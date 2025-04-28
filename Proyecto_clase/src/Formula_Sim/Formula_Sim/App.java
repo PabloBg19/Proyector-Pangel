@@ -93,5 +93,13 @@ public class App extends JFrame {
 		});
 		btnNewButton_2.setBounds(80, 314, 89, 23);
 		getContentPane().add(btnNewButton_2);
+		
+		JButton btnNewButton_3 = new JButton("New button");
+		btnNewButton_3.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton_3.setBounds(114, 380, 89, 23);
+		getContentPane().add(btnNewButton_3);
 	}
 }
