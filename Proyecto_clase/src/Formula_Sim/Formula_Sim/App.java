@@ -40,9 +40,10 @@ public class App extends JFrame {
 	public App() {
 		getContentPane().setBackground(Color.BLACK);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1980, 1080);
+		setBounds(0, 0, 1900, 1000); //cambiar posición y cambiar tamaño de la ventana
 		getContentPane().setLayout(null);
 		getContentPane().setLayout(null);
+		setLocationRelativeTo(null);//centra la ventana
 		
 		JButton btnFORMULA1 = new JButton("F1");
 		btnFORMULA1.setIcon(new ImageIcon(App.class.getResource("/image/F1_button.png")));
@@ -86,20 +87,5 @@ public class App extends JFrame {
 		panel_1_1.setBounds(1315, 0, 10, 207);
 		getContentPane().add(panel_1_1);
 		
-		JButton btnNewButton_2 = new JButton("New button");
-		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton_2.setBounds(80, 314, 89, 23);
-		getContentPane().add(btnNewButton_2);
-		
-		JButton btnNewButton_3 = new JButton("New button");
-		btnNewButton_3.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton_3.setBounds(114, 380, 89, 23);
-		getContentPane().add(btnNewButton_3);
 	}
 }
