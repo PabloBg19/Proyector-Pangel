@@ -73,17 +73,17 @@ public class App extends JFrame {
 		getContentPane().add(btnNewButton_1);
 		
 		JPanel panel = new JPanel();
-		panel.setBackground(new Color(128, 0, 0));
+		panel.setBackground(new Color(0, 64, 128));
 		panel.setBounds(0, 197, 1964, 10);
 		getContentPane().add(panel);
 		
 		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(128, 0, 0));
+		panel_1.setBackground(new Color(0, 64, 128));
 		panel_1.setBounds(616, 0, 10, 207);
 		getContentPane().add(panel_1);
 		
 		JPanel panel_1_1 = new JPanel();
-		panel_1_1.setBackground(new Color(128, 0, 0));
+		panel_1_1.setBackground(new Color(0, 64, 128));
 		panel_1_1.setBounds(1315, 0, 10, 207);
 		getContentPane().add(panel_1_1);
 		
