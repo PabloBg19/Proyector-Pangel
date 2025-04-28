@@ -1,4 +1,4 @@
-package Formula_Sim;
+package View;
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
 
