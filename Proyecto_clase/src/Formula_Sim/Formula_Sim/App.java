@@ -87,5 +87,9 @@ public class App extends JFrame {
 		panel_1_1.setBounds(1315, 0, 10, 207);
 		getContentPane().add(panel_1_1);
 		
+		JButton btn_Formula1 = new JButton("Formula 1");
+		btn_Formula1.setBounds(79, 263, 89, 23);
+		getContentPane().add(btn_Formula1);
+		
 	}
 }
