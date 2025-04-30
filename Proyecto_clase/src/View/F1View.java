@@ -14,6 +14,7 @@ import java.awt.Image;
 import javax.swing.ImageIcon;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
 
 public class F1View extends JFrame {
 
@@ -24,11 +25,12 @@ public class F1View extends JFrame {
 	 * Create the frame.
 	 */
 	public F1View() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(0, 0, 800, 500);
 		contentPane = new JPanel();
+		contentPane.setBackground(new Color(242, 242, 242));
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		setLocationRelativeTo(null);//centra la ventana
+		setLocationRelativeTo(null);//centra la ventana, centrado, centrar
 
 
 		setContentPane(contentPane);
@@ -56,19 +58,44 @@ public class F1View extends JFrame {
 		contentPane.add(btnGestionarEquipos);
 		
 		JButton btnGestionarTemporadas = new JButton("Gestionar Temporadas");
+		btnGestionarTemporadas.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				GestionarTemporada temp=new GestionarTemporada(); //construir nueva ventana
+				temp.setVisible(true); //hacer visible la ventana
+			}
+		});
 		btnGestionarTemporadas.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnGestionarTemporadas.setBounds(113, 307, 272, 54);
 		contentPane.add(btnGestionarTemporadas);
 		
-		JLabel label = new JLabel("");
-		label.setBounds(483, 137, 69, 54);
-		contentPane.add(label);
+		JLabel label_casco = new JLabel("");
+		label_casco.setBounds(483, 137, 69, 54);
+		contentPane.add(label_casco);
 
 		// Código para poner la imagen que se adapta de forma dinámica
 		ImageIcon icon = new ImageIcon(F1View.class.getResource("/image/Casco.png"));
-		Image img = icon.getImage().getScaledInstance(label.getWidth(), label.getHeight(), Image.SCALE_SMOOTH);
-		label.setIcon(new ImageIcon(img));
+		Image img = icon.getImage().getScaledInstance(label_casco.getWidth(), label_casco.getHeight(), Image.SCALE_SMOOTH);
+		label_casco.setIcon(new ImageIcon(img));
+		
+		JLabel label_coche = new JLabel("");
+		label_coche.setBounds(468, 212, 103, 77);
+		contentPane.add(label_coche);
+		
+		// Código para poner la imagen que se adapta de forma dinámica
 
+		ImageIcon icon2 = new ImageIcon(F1View.class.getResource("/image/Coche.png"));
+		Image img2 = icon2.getImage().getScaledInstance(label_coche.getWidth(), label_coche.getHeight(), Image.SCALE_SMOOTH);
+		label_coche.setIcon(new ImageIcon(img2));
+		
+		
+		JLabel label_track = new JLabel("");
+		label_track.setBounds(468, 300, 103, 77);
+		contentPane.add(label_track);
+		
+		ImageIcon icon3 = new ImageIcon(F1View.class.getResource("/image/Track.png"));
+		Image img3 = icon3.getImage().getScaledInstance(label_track.getWidth(), label_track.getHeight(), Image.SCALE_SMOOTH);
+		label_track.setIcon(new ImageIcon(img3));
 
 	}
 }

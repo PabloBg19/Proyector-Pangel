@@ -56,12 +56,12 @@ public class App extends JFrame {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(0, 0, 1900, 1000); // Posición y tamaño de la ventana
         setLocationRelativeTo(null); // Centra la ventana
-		JButton btnFORMULA1 = new JButton("F1");
-		btnFORMULA1.setIcon(new ImageIcon(App.class.getResource("/image/F1_button.png")));
-		btnFORMULA1.setFont(new Font("Verdana Pro", Font.PLAIN, 27));
-		btnFORMULA1.setBackground(new Color(0, 0, 0));
-		btnFORMULA1.setForeground(new Color(128, 0, 0));
-		btnFORMULA1.addActionListener(new ActionListener() {
+		JButton btnNuevaSimulacion = new JButton("Menú de Gestión");
+		btnNuevaSimulacion.setIcon(null);
+		btnNuevaSimulacion.setFont(new Font("Verdana Pro", Font.PLAIN, 27));
+		btnNuevaSimulacion.setBackground(new Color(0, 64, 128));
+		btnNuevaSimulacion.setForeground(new Color(0, 0, 0));
+		btnNuevaSimulacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
 				F1View temp=new F1View(); //construir nueva ventana
@@ -69,38 +69,8 @@ public class App extends JFrame {
 				
 			}
 		});
-		btnFORMULA1.setBounds(76, 23, 439, 163);
-		getContentPane().add(btnFORMULA1);
-		
-		JButton btnNewButton = new JButton("F2");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-			}
-		});
-		btnNewButton.setIcon(new ImageIcon(App.class.getResource("/image/F2_button.png")));
-		btnNewButton.setBounds(724, 23, 494, 163);
-		getContentPane().add(btnNewButton);
-		
-		JButton btnNewButton_1 = new JButton("F3");
-		btnNewButton_1.setIcon(new ImageIcon(App.class.getResource("/image/F3_Button.png")));
-		btnNewButton_1.setSelectedIcon(new ImageIcon(App.class.getResource("/image/F3_Button.png")));
-		btnNewButton_1.setBounds(1412, 23, 422, 163);
-		getContentPane().add(btnNewButton_1);
-		
-		JPanel panel = new JPanel();
-		panel.setBackground(new Color(0, 64, 128));
-		panel.setBounds(0, 197, 1964, 10);
-		getContentPane().add(panel);
-		
-		JPanel panel_1 = new JPanel();
-		panel_1.setBackground(new Color(0, 64, 128));
-		panel_1.setBounds(616, 0, 10, 207);
-		getContentPane().add(panel_1);
-		
-		JPanel panel_1_1 = new JPanel();
-		panel_1_1.setBackground(new Color(0, 64, 128));
-		panel_1_1.setBounds(1315, 0, 10, 207);
-		getContentPane().add(panel_1_1);
+		btnNuevaSimulacion.setBounds(1296, 379, 313, 108);
+		getContentPane().add(btnNuevaSimulacion);
 		
 		JPanel panel_2 = new JPanel();
 		panel_2.setBackground(new Color(0, 64, 128));
@@ -116,6 +86,20 @@ public class App extends JFrame {
 		});
 		btnSIMCARRERA.setBounds(631, 761, 694, 178);
 		getContentPane().add(btnSIMCARRERA);
+		
+		JButton btnCargarSimulacin = new JButton("Cargar Simulación");
+		btnCargarSimulacin.setForeground(new Color(0, 0, 0));
+		btnCargarSimulacin.setFont(new Font("Dialog", Font.PLAIN, 27));
+		btnCargarSimulacin.setBackground(new Color(0, 64, 128));
+		btnCargarSimulacin.setBounds(878, 379, 313, 108);
+		contentPane.add(btnCargarSimulacin);
+		
+		JButton btnMenuDeGestion = new JButton("Nueva Simulación");
+		btnMenuDeGestion.setForeground(new Color(0, 0, 0));
+		btnMenuDeGestion.setFont(new Font("Dialog", Font.PLAIN, 27));
+		btnMenuDeGestion.setBackground(new Color(0, 64, 128));
+		btnMenuDeGestion.setBounds(448, 379, 313, 108);
+		contentPane.add(btnMenuDeGestion);
 		
 	}
 }
