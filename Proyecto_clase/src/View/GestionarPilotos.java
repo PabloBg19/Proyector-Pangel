@@ -9,12 +9,16 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextPane;
 import javax.swing.JTextField;
+import javax.swing.JButton;
+import java.awt.event.ActionListener;
+import java.sql.SQLException;
+import java.awt.event.ActionEvent;
 
 public class GestionarPilotos extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
-	private JTextField textID;
+	private JTextField textId;
 	private JTextField textNombre;
 	private JTextField textEdad;
 	private JTextField textNacionalidad;
@@ -78,10 +82,10 @@ public class GestionarPilotos extends JFrame {
 		lblConsistencia.setBounds(182, 386, 141, 32);
 		contentPane.add(lblConsistencia);
 		
-		textID = new JTextField();
-		textID.setBounds(329, 100, 149, 20);
-		contentPane.add(textID);
-		textID.setColumns(10);
+		textId = new JTextField();
+		textId.setBounds(329, 100, 149, 20);
+		contentPane.add(textId);
+		textId.setColumns(10);
 		
 		textNombre = new JTextField();
 		textNombre.setColumns(10);
@@ -112,5 +116,37 @@ public class GestionarPilotos extends JFrame {
 		textConsistencia.setColumns(10);
 		textConsistencia.setBounds(329, 396, 149, 20);
 		contentPane.add(textConsistencia);
+		
+		JButton btnEnviar = new JButton("ENVIAR");
+		btnEnviar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {  //crear la conexion para el boton Enviar
+				ConexionMySQL conexion1=new ConexionMySQL("root", "", "formula_1"); //conexion a la base de datos 
+				try {
+					conexion1.conectar();
+					String sentencia = "INSERT INTO piloto (Id, Nombre, Edad, Nacionalidad, Equipo, Habilidad, Consistencia) VALUES ('"    //Sentencia SQL
+						    + textId.getText() + "', '" 
+						    + textNombre.getText() + "', '" 
+						    + textEdad.getText() + "', '" 
+						    + textNacionalidad.getText() + "', '" 
+						    + textEquipo.getText() + "', '" 
+						    + textHabilidad.getText() + "', '" 
+						    + textConsistencia.getText() + "')";
+					conexion1.ejecutarInsertDeleteUpdate(sentencia);
+					conexion1.desconectar();
+					dispose();
+				} catch (SQLException e1) {
+					try {
+						conexion1.desconectar();
+					} catch (SQLException e2) {
+						// TODO Auto-generated catch block
+						e2.printStackTrace();
+					}
+					e1.printStackTrace();
+				}
+				
+			}
+		});
+		btnEnviar.setBounds(597, 228, 89, 23);
+		contentPane.add(btnEnviar);
 	}
 }
