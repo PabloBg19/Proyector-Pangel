@@ -53,6 +53,12 @@ public class F1View extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JButton btnGestionarEquipos = new JButton("Gestionar Equipos");
+		btnGestionarEquipos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GestionarEquipo temp=new GestionarEquipo();
+				temp.setVisible(true);
+			}
+		});
 		btnGestionarEquipos.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnGestionarEquipos.setBounds(113, 220, 272, 54);
 		contentPane.add(btnGestionarEquipos);
