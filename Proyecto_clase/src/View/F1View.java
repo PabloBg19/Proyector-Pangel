@@ -12,6 +12,8 @@ import java.awt.Font;
 import java.awt.Image;
 
 import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class F1View extends JFrame {
 
@@ -33,6 +35,12 @@ public class F1View extends JFrame {
 		contentPane.setLayout(null);
 		
 		JButton btnNewButton = new JButton("Gestionar Pilotos");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				GestionarPilotos temp=new GestionarPilotos();
+				temp.setVisible(true);
+			}
+		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
 		btnNewButton.setBounds(113, 137, 272, 54);
 		contentPane.add(btnNewButton);
