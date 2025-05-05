@@ -39,7 +39,7 @@ public class MenuDeGestion extends JFrame {
 		JButton btnNewButton = new JButton("Gestionar Pilotos");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				AñadirPilotos temp=new AñadirPilotos();
+				GestionarPilotos temp=new GestionarPilotos();
 				temp.setVisible(true);
 			}
 		});
