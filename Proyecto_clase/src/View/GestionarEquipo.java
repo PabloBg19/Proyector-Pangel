@@ -24,6 +24,8 @@ public class GestionarEquipo extends JFrame {
 	private JTextField textPiloto_1;
 	private JTextField textPiloto_2;
 	private JTextField textFiabilidad;
+	private JTextField textCampeonatos;
+	private JTextField textPuntos;
 
 	/**
 	 * Launch the application.
@@ -46,7 +48,7 @@ public class GestionarEquipo extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("ID ");
 		lblNewLabel.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-		lblNewLabel.setBounds(280, 90, 39, 32);
+		lblNewLabel.setBounds(280, 77, 39, 32);
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("GESTIONAR EQUIPOS");
@@ -56,67 +58,70 @@ public class GestionarEquipo extends JFrame {
 		
 		JLabel lblNombre = new JLabel("NOMBRE");
 		lblNombre.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-		lblNombre.setBounds(236, 133, 83, 32);
+		lblNombre.setBounds(244, 120, 83, 32);
 		contentPane.add(lblNombre);
 		
 		JLabel lblEdad = new JLabel("MOTOR");
 		lblEdad.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-		lblEdad.setBounds(236, 176, 83, 32);
+		lblEdad.setBounds(236, 163, 83, 32);
 		contentPane.add(lblEdad);
 		
 		JLabel lblNacionalidad = new JLabel("PAIS");
 		lblNacionalidad.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-		lblNacionalidad.setBounds(257, 219, 50, 32);
+		lblNacionalidad.setBounds(259, 206, 50, 32);
 		contentPane.add(lblNacionalidad);
 		
 		JLabel lblEquipo = new JLabel("PILOTO_1");
 		lblEquipo.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-		lblEquipo.setBounds(217, 273, 102, 32);
+		lblEquipo.setBounds(217, 249, 102, 32);
 		contentPane.add(lblEquipo);
 		
 		JLabel lblHabilidad = new JLabel("PILOTO_2");
 		lblHabilidad.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-		lblHabilidad.setBounds(217, 329, 106, 32);
+		lblHabilidad.setBounds(213, 292, 106, 32);
 		contentPane.add(lblHabilidad);
 		
 		JLabel lblConsistencia = new JLabel("FIABILIDAD");
 		lblConsistencia.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-		lblConsistencia.setBounds(205, 386, 102, 32);
+		lblConsistencia.setBounds(217, 335, 102, 32);
 		contentPane.add(lblConsistencia);
 		
+
+
+		
 		textId = new JTextField();
-		textId.setBounds(345, 100, 148, 20);
+		textId.setBounds(345, 87, 148, 20);
 		contentPane.add(textId);
 		textId.setColumns(10);
 		
 		textNombre = new JTextField();
 		textNombre.setColumns(10);
-		textNombre.setBounds(345, 143, 148, 20);
+		textNombre.setBounds(345, 130, 148, 20);
 		contentPane.add(textNombre);
 		
 		textMotor = new JTextField();
 		textMotor.setColumns(10);
-		textMotor.setBounds(345, 186, 148, 20);
+		textMotor.setBounds(345, 173, 148, 20);
 		contentPane.add(textMotor);
 		
 		textPais = new JTextField();
 		textPais.setColumns(10);
-		textPais.setBounds(345, 229, 148, 20);
+		textPais.setBounds(345, 216, 148, 20);
 		contentPane.add(textPais);
 		
 		textPiloto_1 = new JTextField();
 		textPiloto_1.setColumns(10);
-		textPiloto_1.setBounds(345, 283, 148, 20);
+		textPiloto_1.setBounds(345, 259, 148, 20);
 		contentPane.add(textPiloto_1);
 		
 		textPiloto_2 = new JTextField();
 		textPiloto_2.setColumns(10);
-		textPiloto_2.setBounds(345, 339, 148, 20);
+		textPiloto_2.setBounds(345, 302, 148, 20);
 		contentPane.add(textPiloto_2);
 		
 		textFiabilidad = new JTextField();
 		textFiabilidad.setColumns(10);
-		textFiabilidad.setBounds(345, 396, 148, 20);
+		textFiabilidad.setBounds(345, 345, 148, 20);
 		contentPane.add(textFiabilidad);
 		
 		JButton btnEnviar = new JButton("ENVIAR");
@@ -125,7 +130,7 @@ public class GestionarEquipo extends JFrame {
 				ConexionMySQL conexion2=new ConexionMySQL("root", "", "formula_1"); //conexion a la base de datos 
 				try {
 					conexion2.conectar();
-					String sentencia = "INSERT INTO equipo (Id, Nombre, Motor, Pais, Piloto_1, Piloto_2, Fiabilidad) VALUES ('"    //Sentencia SQL
+					String sentencia = "INSERT INTO equipo (Id, Nombre, Motor, Pais, Piloto_1, Piloto_2, Fiabilidad, Puntos, Campeonatos) VALUES ('"    //Sentencia SQL
 						    + textId.getText() + "', '" 
 						    + textNombre.getText() + "', '" 
 						    + textMotor.getText() + "', '" 
@@ -150,6 +155,10 @@ public class GestionarEquipo extends JFrame {
 		});
 		btnEnviar.setBounds(597, 228, 89, 23);
 		contentPane.add(btnEnviar);
+		
+		
+		
+		
 		
 		
 	}

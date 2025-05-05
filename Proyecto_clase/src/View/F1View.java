@@ -39,7 +39,7 @@ public class F1View extends JFrame {
 		JButton btnNewButton = new JButton("Gestionar Pilotos");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GestionarPilotos temp=new GestionarPilotos();
+				AñadirPilotos temp=new AñadirPilotos();
 				temp.setVisible(true);
 			}
 		});
