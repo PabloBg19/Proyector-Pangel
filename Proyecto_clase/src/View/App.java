@@ -101,5 +101,18 @@ public class App extends JFrame {
 		btnMenuDeGestion.setBounds(448, 379, 313, 108);
 		contentPane.add(btnMenuDeGestion);
 		
+		JButton btnVerTemporada = new JButton("Ver Temporada");
+		btnVerTemporada.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				VerTemporada temp=new VerTemporada();
+				temp.setVisible(true);
+			}
+		});
+		btnVerTemporada.setForeground(Color.BLACK);
+		btnVerTemporada.setFont(new Font("Dialog", Font.PLAIN, 27));
+		btnVerTemporada.setBackground(new Color(0, 64, 128));
+		btnVerTemporada.setBounds(878, 576, 313, 108);
+		contentPane.add(btnVerTemporada);
+		
 	}
 }
