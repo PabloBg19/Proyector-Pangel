@@ -55,7 +55,7 @@ public class MenuDeGestion extends JFrame {
 		JButton btnGestionarEquipos = new JButton("Gestionar Equipos");
 		btnGestionarEquipos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				GestionarEquipo temp=new GestionarEquipo();
+				AnadirEquipo temp=new AnadirEquipo();
 				temp.setVisible(true);
 			}
 		});

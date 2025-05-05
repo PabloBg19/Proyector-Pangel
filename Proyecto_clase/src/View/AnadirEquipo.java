@@ -13,7 +13,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-public class GestionarEquipo extends JFrame {
+public class AnadirEquipo extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -35,7 +35,7 @@ public class GestionarEquipo extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public GestionarEquipo() {
+	public AnadirEquipo() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(0, 0, 800, 500);
 		contentPane = new JPanel();
