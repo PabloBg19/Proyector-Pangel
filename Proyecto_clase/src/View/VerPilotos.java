@@ -35,11 +35,11 @@ public class VerPilotos extends JFrame {
 		getContentPane().setLayout(null);
 		
 		JTextArea textMostrar = new JTextArea();
-		textMostrar.setBounds(486, 21, 209, 401);
+		textMostrar.setBounds(402, 78, 330, 344);
 		getContentPane().add(textMostrar);
 		
-		JButton btnVerEquipo = new JButton("VER PILOTOS");
-		btnVerEquipo.setBounds(208, 126, 120, 31);
+		JButton btnVerEquipo = new JButton("Buscar");
+		btnVerEquipo.setBounds(208, 214, 120, 31);
 		getContentPane().add(btnVerEquipo);
 		
 		textNombre = new JTextField();
@@ -84,7 +84,7 @@ public class VerPilotos extends JFrame {
 		getContentPane().add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("BUSQUEDA POR EQUIPO:");
-		lblNewLabel_2.setBounds(31, 321, 131, 14);
+		lblNewLabel_2.setBounds(31, 330, 131, 14);
 		getContentPane().add(lblNewLabel_2);
 		
 		JLabel lblNewLabel_1_1 = new JLabel("EQUIPO: ");
@@ -123,7 +123,7 @@ public class VerPilotos extends JFrame {
 		
 		JLabel lblNewLabel_3 = new JLabel("VER PILOTOS");
 		lblNewLabel_3.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
-		lblNewLabel_3.setBounds(123, 57, 261, 31);
+		lblNewLabel_3.setBounds(67, 58, 261, 31);
 		getContentPane().add(lblNewLabel_3);
 		
 		JLabel lblNewLabel_4 = new JLabel("(AÑADIR NOMBRE Y APELLIDO)");
