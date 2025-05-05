@@ -3,6 +3,7 @@ package View;
 import java.awt.EventQueue;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.ResultSet;
@@ -38,6 +39,15 @@ public class VerPilotos extends JFrame {
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(102, 126, 585, 300);
         getContentPane().add(scrollPane);
+        
+     // Centrar el contenido de las celdas
+        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+
+        // Aplicar el renderer a todas las columnas de la tabla
+        for (int i = 0; i < table.getColumnCount(); i++) {
+            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+        }
 
         // Cargar todos los pilotos al iniciar la ventana
         cargarPilotos();
