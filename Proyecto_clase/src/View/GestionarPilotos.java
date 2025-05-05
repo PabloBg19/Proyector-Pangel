@@ -36,15 +36,6 @@ public class GestionarPilotos extends JFrame {
 		lblNewLabel.setBounds(203, 33, 381, 52);
 		getContentPane().add(lblNewLabel);
 		
-		JButton btnNewButton = new JButton("AÑADIR PILOTO");
-		btnNewButton.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				AñadirPilotos temp=new AñadirPilotos();
-				temp.setVisible(true);
-			}
-		});
-		btnNewButton.setBounds(61, 190, 122, 31);
-		getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("VER PILOTOS");
 		btnNewButton_1.addActionListener(new ActionListener() {

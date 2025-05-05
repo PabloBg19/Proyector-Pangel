@@ -8,6 +8,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class VerPilotos extends JFrame {
 
@@ -56,7 +58,7 @@ public class VerPilotos extends JFrame {
         JButton btnVerEquipo = new JButton("VER PILOTOS");
         btnVerEquipo.setEnabled(false);
         btnVerEquipo.addActionListener(e -> cargarPilotos());
-        btnVerEquipo.setBounds(21, 419, 56, 31);
+        btnVerEquipo.setBounds(33, 439, 0, 11);
         getContentPane().add(btnVerEquipo);
 
         // Campo de texto para búsqueda por nombre
@@ -164,8 +166,19 @@ public class VerPilotos extends JFrame {
                 btnEliminar.setEnabled(true);
             } else {
                 btnEliminar.setEnabled(false);
+                
+                
             }
         });
+        JButton btnNewButton = new JButton("Añadir Piloto");
+        btnNewButton.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		AñadirPilotos temp=new AñadirPilotos();
+        		temp.setVisible(true);
+        	}
+        });
+        btnNewButton.setBounds(205, 424, 129, 26);
+        getContentPane().add(btnNewButton);
     }
 
     // Método para cargar todos los pilotos en la tabla
