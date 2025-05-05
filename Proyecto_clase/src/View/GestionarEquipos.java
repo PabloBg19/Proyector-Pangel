@@ -7,7 +7,12 @@ import javax.swing.JPanel;
 import javax.swing.border.EmptyBorder;
 import javax.swing.JLabel;
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JButton;
+import javax.swing.ImageIcon;
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 
 public class GestionarEquipos extends JFrame {
 
@@ -34,24 +39,67 @@ public class GestionarEquipos extends JFrame {
 		
 		JLabel lblNewLabel = new JLabel("GESTIONAR EQUIPOS");
 		lblNewLabel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
-		lblNewLabel.setBounds(158, 30, 422, 33);
+		lblNewLabel.setBounds(178, 32, 422, 33);
 		contentPane.add(lblNewLabel);
 		
-		JButton btnNewButton = new JButton("Ver Pilotos");
-		btnNewButton.setBounds(77, 193, 89, 23);
+		JButton btnNewButton = new JButton("Ver Equipos");
+		btnNewButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+			}
+		});
+		btnNewButton.setBounds(68, 224, 108, 33);
 		contentPane.add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("Modificar Pilotos");
-		btnNewButton_1.setBounds(258, 193, 119, 23);
+		JButton btnNewButton_1 = new JButton("Modificar Equipo");
+		btnNewButton_1.setBounds(224, 224, 130, 33);
 		contentPane.add(btnNewButton_1);
 		
-		JButton btnNewButton_2 = new JButton("New button");
-		btnNewButton_2.setBounds(437, 193, 89, 23);
+		JButton btnNewButton_2 = new JButton("Añadir Equipo");
+		btnNewButton_2.setBounds(408, 224, 117, 33);
 		contentPane.add(btnNewButton_2);
 		
-		JButton btnNewButton_3 = new JButton("New button");
-		btnNewButton_3.setBounds(600, 193, 89, 23);
+		JButton btnNewButton_3 = new JButton("Eliminar Equipo");
+		btnNewButton_3.setBounds(588, 224, 117, 33);
 		contentPane.add(btnNewButton_3);
+		
+		JLabel lblimgVerEquipo = new JLabel("New label");
+		lblimgVerEquipo.setIcon(new ImageIcon(GestionarEquipos.class.getResource("/image/VerEquipo.png")));
+		lblimgVerEquipo.setBounds(88, 157, 68, 56);
+		contentPane.add(lblimgVerEquipo);
+		
+		//Adaptar imagen dinámicamente
+		ImageIcon icon = new ImageIcon(MenuDeGestion.class.getResource("/image/VerEquipo.png"));
+		Image img = icon.getImage().getScaledInstance(lblimgVerEquipo.getWidth(), lblimgVerEquipo.getHeight(), Image.SCALE_SMOOTH);
+		lblimgVerEquipo.setIcon(new ImageIcon(img));
+		
+		JLabel lblimgModificarEquipo = new JLabel("New label");
+		lblimgModificarEquipo.setIcon(new ImageIcon(GestionarEquipos.class.getResource("/image/ModificarEquipo.png")));
+		lblimgModificarEquipo.setBounds(260, 160, 55, 50);
+		contentPane.add(lblimgModificarEquipo);
+		
+		//Adaptar imagen dinámicamente
+				ImageIcon icon2 = new ImageIcon(MenuDeGestion.class.getResource("/image/ModificarEquipo.png"));
+				Image img2 = icon2.getImage().getScaledInstance(lblimgModificarEquipo.getWidth(), lblimgModificarEquipo.getHeight(), Image.SCALE_SMOOTH);
+				lblimgModificarEquipo.setIcon(new ImageIcon(img2));
+		
+		JLabel lblimgAnadirEquipo = new JLabel("New label");
+		lblimgAnadirEquipo.setIcon(new ImageIcon(GestionarEquipos.class.getResource("/image/AnadirEquipo.png")));
+		lblimgAnadirEquipo.setBounds(434, 157, 61, 56);
+		contentPane.add(lblimgAnadirEquipo);
+		
+		//Adaptar imagen dinámicamente
+				ImageIcon icon3 = new ImageIcon(MenuDeGestion.class.getResource("/image/anadirEquipo.png"));
+				Image img3 = icon3.getImage().getScaledInstance(lblimgAnadirEquipo.getWidth(), lblimgAnadirEquipo.getHeight(), Image.SCALE_SMOOTH);
+				lblimgAnadirEquipo.setIcon(new ImageIcon(img3));
+		
+		JLabel lblimgEliminarEquipo = new JLabel("New label");
+		lblimgEliminarEquipo.setIcon(new ImageIcon(GestionarEquipos.class.getResource("/image/EliminarEquipo.png")));
+		lblimgEliminarEquipo.setBounds(620, 160, 55, 50);
+		contentPane.add(lblimgEliminarEquipo);
+		
+		//Adaptar imagen dinámicamente
+				ImageIcon icon4 = new ImageIcon(MenuDeGestion.class.getResource("/image/EliminarEquipo.png"));
+				Image img4 = icon4.getImage().getScaledInstance(lblimgEliminarEquipo.getWidth(), lblimgEliminarEquipo.getHeight(), Image.SCALE_SMOOTH);
+				lblimgEliminarEquipo.setIcon(new ImageIcon(img4));
 	}
-
 }
