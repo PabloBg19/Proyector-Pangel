@@ -47,24 +47,24 @@ public class GestionarEquipos extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		btnNewButton.setBounds(68, 224, 108, 33);
+		btnNewButton.setBounds(60, 226, 108, 33);
 		contentPane.add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Modificar Equipo");
-		btnNewButton_1.setBounds(224, 224, 130, 33);
+		btnNewButton_1.setBounds(216, 226, 130, 33);
 		contentPane.add(btnNewButton_1);
 		
 		JButton btnNewButton_2 = new JButton("Añadir Equipo");
-		btnNewButton_2.setBounds(408, 224, 117, 33);
+		btnNewButton_2.setBounds(400, 226, 117, 33);
 		contentPane.add(btnNewButton_2);
 		
 		JButton btnNewButton_3 = new JButton("Eliminar Equipo");
-		btnNewButton_3.setBounds(588, 224, 117, 33);
+		btnNewButton_3.setBounds(580, 226, 123, 33);
 		contentPane.add(btnNewButton_3);
 		
 		JLabel lblimgVerEquipo = new JLabel("New label");
 		lblimgVerEquipo.setIcon(new ImageIcon(GestionarEquipos.class.getResource("/image/VerEquipo.png")));
-		lblimgVerEquipo.setBounds(88, 157, 68, 56);
+		lblimgVerEquipo.setBounds(80, 159, 68, 56);
 		contentPane.add(lblimgVerEquipo);
 		
 		//Adaptar imagen dinámicamente
@@ -74,7 +74,7 @@ public class GestionarEquipos extends JFrame {
 		
 		JLabel lblimgModificarEquipo = new JLabel("New label");
 		lblimgModificarEquipo.setIcon(new ImageIcon(GestionarEquipos.class.getResource("/image/ModificarEquipo.png")));
-		lblimgModificarEquipo.setBounds(260, 160, 55, 50);
+		lblimgModificarEquipo.setBounds(252, 162, 55, 50);
 		contentPane.add(lblimgModificarEquipo);
 		
 		//Adaptar imagen dinámicamente
@@ -84,7 +84,7 @@ public class GestionarEquipos extends JFrame {
 		
 		JLabel lblimgAnadirEquipo = new JLabel("New label");
 		lblimgAnadirEquipo.setIcon(new ImageIcon(GestionarEquipos.class.getResource("/image/AnadirEquipo.png")));
-		lblimgAnadirEquipo.setBounds(434, 157, 61, 56);
+		lblimgAnadirEquipo.setBounds(426, 159, 61, 56);
 		contentPane.add(lblimgAnadirEquipo);
 		
 		//Adaptar imagen dinámicamente
@@ -94,7 +94,7 @@ public class GestionarEquipos extends JFrame {
 		
 		JLabel lblimgEliminarEquipo = new JLabel("New label");
 		lblimgEliminarEquipo.setIcon(new ImageIcon(GestionarEquipos.class.getResource("/image/EliminarEquipo.png")));
-		lblimgEliminarEquipo.setBounds(620, 160, 55, 50);
+		lblimgEliminarEquipo.setBounds(612, 162, 55, 50);
 		contentPane.add(lblimgEliminarEquipo);
 		
 		//Adaptar imagen dinámicamente
