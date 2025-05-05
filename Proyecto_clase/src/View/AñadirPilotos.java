@@ -25,8 +25,9 @@ public class AñadirPilotos extends JFrame {
 	private JTextField textEquipo;
 	private JTextField textHabilidad;
 	private JTextField textConsistencia;
-
-	
+	private JTextField textPuntos;
+	private JTextField textCampeonatos;
+	private JTextField textCampeonato;
 
 	/**
 	 * Create the frame.
@@ -37,7 +38,6 @@ public class AñadirPilotos extends JFrame {
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		setLocationRelativeTo(null);//centra la ventana
-
 
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
@@ -87,21 +87,17 @@ public class AñadirPilotos extends JFrame {
 		lblPuntos.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
 		contentPane.add(lblPuntos);
 		
-		JLabel lblCampeonatos = new JLabel("CAMPEONATOS");
-		lblCampeonatos.setBounds(171, 424, 148, 32);
-		lblCampeonatos.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+		// Añadido JLabel para Campeonato
+		JLabel lblCampeonato = new JLabel("CAMPEONATO");
+		lblCampeonato.setBounds(192, 424, 129, 32);
+		lblCampeonato.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+		contentPane.add(lblCampeonato);
 		
-		JTextField textCampeonatos = new JTextField();
-		textCampeonatos.setColumns(10);
-		textCampeonatos.setBounds(329, 434, 148, 20);
-		contentPane.add(textCampeonatos);
-		
-		JTextField textPuntos = new JTextField();
+		textPuntos = new JTextField();
 		textPuntos.setColumns(10);
-		textPuntos.setBounds(329, 391, 148, 20);
+		textPuntos.setBounds(330, 348, 148, 20);
 		contentPane.add(textPuntos);
 		
-		contentPane.add(lblCampeonatos);
 		textId = new JTextField();
 		textId.setBounds(329, 90, 149, 20);
 		contentPane.add(textId);
@@ -133,9 +129,14 @@ public class AñadirPilotos extends JFrame {
 		contentPane.add(textHabilidad);
 		
 		textConsistencia = new JTextField();
-		textConsistencia.setBounds(329, 348, 149, 20);
+		textConsistencia.setBounds(331, 391, 149, 20);
 		textConsistencia.setColumns(10);
 		contentPane.add(textConsistencia);
+		
+		textCampeonato = new JTextField();
+		textCampeonato.setColumns(10);
+		textCampeonato.setBounds(329, 434, 149, 20);
+		contentPane.add(textCampeonato);
 		
 		JButton btnEnviar = new JButton("ENVIAR");
 		btnEnviar.setBounds(597, 228, 89, 23);
@@ -144,14 +145,16 @@ public class AñadirPilotos extends JFrame {
 				ConexionMySQL conexion1=new ConexionMySQL("root", "", "formula_1"); //conexion a la base de datos 
 				try {
 					conexion1.conectar();
-					String sentencia = "INSERT INTO piloto (Id, Nombre, Edad, Nacionalidad, Equipo, Habilidad, Consistencia) VALUES ('"    //Sentencia SQL
+					String sentencia = "INSERT INTO piloto (Id, Nombre, Edad, Nacionalidad, Equipo, Habilidad, Consistencia, Puntos, Campeonato) VALUES ('"    //Sentencia SQL corregida
 						    + textId.getText() + "', '" 
 						    + textNombre.getText() + "', '" 
 						    + textEdad.getText() + "', '" 
 						    + textNacionalidad.getText() + "', '" 
 						    + textEquipo.getText() + "', '" 
 						    + textHabilidad.getText() + "', '" 
-						    + textConsistencia.getText() + "')";
+						    + textConsistencia.getText() + "', '" 
+						    + textPuntos.getText() + "', '" 
+						    + textCampeonato.getText() + "')";
 					
 					conexion1.ejecutarInsertDeleteUpdate(sentencia);
 					conexion1.desconectar();
@@ -165,7 +168,6 @@ public class AñadirPilotos extends JFrame {
 					}
 					e1.printStackTrace();
 				}
-				
 			}
 		});
 		contentPane.add(btnEnviar);

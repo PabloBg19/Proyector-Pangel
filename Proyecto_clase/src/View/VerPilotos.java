@@ -145,7 +145,7 @@ public class VerPilotos extends JFrame {
                 JOptionPane.showMessageDialog(this, "Selecciona un piloto para eliminar.");
             }
         });
-        btnEliminar.setBounds(537, 419, 150, 31);
+        btnEliminar.setBounds(408, 419, 150, 31);
         getContentPane().add(btnEliminar);
 
         // Detectar selección en la tabla
