@@ -41,7 +41,7 @@ public class VerPilotos extends JFrame {
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(102, 113, 585, 300);
         getContentPane().add(scrollPane);
-        
+       
      // Centrar el contenido de las celdas
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
@@ -157,7 +157,7 @@ public class VerPilotos extends JFrame {
                 JOptionPane.showMessageDialog(this, "Selecciona un piloto para eliminar.");
             }
         });
-        btnEliminar.setBounds(408, 419, 150, 31);
+        btnEliminar.setBounds(474, 424, 150, 26);
         getContentPane().add(btnEliminar);
 
         // Detectar selección en la tabla
@@ -166,19 +166,65 @@ public class VerPilotos extends JFrame {
                 btnEliminar.setEnabled(true);
             } else {
                 btnEliminar.setEnabled(false);
-                
-                
             }
         });
         JButton btnNewButton = new JButton("Añadir Piloto");
         btnNewButton.addActionListener(new ActionListener() {
+        public void actionPerformed(ActionEvent e) {
+        AñadirPilotos temp=new AñadirPilotos();
+        temp.setVisible(true);
+        }
+        });
+        btnNewButton.setBounds(170, 424, 129, 26);
+        getContentPane().add(btnNewButton);
+       
+        JButton btnNewButton_1 = new JButton("Modificar Piloto");
+        
+        btnNewButton_1.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                int selectedRow = table.getSelectedRow();
+                if (selectedRow != -1) {
+                    String nombre = (String) tableModel.getValueAt(selectedRow, 0);
+                    String equipo = (String) tableModel.getValueAt(selectedRow, 1);
+                    String nacionalidad = (String) tableModel.getValueAt(selectedRow, 2);
+                    String habilidadStr = (String) tableModel.getValueAt(selectedRow, 3);
+                    String consistenciaStr = (String) tableModel.getValueAt(selectedRow, 4);
+
+                    // Abrir ventana de modificación
+                    ModificarPiloto modificar = new ModificarPiloto(nombre, equipo, nacionalidad, habilidadStr, consistenciaStr);
+                    modificar.setVisible(true);
+                    modificar.addWindowListener(new java.awt.event.WindowAdapter() {
+                        @Override
+                        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
+                            cargarPilotos(); // Recargar tabla después de modificar
+                        }
+                    });
+                } else {
+                    JOptionPane.showMessageDialog(null, "Selecciona un piloto para modificar.");
+                }
+            }
+        });
+        btnNewButton_1.setBounds(327, 424, 129, 26);
+        getContentPane().add(btnNewButton_1);
+        
+        
+
+        JButton btnNewButton_2 = new JButton("New button");
+        btnNewButton_2.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
-        		AñadirPilotos temp=new AñadirPilotos();
-        		temp.setVisible(true);
+        		cargarPilotos();
         	}
         });
-        btnNewButton.setBounds(205, 424, 129, 26);
-        getContentPane().add(btnNewButton);
+
+        ImageIcon originalIcon = new ImageIcon(VerPilotos.class.getResource("/image/recargar.png"));
+
+        Image scaledImage = originalIcon.getImage().getScaledInstance(52, 51, Image.SCALE_SMOOTH);
+        ImageIcon scaledIcon = new ImageIcon(scaledImage);
+        btnNewButton_2.setIcon(scaledIcon);
+        btnNewButton_2.setSelectedIcon(scaledIcon);
+        btnNewButton_2.setBounds(711, 345, 52, 51);
+        btnNewButton_2.setText("");
+        getContentPane().add(btnNewButton_2);
     }
 
     // Método para cargar todos los pilotos en la tabla
@@ -203,5 +249,151 @@ public class VerPilotos extends JFrame {
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
+    }
+}
+
+// Nueva clase ModificarPiloto
+class ModificarPiloto extends JFrame {
+    private static final long serialVersionUID = 1L;
+    private JTextField textId;
+    private JTextField textNombre;
+    private JTextField textEdad;
+    private JTextField textNacionalidad;
+    private JTextField textEquipo;
+    private JTextField textHabilidad;
+    private JTextField textConsistencia;
+    private JTextField textPuntos;
+    private JTextField textCampeonato;
+
+    public ModificarPiloto(String nombre, String equipo, String nacionalidad, String habilidad, String consistencia) {
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setBounds(0, 0, 800, 500);
+        setLocationRelativeTo(null);
+        JPanel contentPane = new JPanel();
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+        setContentPane(contentPane);
+        contentPane.setLayout(null);
+
+        JLabel lblId = new JLabel("ID");
+        lblId.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+        lblId.setBounds(282, 80, 39, 32);
+        contentPane.add(lblId);
+
+        JLabel lblNombre = new JLabel("NOMBRE");
+        lblNombre.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+        lblNombre.setBounds(238, 123, 83, 32);
+        contentPane.add(lblNombre);
+
+        JLabel lblEdad = new JLabel("EDAD");
+        lblEdad.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+        lblEdad.setBounds(238, 166, 83, 32);
+        contentPane.add(lblEdad);
+
+        JLabel lblNacionalidad = new JLabel("NACIONALIDAD");
+        lblNacionalidad.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+        lblNacionalidad.setBounds(171, 209, 148, 32);
+        contentPane.add(lblNacionalidad);
+
+        JLabel lblEquipo = new JLabel("EQUIPO");
+        lblEquipo.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+        lblEquipo.setBounds(234, 252, 74, 32);
+        contentPane.add(lblEquipo);
+
+        JLabel lblHabilidad = new JLabel("HABILIDAD");
+        lblHabilidad.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+        lblHabilidad.setBounds(215, 295, 106, 32);
+        contentPane.add(lblHabilidad);
+
+        JLabel lblConsistencia = new JLabel("CONSISTENCIA");
+        lblConsistencia.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+        lblConsistencia.setBounds(192, 381, 129, 32);
+        contentPane.add(lblConsistencia);
+
+        JLabel lblPuntos = new JLabel("PUNTOS");
+        lblPuntos.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+        lblPuntos.setBounds(234, 338, 83, 32);
+        contentPane.add(lblPuntos);
+
+        JLabel lblCampeonato = new JLabel("CAMPEONATO");
+        lblCampeonato.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+        lblCampeonato.setBounds(192, 424, 129, 32);
+        contentPane.add(lblCampeonato);
+
+        textId = new JTextField();
+        textId.setColumns(10);
+        textId.setBounds(329, 90, 149, 20);
+        contentPane.add(textId);
+
+        textNombre = new JTextField(nombre);
+        textNombre.setColumns(10);
+        textNombre.setBounds(329, 133, 149, 20);
+        contentPane.add(textNombre);
+
+        textEdad = new JTextField();
+        textEdad.setColumns(10);
+        textEdad.setBounds(329, 176, 149, 20);
+        contentPane.add(textEdad);
+
+        textNacionalidad = new JTextField(nacionalidad);
+        textNacionalidad.setColumns(10);
+        textNacionalidad.setBounds(329, 219, 149, 20);
+        contentPane.add(textNacionalidad);
+
+        textEquipo = new JTextField(equipo);
+        textEquipo.setColumns(10);
+        textEquipo.setBounds(329, 262, 149, 20);
+        contentPane.add(textEquipo);
+
+        textHabilidad = new JTextField(habilidad);
+        textHabilidad.setColumns(10);
+        textHabilidad.setBounds(331, 305, 149, 20);
+        contentPane.add(textHabilidad);
+
+        textConsistencia = new JTextField(consistencia);
+        textConsistencia.setColumns(10);
+        textConsistencia.setBounds(331, 391, 149, 20);
+        contentPane.add(textConsistencia);
+
+        textPuntos = new JTextField();
+        textPuntos.setColumns(10);
+        textPuntos.setBounds(330, 348, 148, 20);
+        contentPane.add(textPuntos);
+
+        textCampeonato = new JTextField();
+        textCampeonato.setColumns(10);
+        textCampeonato.setBounds(329, 434, 149, 20);
+        contentPane.add(textCampeonato);
+
+        JButton btnGuardar = new JButton("Guardar");
+        btnGuardar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
+                try {
+                    conexion.conectar();
+                    String sentencia = "UPDATE piloto SET Nombre='" + textNombre.getText() + "', Edad='" + textEdad.getText() + "', Nacionalidad='" + textNacionalidad.getText() +
+                                      "', Equipo='" + textEquipo.getText() + "', Habilidad='" + textHabilidad.getText() + "', Consistencia='" + textConsistencia.getText() +
+                                      "', Puntos='" + textPuntos.getText() + "', Campeonato='" + textCampeonato.getText() +
+                                      "' WHERE Nombre='" + nombre + "'";
+                    int rowsAffected = conexion.ejecutarInsertDeleteUpdate(sentencia);
+                    if (rowsAffected > 0) {
+                        JOptionPane.showMessageDialog(ModificarPiloto.this, "Piloto modificado con éxito.");
+                        dispose();
+                    } else {
+                        JOptionPane.showMessageDialog(ModificarPiloto.this, "No se pudo modificar el piloto.");
+                    }
+                    conexion.desconectar();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(ModificarPiloto.this, "Error al modificar el piloto.");
+                }
+            }
+        });
+        btnGuardar.setBounds(597, 228, 89, 23);
+        contentPane.add(btnGuardar);
+
+        JLabel lblNewLabel_1 = new JLabel("MODIFICAR PILOTO");
+        lblNewLabel_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
+        lblNewLabel_1.setBounds(240, 11, 325, 90);
+        contentPane.add(lblNewLabel_1);
     }
 }
