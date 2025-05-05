@@ -31,8 +31,8 @@ public class VerPilotos extends JFrame {
         setLocationRelativeTo(null); // centra la ventana
         getContentPane().setLayout(null);
 
-        // Crear modelo de la tabla con columnas Nombre, Equipo, Nacionalidad, Habilidad, Consistencia
-        String[] columnNames = {"Nombre", "Equipo", "Nacionalidad", "Habilidad", "Consistencia"};
+        // Crear modelo de la tabla con columnas Id, Nombre, Equipo, Nacionalidad, Habilidad, Consistencia
+        String[] columnNames = {"Id", "Nombre", "Equipo", "Nacionalidad", "Habilidad", "Consistencia"};
         tableModel = new DefaultTableModel(columnNames, 0);
         table = new JTable(tableModel);
         table.setFillsViewportHeight(true);
@@ -42,7 +42,7 @@ public class VerPilotos extends JFrame {
         scrollPane.setBounds(102, 113, 585, 300);
         getContentPane().add(scrollPane);
        
-     // Centrar el contenido de las celdas
+        // Centrar el contenido de las celdas
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 
@@ -79,12 +79,13 @@ public class VerPilotos extends JFrame {
                 tableModel.setRowCount(0);
                 // Añadir filas a la tabla
                 while (resultado.next()) {
+                    String Id = resultado.getString("Id");
                     String nombre = resultado.getString("Nombre");
                     String equipo = resultado.getString("Equipo");
                     String nacionalidad = resultado.getString("Nacionalidad");
                     String habilidad = resultado.getString("Habilidad");
                     String consistencia = resultado.getString("Consistencia");
-                    tableModel.addRow(new Object[]{nombre, equipo, nacionalidad, habilidad, consistencia});
+                    tableModel.addRow(new Object[]{Id, nombre, equipo, nacionalidad, habilidad, consistencia});
                 }
                 conexion.desconectar();
             } catch (SQLException ex) {
@@ -111,12 +112,13 @@ public class VerPilotos extends JFrame {
                 tableModel.setRowCount(0);
                 // Añadir filas a la tabla
                 while (resultado.next()) {
+                    String Id = resultado.getString("Id");
                     String nombre = resultado.getString("Nombre");
                     String equipo = resultado.getString("Equipo");
                     String nacionalidad = resultado.getString("Nacionalidad");
                     String habilidad = resultado.getString("Habilidad");
                     String consistencia = resultado.getString("Consistencia");
-                    tableModel.addRow(new Object[]{nombre, equipo, nacionalidad, habilidad, consistencia});
+                    tableModel.addRow(new Object[]{Id, nombre, equipo, nacionalidad, habilidad, consistencia});
                 }
                 conexion.desconectar();
             } catch (SQLException ex) {
@@ -136,11 +138,11 @@ public class VerPilotos extends JFrame {
         btnEliminar.addActionListener(e -> {
             int selectedRow = table.getSelectedRow();
             if (selectedRow != -1) {
-                String nombrePiloto = (String) tableModel.getValueAt(selectedRow, 0); // Columna Nombre
+                String idPiloto = (String) tableModel.getValueAt(selectedRow, 0); // Columna Id
                 ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
                 try {
                     conexion.conectar();
-                    String sentencia = "DELETE FROM piloto WHERE Nombre='" + nombrePiloto + "'";
+                    String sentencia = "DELETE FROM piloto WHERE Id='" + idPiloto + "'";
                     int rowsAffected = conexion.ejecutarInsertDeleteUpdate(sentencia);
                     if (rowsAffected > 0) {
                         tableModel.removeRow(selectedRow); // Eliminar fila de la tabla
@@ -168,37 +170,31 @@ public class VerPilotos extends JFrame {
                 btnEliminar.setEnabled(false);
             }
         });
+
         JButton btnNewButton = new JButton("Añadir Piloto");
         btnNewButton.addActionListener(new ActionListener() {
-        public void actionPerformed(ActionEvent e) {
-        AñadirPilotos temp=new AñadirPilotos();
-        temp.setVisible(true);
-        }
+            public void actionPerformed(ActionEvent e) {
+                AñadirPilotos temp = new AñadirPilotos();
+                temp.setVisible(true);
+            }
         });
         btnNewButton.setBounds(170, 424, 129, 26);
         getContentPane().add(btnNewButton);
-       
+
         JButton btnNewButton_1 = new JButton("Modificar Piloto");
-        
         btnNewButton_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 int selectedRow = table.getSelectedRow();
                 if (selectedRow != -1) {
-                    String nombre = (String) tableModel.getValueAt(selectedRow, 0);
-                    String equipo = (String) tableModel.getValueAt(selectedRow, 1);
-                    String nacionalidad = (String) tableModel.getValueAt(selectedRow, 2);
-                    String habilidadStr = (String) tableModel.getValueAt(selectedRow, 3);
-                    String consistenciaStr = (String) tableModel.getValueAt(selectedRow, 4);
+                    String id = (String) tableModel.getValueAt(selectedRow, 0);
+                    String nombre = (String) tableModel.getValueAt(selectedRow, 1);
+                    String equipo = (String) tableModel.getValueAt(selectedRow, 2);
+                    String nacionalidad = (String) tableModel.getValueAt(selectedRow, 3);
+                    String habilidad = (String) tableModel.getValueAt(selectedRow, 4);
+                    String consistencia = (String) tableModel.getValueAt(selectedRow, 5);
 
                     // Abrir ventana de modificación
-                    ModificarPiloto modificar = new ModificarPiloto(nombre, equipo, nacionalidad, habilidadStr, consistenciaStr);
-                    modificar.setVisible(true);
-                    modificar.addWindowListener(new java.awt.event.WindowAdapter() {
-                        @Override
-                        public void windowClosed(java.awt.event.WindowEvent windowEvent) {
-                            cargarPilotos(); // Recargar tabla después de modificar
-                        }
-                    });
+                    abrirVentanaModificacion(id, nombre, equipo, nacionalidad, habilidad, consistencia);
                 } else {
                     JOptionPane.showMessageDialog(null, "Selecciona un piloto para modificar.");
                 }
@@ -206,14 +202,12 @@ public class VerPilotos extends JFrame {
         });
         btnNewButton_1.setBounds(327, 424, 129, 26);
         getContentPane().add(btnNewButton_1);
-        
-        
 
         JButton btnNewButton_2 = new JButton("New button");
         btnNewButton_2.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		cargarPilotos();
-        	}
+            public void actionPerformed(ActionEvent e) {
+                cargarPilotos();
+            }
         });
 
         ImageIcon originalIcon = new ImageIcon(VerPilotos.class.getResource("/image/recargar.png"));
@@ -232,46 +226,35 @@ public class VerPilotos extends JFrame {
         ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
         try {
             conexion.conectar();
-            String sentencia = "SELECT * FROM piloto";
+            String sentencia = "SELECT * FROM piloto ORDER BY CAST(SUBSTRING(Id, 2) AS UNSIGNED) ASC";
             ResultSet resultado = conexion.ejecutarSelect(sentencia);
             // Limpiar tabla
             tableModel.setRowCount(0);
             // Añadir filas a la tabla
             while (resultado.next()) {
+                String Id = resultado.getString("Id");
                 String nombre = resultado.getString("Nombre");
                 String equipo = resultado.getString("Equipo");
                 String nacionalidad = resultado.getString("Nacionalidad");
                 String habilidad = resultado.getString("Habilidad");
                 String consistencia = resultado.getString("Consistencia");
-                tableModel.addRow(new Object[]{nombre, equipo, nacionalidad, habilidad, consistencia});
+                tableModel.addRow(new Object[]{Id, nombre, equipo, nacionalidad, habilidad, consistencia});
             }
             conexion.desconectar();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
     }
-}
 
-// Nueva clase ModificarPiloto
-class ModificarPiloto extends JFrame {
-    private static final long serialVersionUID = 1L;
-    private JTextField textId;
-    private JTextField textNombre;
-    private JTextField textEdad;
-    private JTextField textNacionalidad;
-    private JTextField textEquipo;
-    private JTextField textHabilidad;
-    private JTextField textConsistencia;
-    private JTextField textPuntos;
-    private JTextField textCampeonato;
-
-    public ModificarPiloto(String nombre, String equipo, String nacionalidad, String habilidad, String consistencia) {
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(0, 0, 800, 500);
-        setLocationRelativeTo(null);
+    // Método para abrir la ventana de modificación
+    private void abrirVentanaModificacion(String id, String nombre, String equipo, String nacionalidad, String habilidad, String consistencia) {
+        JDialog dialog = new JDialog(this, "Modificar Piloto", true);
+        dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
+        dialog.setBounds(0, 0, 800, 500);
+        dialog.setLocationRelativeTo(this);
         JPanel contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setContentPane(contentPane);
+        dialog.setContentPane(contentPane);
         contentPane.setLayout(null);
 
         JLabel lblId = new JLabel("ID");
@@ -319,47 +302,47 @@ class ModificarPiloto extends JFrame {
         lblCampeonato.setBounds(192, 424, 129, 32);
         contentPane.add(lblCampeonato);
 
-        textId = new JTextField();
+        JTextField textId = new JTextField(id);
         textId.setColumns(10);
         textId.setBounds(329, 90, 149, 20);
         contentPane.add(textId);
 
-        textNombre = new JTextField(nombre);
+        JTextField textNombre = new JTextField(nombre);
         textNombre.setColumns(10);
         textNombre.setBounds(329, 133, 149, 20);
         contentPane.add(textNombre);
 
-        textEdad = new JTextField();
+        JTextField textEdad = new JTextField();
         textEdad.setColumns(10);
         textEdad.setBounds(329, 176, 149, 20);
         contentPane.add(textEdad);
 
-        textNacionalidad = new JTextField(nacionalidad);
+        JTextField textNacionalidad = new JTextField(nacionalidad);
         textNacionalidad.setColumns(10);
         textNacionalidad.setBounds(329, 219, 149, 20);
         contentPane.add(textNacionalidad);
 
-        textEquipo = new JTextField(equipo);
+        JTextField textEquipo = new JTextField(equipo);
         textEquipo.setColumns(10);
         textEquipo.setBounds(329, 262, 149, 20);
         contentPane.add(textEquipo);
 
-        textHabilidad = new JTextField(habilidad);
+        JTextField textHabilidad = new JTextField(habilidad);
         textHabilidad.setColumns(10);
         textHabilidad.setBounds(331, 305, 149, 20);
         contentPane.add(textHabilidad);
 
-        textConsistencia = new JTextField(consistencia);
+        JTextField textConsistencia = new JTextField(consistencia);
         textConsistencia.setColumns(10);
         textConsistencia.setBounds(331, 391, 149, 20);
         contentPane.add(textConsistencia);
 
-        textPuntos = new JTextField();
+        JTextField textPuntos = new JTextField();
         textPuntos.setColumns(10);
         textPuntos.setBounds(330, 348, 148, 20);
         contentPane.add(textPuntos);
 
-        textCampeonato = new JTextField();
+        JTextField textCampeonato = new JTextField();
         textCampeonato.setColumns(10);
         textCampeonato.setBounds(329, 434, 149, 20);
         contentPane.add(textCampeonato);
@@ -373,18 +356,19 @@ class ModificarPiloto extends JFrame {
                     String sentencia = "UPDATE piloto SET Nombre='" + textNombre.getText() + "', Edad='" + textEdad.getText() + "', Nacionalidad='" + textNacionalidad.getText() +
                                       "', Equipo='" + textEquipo.getText() + "', Habilidad='" + textHabilidad.getText() + "', Consistencia='" + textConsistencia.getText() +
                                       "', Puntos='" + textPuntos.getText() + "', Campeonato='" + textCampeonato.getText() +
-                                      "' WHERE Nombre='" + nombre + "'";
+                                      "' WHERE Id='" + textId.getText() + "'";
                     int rowsAffected = conexion.ejecutarInsertDeleteUpdate(sentencia);
                     if (rowsAffected > 0) {
-                        JOptionPane.showMessageDialog(ModificarPiloto.this, "Piloto modificado con éxito.");
-                        dispose();
+                        JOptionPane.showMessageDialog(dialog, "Piloto modificado con éxito.");
+                        dialog.dispose();
+                        cargarPilotos(); // Recargar tabla después de modificar
                     } else {
-                        JOptionPane.showMessageDialog(ModificarPiloto.this, "No se pudo modificar el piloto.");
+                        JOptionPane.showMessageDialog(dialog, "No se pudo modificar el piloto.");
                     }
                     conexion.desconectar();
                 } catch (SQLException ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(ModificarPiloto.this, "Error al modificar el piloto.");
+                    JOptionPane.showMessageDialog(dialog, "Error al modificar el piloto.");
                 }
             }
         });
@@ -395,5 +379,8 @@ class ModificarPiloto extends JFrame {
         lblNewLabel_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
         lblNewLabel_1.setBounds(240, 11, 325, 90);
         contentPane.add(lblNewLabel_1);
+
+        dialog.setVisible(true);
     }
 }
+
