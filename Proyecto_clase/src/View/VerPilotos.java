@@ -29,7 +29,7 @@ public class VerPilotos extends JFrame {
         setLocationRelativeTo(null); // centra la ventana
         getContentPane().setLayout(null);
 
-        // Crear modelo de la tabla con columnas Nombre, Equipo, Nacionalidad, Habilidad
+        // Crear modelo de la tabla con columnas Nombre, Equipo, Nacionalidad, Habilidad, Consistencia
         String[] columnNames = {"Nombre", "Equipo", "Nacionalidad", "Habilidad", "Consistencia"};
         tableModel = new DefaultTableModel(columnNames, 0);
         table = new JTable(tableModel);
@@ -37,7 +37,7 @@ public class VerPilotos extends JFrame {
 
         // Añadir la tabla a un JScrollPane
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(102, 126, 585, 300);
+        scrollPane.setBounds(102, 113, 585, 300);
         getContentPane().add(scrollPane);
         
      // Centrar el contenido de las celdas
@@ -81,7 +81,8 @@ public class VerPilotos extends JFrame {
                     String equipo = resultado.getString("Equipo");
                     String nacionalidad = resultado.getString("Nacionalidad");
                     String habilidad = resultado.getString("Habilidad");
-                    tableModel.addRow(new Object[]{nombre, equipo, nacionalidad, habilidad});
+                    String consistencia = resultado.getString("Consistencia");
+                    tableModel.addRow(new Object[]{nombre, equipo, nacionalidad, habilidad, consistencia});
                 }
                 conexion.desconectar();
             } catch (SQLException ex) {
@@ -112,7 +113,8 @@ public class VerPilotos extends JFrame {
                     String equipo = resultado.getString("Equipo");
                     String nacionalidad = resultado.getString("Nacionalidad");
                     String habilidad = resultado.getString("Habilidad");
-                    tableModel.addRow(new Object[]{nombre, equipo, nacionalidad, habilidad});
+                    String consistencia = resultado.getString("Consistencia");
+                    tableModel.addRow(new Object[]{nombre, equipo, nacionalidad, habilidad, consistencia});
                 }
                 conexion.desconectar();
             } catch (SQLException ex) {
@@ -124,8 +126,46 @@ public class VerPilotos extends JFrame {
 
         JLabel lblNewLabel_3 = new JLabel("VER PILOTOS");
         lblNewLabel_3.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
-        lblNewLabel_3.setBounds(231, 25, 261, 31);
+        lblNewLabel_3.setBounds(264, 25, 261, 31);
         getContentPane().add(lblNewLabel_3);
+
+        // Botón ELIMINAR PILOTO
+        JButton btnEliminar = new JButton("Eliminar Piloto");
+        btnEliminar.addActionListener(e -> {
+            int selectedRow = table.getSelectedRow();
+            if (selectedRow != -1) {
+                String nombrePiloto = (String) tableModel.getValueAt(selectedRow, 0); // Columna Nombre
+                ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
+                try {
+                    conexion.conectar();
+                    String sentencia = "DELETE FROM piloto WHERE Nombre='" + nombrePiloto + "'";
+                    int rowsAffected = conexion.ejecutarInsertDeleteUpdate(sentencia);
+                    if (rowsAffected > 0) {
+                        tableModel.removeRow(selectedRow); // Eliminar fila de la tabla
+                        JOptionPane.showMessageDialog(this, "Piloto eliminado con éxito.");
+                    } else {
+                        JOptionPane.showMessageDialog(this, "No se pudo eliminar el piloto.");
+                    }
+                    conexion.desconectar();
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Error al eliminar el piloto.");
+                }
+            } else {
+                JOptionPane.showMessageDialog(this, "Selecciona un piloto para eliminar.");
+            }
+        });
+        btnEliminar.setBounds(408, 419, 150, 31);
+        getContentPane().add(btnEliminar);
+
+        // Detectar selección en la tabla
+        table.getSelectionModel().addListSelectionListener(e -> {
+            if (!e.getValueIsAdjusting() && table.getSelectedRow() != -1) {
+                btnEliminar.setEnabled(true);
+            } else {
+                btnEliminar.setEnabled(false);
+            }
+        });
     }
 
     // Método para cargar todos los pilotos en la tabla
@@ -143,23 +183,12 @@ public class VerPilotos extends JFrame {
                 String equipo = resultado.getString("Equipo");
                 String nacionalidad = resultado.getString("Nacionalidad");
                 String habilidad = resultado.getString("Habilidad");
-                String consistencia =resultado.getString("Consistencia");
+                String consistencia = resultado.getString("Consistencia");
                 tableModel.addRow(new Object[]{nombre, equipo, nacionalidad, habilidad, consistencia});
             }
             conexion.desconectar();
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-    }
-
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            try {
-                VerPilotos frame = new VerPilotos();
-                frame.setVisible(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
     }
 }
