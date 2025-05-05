@@ -114,7 +114,7 @@ public class VerPilotos extends JFrame {
 
         JLabel lblNewLabel_3 = new JLabel("VER PILOTOS");
         lblNewLabel_3.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
-        lblNewLabel_3.setBounds(231, 25, 261, 31);
+        lblNewLabel_3.setBounds(264, 25, 261, 31);
         getContentPane().add(lblNewLabel_3);
     }
 
@@ -142,14 +142,4 @@ public class VerPilotos extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
-            try {
-                VerPilotos frame = new VerPilotos();
-                frame.setVisible(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
     }
-}
