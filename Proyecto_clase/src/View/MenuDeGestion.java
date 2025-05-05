@@ -16,7 +16,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 
-public class F1View extends JFrame {
+public class MenuDeGestion extends JFrame {
 
 	private static final long serialVersionUID = 1L;
 	private JPanel contentPane;
@@ -24,7 +24,7 @@ public class F1View extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public F1View() {
+	public MenuDeGestion() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(0, 0, 800, 500);
 		contentPane = new JPanel();
@@ -80,7 +80,7 @@ public class F1View extends JFrame {
 		contentPane.add(label_casco);
 
 		// Código para poner la imagen que se adapta de forma dinámica
-		ImageIcon icon = new ImageIcon(F1View.class.getResource("/image/Casco.png"));
+		ImageIcon icon = new ImageIcon(MenuDeGestion.class.getResource("/image/Casco.png"));
 		Image img = icon.getImage().getScaledInstance(label_casco.getWidth(), label_casco.getHeight(), Image.SCALE_SMOOTH);
 		label_casco.setIcon(new ImageIcon(img));
 		
@@ -90,7 +90,7 @@ public class F1View extends JFrame {
 		
 		// Código para poner la imagen que se adapta de forma dinámica
 
-		ImageIcon icon2 = new ImageIcon(F1View.class.getResource("/image/Coche.png"));
+		ImageIcon icon2 = new ImageIcon(MenuDeGestion.class.getResource("/image/Coche.png"));
 		Image img2 = icon2.getImage().getScaledInstance(label_coche.getWidth(), label_coche.getHeight(), Image.SCALE_SMOOTH);
 		label_coche.setIcon(new ImageIcon(img2));
 		
@@ -99,7 +99,7 @@ public class F1View extends JFrame {
 		label_track.setBounds(468, 300, 103, 77);
 		contentPane.add(label_track);
 		
-		ImageIcon icon3 = new ImageIcon(F1View.class.getResource("/image/Track.png"));
+		ImageIcon icon3 = new ImageIcon(MenuDeGestion.class.getResource("/image/Track.png"));
 		Image img3 = icon3.getImage().getScaledInstance(label_track.getWidth(), label_track.getHeight(), Image.SCALE_SMOOTH);
 		label_track.setIcon(new ImageIcon(img3));
 

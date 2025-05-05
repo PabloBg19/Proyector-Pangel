@@ -64,7 +64,7 @@ public class App extends JFrame {
 		btnNuevaSimulacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				F1View temp=new F1View(); //construir nueva ventana
+				MenuDeGestion temp=new MenuDeGestion(); //construir nueva ventana
 				temp.setVisible(true); //hacer visible la ventana
 				
 			}
