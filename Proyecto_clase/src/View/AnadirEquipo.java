@@ -23,11 +23,10 @@ public class AnadirEquipo extends JFrame {
 	private JTextField textPais;
 	private JTextField textPiloto_1;
 	private JTextField textPiloto_2;
-	private JTextField textFiabilidad;
-	private JTextField textCampeonatos;
-	private JTextField textPuntos;
-	private JTextField textField;
-	private JTextField textField_1;
+	private JTextField textField_Potencia;
+	private JTextField textField_Aerodinamica;
+	private JTextField textField_Fiabilidad;
+	
 
 	/**
 	 * Launch the application.
@@ -38,7 +37,7 @@ public class AnadirEquipo extends JFrame {
 	 * Create the frame.
 	 */
 	public AnadirEquipo() {
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setBounds(0, 0, 800, 500);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -120,11 +119,7 @@ public class AnadirEquipo extends JFrame {
 		textPiloto_2.setColumns(10);
 		textPiloto_2.setBounds(345, 302, 148, 20);
 		contentPane.add(textPiloto_2);
-		
-		textFiabilidad = new JTextField();
-		textFiabilidad.setColumns(10);
-		textFiabilidad.setBounds(345, 345, 148, 20);
-		contentPane.add(textFiabilidad);
+
 		
 		JButton btnEnviar = new JButton("ENVIAR");
 		btnEnviar.addActionListener(new ActionListener() {
@@ -139,7 +134,7 @@ public class AnadirEquipo extends JFrame {
 						    + textPais.getText() + "', '" 
 						    + textPiloto_1.getText() + "', '" 
 						    + textPiloto_2.getText() + "', '" 
-						    + textFiabilidad.getText() + "')";
+						    + textField_Fiabilidad.getText() + "')";
 					conexion2.ejecutarInsertDeleteUpdate(sentencia);
 					conexion2.desconectar();
 					dispose();
@@ -162,21 +157,26 @@ public class AnadirEquipo extends JFrame {
 		lblPotencia.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
 		lblPotencia.setBounds(208, 335, 102, 32);
 		contentPane.add(lblPotencia);
-		
-		textField = new JTextField();
-		textField.setColumns(10);
-		textField.setBounds(345, 428, 148, 20);
-		contentPane.add(textField);
-		
+	
 		JLabel lblAerodinmica = new JLabel("AERODINÁMICA");
 		lblAerodinmica.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
 		lblAerodinmica.setBounds(155, 378, 155, 32);
 		contentPane.add(lblAerodinmica);
 		
-		textField_1 = new JTextField();
-		textField_1.setColumns(10);
-		textField_1.setBounds(345, 388, 148, 20);
-		contentPane.add(textField_1);
+		textField_Potencia = new JTextField();
+		textField_Potencia.setBounds(345, 345, 148, 22);
+		contentPane.add(textField_Potencia);
+		textField_Potencia.setColumns(10);
+		
+		textField_Aerodinamica = new JTextField();
+		textField_Aerodinamica.setBounds(345, 387, 148, 22);
+		contentPane.add(textField_Aerodinamica);
+		textField_Aerodinamica.setColumns(10);
+		
+		textField_Fiabilidad = new JTextField();
+		textField_Fiabilidad.setBounds(345, 427, 148, 22);
+		contentPane.add(textField_Fiabilidad);
+		textField_Fiabilidad.setColumns(10);
 		
 		
 		

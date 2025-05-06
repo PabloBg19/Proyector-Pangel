@@ -56,7 +56,10 @@ public class GestionarEquipos extends JFrame {
 		
 		JButton btnNewButton_2 = new JButton("Añadir Equipo");
 		btnNewButton_2.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent e) 
+			{
+				AnadirEquipo temp=new AnadirEquipo();
+				temp.setVisible(true);
 			}
 		});
 		btnNewButton_2.setBounds(400, 226, 117, 33);
