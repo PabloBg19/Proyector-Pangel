@@ -124,7 +124,7 @@ public class AnadirEquipo extends JFrame {
 		JButton btnEnviar = new JButton("ENVIAR");
 		btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {  //crear la conexion para el boton Enviar
-				ConexionMySQL conexion2=new ConexionMySQL("root", "", "formula_1"); //conexion a la base de datos 
+				ConexionMySQL conexion2=new ConexionMySQL("root", "", "formula_1"); //conexion a la base de datoss
 				try {
 					conexion2.conectar();
 					String sentencia = "INSERT INTO equipo (Id, Nombre, Motor, Pais, Piloto_1, Piloto_2, Potencia, Aerodinamica, Fiabilidad) VALUES ('"    //Sentencia SQL
