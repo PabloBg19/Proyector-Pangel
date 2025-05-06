@@ -39,7 +39,7 @@ public class VerPilotos extends JFrame {
 
         // Añadir la tabla a un JScrollPane
         JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(102, 113, 585, 300);
+        scrollPane.setBounds(70, 120, 652, 293);
         getContentPane().add(scrollPane);
        
         // Centrar el contenido de las celdas
@@ -216,9 +216,14 @@ public class VerPilotos extends JFrame {
         ImageIcon scaledIcon = new ImageIcon(scaledImage);
         btnNewButton_2.setIcon(scaledIcon);
         btnNewButton_2.setSelectedIcon(scaledIcon);
-        btnNewButton_2.setBounds(711, 345, 52, 51);
+        btnNewButton_2.setBounds(552, 11, 52, 51);
         btnNewButton_2.setText("");
         getContentPane().add(btnNewButton_2);
+        
+        JLabel lblNewLabel_3_1 = new JLabel("Refrescar");
+        lblNewLabel_3_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
+        lblNewLabel_3_1.setBounds(614, 25, 69, 31);
+        getContentPane().add(lblNewLabel_3_1);
     }
 
     // Método para cargar todos los pilotos en la tabla

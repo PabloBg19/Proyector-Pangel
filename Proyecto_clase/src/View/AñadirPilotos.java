@@ -48,7 +48,7 @@ public class AñadirPilotos extends JFrame {
 		contentPane.add(lblNewLabel);
 		
 		JLabel lblNewLabel_1 = new JLabel("AÑADIR PILOTO");
-		lblNewLabel_1.setBounds(240, 11, 325, 90);
+		lblNewLabel_1.setBounds(241, 0, 325, 90);
 		lblNewLabel_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
 		contentPane.add(lblNewLabel_1);
 		
@@ -139,7 +139,7 @@ public class AñadirPilotos extends JFrame {
 		contentPane.add(textCampeonato);
 		
 		JButton btnEnviar = new JButton("ENVIAR");
-		btnEnviar.setBounds(597, 228, 89, 23);
+		btnEnviar.setBounds(579, 224, 106, 37);
 		btnEnviar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {  //crear la conexion para el boton Enviar
 				ConexionMySQL conexion1=new ConexionMySQL("root", "", "formula_1"); //conexion a la base de datos 
@@ -157,7 +157,7 @@ public class AñadirPilotos extends JFrame {
 						    + textCampeonato.getText() + "')";
 					
 					conexion1.ejecutarInsertDeleteUpdate(sentencia);
-					conexion1.desconectar();
+					conexion1.desconectar();//Añadir un FInally
 					dispose();
 				} catch (SQLException e1) {
 					try {

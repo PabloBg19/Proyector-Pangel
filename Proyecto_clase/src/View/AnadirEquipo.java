@@ -26,6 +26,8 @@ public class AnadirEquipo extends JFrame {
 	private JTextField textFiabilidad;
 	private JTextField textCampeonatos;
 	private JTextField textPuntos;
+	private JTextField textField;
+	private JTextField textField_1;
 
 	/**
 	 * Launch the application.
@@ -46,45 +48,45 @@ public class AnadirEquipo extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JLabel lblNewLabel = new JLabel("ID ");
-		lblNewLabel.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-		lblNewLabel.setBounds(280, 77, 39, 32);
-		contentPane.add(lblNewLabel);
+		JLabel lbl_Id = new JLabel("ID ");
+		lbl_Id.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+		lbl_Id.setBounds(280, 77, 39, 32);
+		contentPane.add(lbl_Id);
 		
-		JLabel lblNewLabel_1 = new JLabel("GESTIONAR EQUIPOS");
-		lblNewLabel_1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 31));
-		lblNewLabel_1.setBounds(234, 11, 325, 90);
+		JLabel lblNewLabel_1 = new JLabel("AÑADIR EQUIPOS");
+		lblNewLabel_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
+		lblNewLabel_1.setBounds(227, 0, 338, 90);
 		contentPane.add(lblNewLabel_1);
 		
 		JLabel lblNombre = new JLabel("NOMBRE");
 		lblNombre.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-		lblNombre.setBounds(244, 120, 83, 32);
+		lblNombre.setBounds(227, 120, 83, 32);
 		contentPane.add(lblNombre);
 		
-		JLabel lblEdad = new JLabel("MOTOR");
-		lblEdad.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-		lblEdad.setBounds(236, 163, 83, 32);
-		contentPane.add(lblEdad);
+		JLabel lblMotor = new JLabel("MOTOR");
+		lblMotor.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+		lblMotor.setBounds(236, 163, 83, 32);
+		contentPane.add(lblMotor);
 		
-		JLabel lblNacionalidad = new JLabel("PAIS");
-		lblNacionalidad.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-		lblNacionalidad.setBounds(259, 206, 50, 32);
-		contentPane.add(lblNacionalidad);
+		JLabel lblPais = new JLabel("PAIS");
+		lblPais.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+		lblPais.setBounds(259, 206, 50, 32);
+		contentPane.add(lblPais);
 		
-		JLabel lblEquipo = new JLabel("PILOTO_1");
-		lblEquipo.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-		lblEquipo.setBounds(217, 249, 102, 32);
-		contentPane.add(lblEquipo);
+		JLabel lblPiloto1 = new JLabel("PILOTO 1");
+		lblPiloto1.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+		lblPiloto1.setBounds(217, 249, 102, 32);
+		contentPane.add(lblPiloto1);
 		
-		JLabel lblHabilidad = new JLabel("PILOTO_2");
-		lblHabilidad.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-		lblHabilidad.setBounds(213, 292, 106, 32);
-		contentPane.add(lblHabilidad);
+		JLabel lblPiloto2 = new JLabel("PILOTO 2");
+		lblPiloto2.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+		lblPiloto2.setBounds(213, 292, 106, 32);
+		contentPane.add(lblPiloto2);
 		
-		JLabel lblConsistencia = new JLabel("FIABILIDAD");
-		lblConsistencia.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-		lblConsistencia.setBounds(217, 335, 102, 32);
-		contentPane.add(lblConsistencia);
+		JLabel lblFiabilidad = new JLabel("FIABILIDAD");
+		lblFiabilidad.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+		lblFiabilidad.setBounds(197, 418, 102, 32);
+		contentPane.add(lblFiabilidad);
 		
 
 
@@ -153,8 +155,28 @@ public class AnadirEquipo extends JFrame {
 				
 			}
 		});
-		btnEnviar.setBounds(597, 228, 89, 23);
+		btnEnviar.setBounds(596, 228, 102, 39);
 		contentPane.add(btnEnviar);
+		
+		JLabel lblPotencia = new JLabel("POTENCIA");
+		lblPotencia.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+		lblPotencia.setBounds(208, 335, 102, 32);
+		contentPane.add(lblPotencia);
+		
+		textField = new JTextField();
+		textField.setColumns(10);
+		textField.setBounds(345, 428, 148, 20);
+		contentPane.add(textField);
+		
+		JLabel lblAerodinmica = new JLabel("AERODINÁMICA");
+		lblAerodinmica.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+		lblAerodinmica.setBounds(155, 378, 155, 32);
+		contentPane.add(lblAerodinmica);
+		
+		textField_1 = new JTextField();
+		textField_1.setColumns(10);
+		textField_1.setBounds(345, 388, 148, 20);
+		contentPane.add(textField_1);
 		
 		
 		
