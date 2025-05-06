@@ -127,13 +127,15 @@ public class AnadirEquipo extends JFrame {
 				ConexionMySQL conexion2=new ConexionMySQL("root", "", "formula_1"); //conexion a la base de datos 
 				try {
 					conexion2.conectar();
-					String sentencia = "INSERT INTO equipo (Id, Nombre, Motor, Pais, Piloto_1, Piloto_2, Fiabilidad, Puntos, Campeonatos) VALUES ('"    //Sentencia SQL
+					String sentencia = "INSERT INTO equipo (Id, Nombre, Motor, Pais, Piloto_1, Piloto_2, Potencia, Aerodinamica, Fiabilidad) VALUES ('"    //Sentencia SQL
 						    + textId.getText() + "', '" 
 						    + textNombre.getText() + "', '" 
 						    + textMotor.getText() + "', '" 
 						    + textPais.getText() + "', '" 
 						    + textPiloto_1.getText() + "', '" 
 						    + textPiloto_2.getText() + "', '" 
+						    + textField_Potencia.getText() + "', '"
+						    + textField_Aerodinamica.getText() + "', '"
 						    + textField_Fiabilidad.getText() + "')";
 					conexion2.ejecutarInsertDeleteUpdate(sentencia);
 					conexion2.desconectar();
