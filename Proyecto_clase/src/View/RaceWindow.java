@@ -20,140 +20,188 @@ public class RaceWindow extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
-    private JPanel[] pilotPoints; // Array para los 20 puntos (pilotos)
-    private int[] pilotPositions; // Posiciones X de los pilotos
-    private JLabel[] positionLabels; // Etiquetas para mostrar posición y puntos finales (a la derecha)
-    private JLabel[] livePositionLabels; // Etiquetas para mostrar posición en tiempo real (a la izquierda)
-    private boolean[] hasFinished; // Marca si un piloto ha cruzado la meta
-    private ArrayList<Integer> finishOrder; // Orden de llegada
-    private static final int START_X = 50; // Punto de inicio
-    private static final int FINISH_X = 700; // Línea de meta
-    private static final int Y_POSITION = 150; // Posición Y fija para los puntos
-    private static final int POINT_SIZE = 10; // Tamaño de los puntos
-    private static final int NUM_PILOTS = 20; // Número de pilotos
+    private JPanel[] pilotPoints;
+    private int[] pilotPositions;
+    private JLabel[] positionLabels;
+    private JLabel[] livePositionLabels;
+    private JLabel[] driverNameLabels;
+    private boolean[] hasFinished;
+    private ArrayList<Integer> finishOrder;
+    private int[] lapsCompleted;
+    private static final int START_X = 150;
+    private static final int FINISH_X = 700;
+    private static final int Y_POSITION = 100;
+    private static final int POINT_SIZE = 10;
+    private static final int NUM_PILOTS = 20;
+    private static final int TOTAL_LAPS = 10;
+
+    // F1 2025 drivers and their team colors
+    private static final String[] DRIVERS = {
+        "Verstappen", "Norris", "Leclerc", "Sainz", "Hamilton", "Russell", 
+        "Perez", "Alonso", "Stroll", "Ocon", "Gasly", "Albon", 
+        "Tsunoda", "Ricciardo", "Bottas", "Zhou", "Magnussen", 
+        "Hulkenberg", "Bearman", "Colapinto"
+    };
+    private static final Color[] TEAM_COLORS = {
+        new Color(0, 71, 171), // Red Bull
+        new Color(0, 71, 171), // Red Bull
+        new Color(220, 0, 0),  // Ferrari
+        new Color(220, 0, 0),  // Ferrari
+        new Color(0, 229, 255),// Mercedes
+        new Color(0, 229, 255),// Mercedes
+        new Color(0, 71, 171), // Red Bull
+        new Color(0, 138, 0),  // Aston Martin
+        new Color(0, 138, 0),  // Aston Martin
+        new Color(0, 102, 204),// Alpine
+        new Color(0, 102, 204),// Alpine
+        new Color(0, 229, 255),// Williams
+        new Color(229, 0, 0),  // RB
+        new Color(229, 0, 0),  // RB
+        new Color(255, 0, 0),  // Sauber
+        new Color(255, 0, 0),  // Sauber
+        new Color(108, 118, 135),// Haas
+        new Color(108, 118, 135),// Haas
+        new Color(108, 118, 135),// Haas
+        new Color(0, 229, 255) // Williams
+    };
 
     public RaceWindow(String raceName) {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(0, 0, 800, 500);
+        setBounds(0, 0, 900, 600);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setLocationRelativeTo(null); // Centra la ventana
+        setLocationRelativeTo(null);
 
         contentPane.setBackground(new Color(242, 242, 242));
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        // Title label for the race
+        // Title label
         JLabel lblRaceTitle = new JLabel(raceName);
         lblRaceTitle.setFont(new Font("Baskerville Old Face", Font.PLAIN, 24));
-        lblRaceTitle.setBounds(224, 29, 300, 40);
+        lblRaceTitle.setBounds(300, 20, 300, 40);
         contentPane.add(lblRaceTitle);
-
-        // Placeholder label
-        JLabel lblDetails = new JLabel("Detalles de la carrera (en desarrollo)");
-        lblDetails.setFont(new Font("Dialog", Font.PLAIN, 14));
-        lblDetails.setBounds(224, 79, 300, 30);
-        contentPane.add(lblDetails);
 
         // Close button
         JButton btnClose = new JButton("Cerrar");
-        btnClose.setBounds(320, 392, 100, 30);
+        btnClose.setBounds(400, 500, 100, 30);
         btnClose.addActionListener(e -> dispose());
         contentPane.add(btnClose);
 
-        // Inicializar puntos y etiquetas para los pilotos
+        // Initialize arrays
         pilotPoints = new JPanel[NUM_PILOTS];
         pilotPositions = new int[NUM_PILOTS];
         positionLabels = new JLabel[NUM_PILOTS];
         livePositionLabels = new JLabel[NUM_PILOTS];
+        driverNameLabels = new JLabel[NUM_PILOTS];
         hasFinished = new boolean[NUM_PILOTS];
         finishOrder = new ArrayList<>();
+        lapsCompleted = new int[NUM_PILOTS];
         Random random = new Random();
+
+        // Leaderboard panel
+        JPanel leaderboardPanel = new JPanel();
+        leaderboardPanel.setBounds(10, 80, 120, 400);
+        leaderboardPanel.setBackground(new Color(30, 30, 30));
+        leaderboardPanel.setLayout(null);
+        contentPane.add(leaderboardPanel);
+
+        // Initialize pilots and leaderboard
         for (int i = 0; i < NUM_PILOTS; i++) {
-            // Puntos de los pilotos
+            // Pilot points
             pilotPoints[i] = new JPanel();
-            pilotPoints[i].setBounds(START_X, Y_POSITION + (i * 15), POINT_SIZE, POINT_SIZE);
-            pilotPoints[i].setBackground(new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256)));
+            pilotPoints[i].setBounds(START_X, Y_POSITION + (i * 20), POINT_SIZE, POINT_SIZE);
+            pilotPoints[i].setBackground(TEAM_COLORS[i]);
             pilotPoints[i].setOpaque(true);
             contentPane.add(pilotPoints[i]);
-            pilotPositions[i] = START_X; // Todas las posiciones iniciales en el inicio
+            pilotPositions[i] = START_X;
             hasFinished[i] = false;
+            lapsCompleted[i] = 0;
 
-            // Etiqueta para posición y puntos finales (a la derecha)
+            // Final position and points label (right)
             positionLabels[i] = new JLabel("");
             positionLabels[i].setFont(new Font("Dialog", Font.PLAIN, 12));
-            positionLabels[i].setBounds(FINISH_X + 10, Y_POSITION + (i * 15) - 5, 50, 20);
+            positionLabels[i].setBounds(FINISH_X + 10, Y_POSITION + (i * 20) - 5, 50, 20);
             contentPane.add(positionLabels[i]);
 
-            // Etiqueta para posición en tiempo real (a la izquierda)
-            livePositionLabels[i] = new JLabel(String.valueOf(i + 1)); // Posición inicial
+            // Live position label (leaderboard)
+            livePositionLabels[i] = new JLabel(String.valueOf(i + 1));
             livePositionLabels[i].setFont(new Font("Dialog", Font.BOLD, 12));
-            livePositionLabels[i].setBounds(START_X - 30, Y_POSITION + (i * 15) - 5, 20, 20);
-            contentPane.add(livePositionLabels[i]);
+            livePositionLabels[i].setForeground(Color.WHITE);
+            livePositionLabels[i].setBounds(10, 10 + (i * 20), 20, 20);
+            leaderboardPanel.add(livePositionLabels[i]);
+
+            // Driver name label (leaderboard)
+            driverNameLabels[i] = new JLabel(DRIVERS[i]);
+            driverNameLabels[i].setFont(new Font("Dialog", Font.BOLD, 12));
+            driverNameLabels[i].setForeground(Color.WHITE);
+            driverNameLabels[i].setBounds(40, 10 + (i * 20), 80, 20);
+            leaderboardPanel.add(driverNameLabels[i]);
         }
 
-        // Línea de meta
+        // Finish line
         JLabel finishLine = new JLabel("META");
         finishLine.setBounds(FINISH_X - 20, Y_POSITION - 20, 40, 20);
         finishLine.setFont(new Font("Dialog", Font.BOLD, 12));
         finishLine.setForeground(Color.RED);
         contentPane.add(finishLine);
 
-        // Temporizador para animar los puntos
+        // Timer for animation
         Timer timer = new Timer(50, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Actualizar posiciones de los pilotos
+                // Update pilot positions
                 for (int i = 0; i < NUM_PILOTS; i++) {
                     if (!hasFinished[i]) {
-                        // Velocidad aleatoria entre 1 y 5 píxeles por tick
                         int speed = random.nextInt(5) + 1;
                         pilotPositions[i] += speed;
-                        if (pilotPositions[i] < FINISH_X) {
-                            pilotPoints[i].setLocation(pilotPositions[i], Y_POSITION + (i * 15));
-                        } else {
-                            pilotPositions[i] = FINISH_X; // Detener en la meta
-                            pilotPoints[i].setLocation(pilotPositions[i], Y_POSITION + (i * 15));
-                            hasFinished[i] = true;
-                            finishOrder.add(i); // Registrar el orden de llegada
-                            int position = finishOrder.size(); // Posición final basada en el orden de llegada
-                            int points = getPointsForPosition(position);
-                            // Actualizar etiqueta final a la derecha para el piloto i
-                            positionLabels[i].setText(position + " + " + points);
-                            // Actualizar la posición final a la izquierda para el piloto i
-                            livePositionLabels[i].setText(String.valueOf(position));
+                        if (pilotPositions[i] >= FINISH_X) {
+                            lapsCompleted[i]++;
+                            if (lapsCompleted[i] < TOTAL_LAPS) {
+                                pilotPositions[i] = START_X; // Reset to start for next lap
+                            } else {
+                                pilotPositions[i] = FINISH_X;
+                                hasFinished[i] = true;
+                                finishOrder.add(i);
+                                int position = finishOrder.size();
+                                int points = getPointsForPosition(position);
+                                positionLabels[i].setText(position + " + " + points);
+                                livePositionLabels[i].setText(String.valueOf(position));
+                            }
                         }
+                        pilotPoints[i].setLocation(pilotPositions[i], Y_POSITION + (i * 20));
                     }
                 }
 
-                // Calcular y actualizar posiciones en tiempo real (solo para los que no han terminado)
+                // Update live positions
                 Integer[] indices = new Integer[NUM_PILOTS];
                 for (int i = 0; i < NUM_PILOTS; i++) {
                     indices[i] = i;
                 }
-                // Ordenar pilotos por posición X (de mayor a menor, ya que X aumenta hacia la meta)
                 Arrays.sort(indices, (a, b) -> {
                     if (hasFinished[a] && hasFinished[b]) {
-                        // Si ambos han terminado, mantener el orden de llegada
                         return Integer.compare(finishOrder.indexOf(a), finishOrder.indexOf(b));
                     } else if (hasFinished[a]) {
-                        return 1; // Pilotos terminados al final
+                        return 1;
                     } else if (hasFinished[b]) {
                         return -1;
+                    }
+                    if (lapsCompleted[a] != lapsCompleted[b]) {
+                        return Integer.compare(lapsCompleted[b], lapsCompleted[a]);
                     }
                     return Integer.compare(pilotPositions[b], pilotPositions[a]);
                 });
 
-                // Actualizar etiquetas de posición en tiempo real
+                // Update leaderboard
                 for (int i = 0; i < NUM_PILOTS; i++) {
-                    if (!hasFinished[indices[i]]) {
-                        livePositionLabels[indices[i]].setText(String.valueOf(i + 1));
-                    }
+                    livePositionLabels[indices[i]].setText(String.valueOf(i + 1));
+                    livePositionLabels[indices[i]].setBounds(10, 10 + (i * 20), 20, 20);
+                    driverNameLabels[indices[i]].setBounds(40, 10 + (i * 20), 80, 20);
                 }
 
-                contentPane.repaint(); // Actualizar la ventana
+                contentPane.repaint();
 
-                // Detener el timer cuando todos lleguen a la meta
+                // Stop timer when all pilots finish
                 if (finishOrder.size() == NUM_PILOTS) {
                     ((Timer)e.getSource()).stop();
                 }
@@ -162,7 +210,7 @@ public class RaceWindow extends JFrame {
         timer.start();
     }
 
-    // Método para obtener puntos según la posición (sistema F1 2008)
+    // Points system (F1 2008)
     private int getPointsForPosition(int position) {
         switch (position) {
             case 1: return 10;
@@ -177,7 +225,6 @@ public class RaceWindow extends JFrame {
         }
     }
 
-    // Método main para probar la ventana
     public static void main(String[] args) {
         EventQueue.invokeLater(new Runnable() {
             public void run() {

@@ -197,17 +197,7 @@ public class NuevaTemporada2007 extends JFrame {
         }
     }
 
-    //Main de la Temporada 2007
-    public static void main(String[] args) {
-        EventQueue.invokeLater(() -> //Pone el código en una cola para que se ejecute en el EDT (Hilo Despacho de Eventos)
-        {
-            try {
-                NuevaTemporada2007 frame = new NuevaTemporada2007();
-                frame.setVisible(true);
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
-        });
-    }
+    
+    
 }
 
