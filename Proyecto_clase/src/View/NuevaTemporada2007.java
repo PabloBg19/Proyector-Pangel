@@ -9,6 +9,7 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import java.awt.Font;
 
+// Main window for the 2007 season
 public class NuevaTemporada2007 extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -26,12 +27,11 @@ public class NuevaTemporada2007 extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        // Initialize race labels array
-        raceLabels = new JLabel[10]; // 10 races in the season
-
-        // Race labels
+        // Inicializar array de labels carreras
+        raceLabels = new JLabel[10]; // 10 Carreras en la Temporada
+        // labels carreras
         JLabel lblGPAustralia = new JLabel("Gran Premio de Albert Park");
-        lblGPAustralia.setBounds(147, 139, 159, 14);
+        lblGPAustralia.setBounds(147, 139, 140, 14);
         contentPane.add(lblGPAustralia);
         raceLabels[0] = lblGPAustralia;
 
@@ -40,7 +40,7 @@ public class NuevaTemporada2007 extends JFrame {
         contentPane.add(lblRAustralia);
 
         JLabel lblGranPremioDe = new JLabel("Gran Premio de Barein");
-        lblGranPremioDe.setBounds(147, 164, 159, 14);
+        lblGranPremioDe.setBounds(147, 164, 140, 14);
         contentPane.add(lblGranPremioDe);
         raceLabels[1] = lblGranPremioDe;
 
@@ -49,7 +49,7 @@ public class NuevaTemporada2007 extends JFrame {
         contentPane.add(lblRAustralia_1);
 
         JLabel lblGPAustralia_1_1 = new JLabel("Gran Premio de España");
-        lblGPAustralia_1_1.setBounds(147, 189, 159, 14);
+        lblGPAustralia_1_1.setBounds(147, 189, 140, 14);
         contentPane.add(lblGPAustralia_1_1);
         raceLabels[2] = lblGPAustralia_1_1;
 
@@ -58,7 +58,7 @@ public class NuevaTemporada2007 extends JFrame {
         contentPane.add(lblRAustralia_1_1);
 
         JLabel lblGPAustralia_1_1_1 = new JLabel("Gran Premio de Mónaco");
-        lblGPAustralia_1_1_1.setBounds(147, 214, 159, 14);
+        lblGPAustralia_1_1_1.setBounds(147, 214, 140, 14);
         contentPane.add(lblGPAustralia_1_1_1);
         raceLabels[3] = lblGPAustralia_1_1_1;
 
@@ -67,7 +67,7 @@ public class NuevaTemporada2007 extends JFrame {
         contentPane.add(lblRAustralia_1_1_1);
 
         JLabel lblGPAustralia_1_1_1_1 = new JLabel("Gran Premio de Silverstone");
-        lblGPAustralia_1_1_1_1.setBounds(147, 239, 159, 14);
+        lblGPAustralia_1_1_1_1.setBounds(147, 239, 140, 14);
         contentPane.add(lblGPAustralia_1_1_1_1);
         raceLabels[4] = lblGPAustralia_1_1_1_1;
 
@@ -76,7 +76,7 @@ public class NuevaTemporada2007 extends JFrame {
         contentPane.add(lblRAustralia_1_1_1_1);
 
         JLabel lblGranPremioDe_1 = new JLabel("Gran Premio de Monza");
-        lblGranPremioDe_1.setBounds(383, 139, 159, 14);
+        lblGranPremioDe_1.setBounds(383, 139, 140, 14);
         contentPane.add(lblGranPremioDe_1);
         raceLabels[5] = lblGranPremioDe_1;
 
@@ -85,7 +85,7 @@ public class NuevaTemporada2007 extends JFrame {
         contentPane.add(lblRAustralia_2);
 
         JLabel lblGPAustralia_2_1 = new JLabel("Gran Premio de Spa");
-        lblGPAustralia_2_1.setBounds(383, 164, 159, 14);
+        lblGPAustralia_2_1.setBounds(383, 164, 140, 14);
         contentPane.add(lblGPAustralia_2_1);
         raceLabels[6] = lblGPAustralia_2_1;
 
@@ -94,7 +94,7 @@ public class NuevaTemporada2007 extends JFrame {
         contentPane.add(lblRAustralia_2_1);
 
         JLabel lblGPAustralia_2_1_1 = new JLabel("Gran Premio de Suzuka");
-        lblGPAustralia_2_1_1.setBounds(383, 189, 159, 14);
+        lblGPAustralia_2_1_1.setBounds(383, 189, 140, 14);
         contentPane.add(lblGPAustralia_2_1_1);
         raceLabels[7] = lblGPAustralia_2_1_1;
 
@@ -103,7 +103,7 @@ public class NuevaTemporada2007 extends JFrame {
         contentPane.add(lblRAustralia_2_1_1);
 
         JLabel lblGPAustralia_2_1_1_1 = new JLabel("Gran Premio de China");
-        lblGPAustralia_2_1_1_1.setBounds(383, 214, 159, 14);
+        lblGPAustralia_2_1_1_1.setBounds(383, 214, 140, 14);
         contentPane.add(lblGPAustralia_2_1_1_1);
         raceLabels[8] = lblGPAustralia_2_1_1_1;
 
@@ -112,7 +112,7 @@ public class NuevaTemporada2007 extends JFrame {
         contentPane.add(lblRAustralia_2_1_1_2);
 
         JLabel lblGPAustralia_2_1_1_2 = new JLabel("Gran Premio de Brasil");
-        lblGPAustralia_2_1_1_2.setBounds(383, 239, 159, 14);
+        lblGPAustralia_2_1_1_2.setBounds(383, 239, 140, 14);
         contentPane.add(lblGPAustralia_2_1_1_2);
         raceLabels[9] = lblGPAustralia_2_1_1_2;
 
@@ -123,7 +123,7 @@ public class NuevaTemporada2007 extends JFrame {
         // Buttons
         JButton btnNewButton = new JButton("Avanzar a Carrera");
         btnNewButton.setBounds(477, 353, 128, 51);
-        btnNewButton.addActionListener(e -> advanceToNextRace());
+        btnNewButton.addActionListener(e -> advanceToNextRace()); 
         contentPane.add(btnNewButton);
 
         JButton btnVerClasificacin = new JButton("Ver Clasificación");
@@ -142,24 +142,65 @@ public class NuevaTemporada2007 extends JFrame {
     }
 
     private void advanceToNextRace() {
-        // Reset previous race highlight
+        // Resetea el subrayado de la carrera
         if (currentRaceIndex >= 0 && currentRaceIndex < raceLabels.length) {
             raceLabels[currentRaceIndex].setOpaque(false);
             raceLabels[currentRaceIndex].setBackground(null);
             raceLabels[currentRaceIndex].setFont(new Font("Dialog", Font.PLAIN, 12));
         }
 
-        // Move to the next race
+        // Avanza a la siguiente carrera
         currentRaceIndex = (currentRaceIndex + 1) % raceLabels.length;
 
-        // Highlight the current race
+        // Resalta la carrera actual
         raceLabels[currentRaceIndex].setOpaque(true);
         raceLabels[currentRaceIndex].setBackground(new Color(173, 216, 230)); // Light blue
         raceLabels[currentRaceIndex].setFont(new Font("Dialog", Font.BOLD, 12));
+
+        // Abre una ventana nueva para cada carrera
+        new RaceWindow(raceLabels[currentRaceIndex].getText()).setVisible(true);
     }
 
+    // Ventana nueva para cada carrera
+    private class RaceWindow extends JFrame {
+        private static final long serialVersionUID = 1L;
+
+        public RaceWindow(String raceName) {
+            setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+            setBounds(0, 0, 400, 300);
+            setLocationRelativeTo(null); // Center the window
+            setTitle(raceName);
+
+            JPanel contentPane = new JPanel();
+            contentPane.setBackground(new Color(242, 242, 242)); // Match main window background
+            contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+            setContentPane(contentPane);
+            contentPane.setLayout(null);
+
+            // Title label for the race
+            JLabel lblRaceTitle = new JLabel(raceName);
+            lblRaceTitle.setFont(new Font("Baskerville Old Face", Font.PLAIN, 24));
+            lblRaceTitle.setBounds(50, 30, 300, 40);
+            contentPane.add(lblRaceTitle);
+
+            // Placeholder label (can be expanded with race details)
+            JLabel lblDetails = new JLabel("Detalles de la carrera (en desarrollo)");
+            lblDetails.setFont(new Font("Dialog", Font.PLAIN, 14));
+            lblDetails.setBounds(50, 80, 300, 30);
+            contentPane.add(lblDetails);
+
+            // Close button
+            JButton btnClose = new JButton("Cerrar");
+            btnClose.setBounds(150, 200, 100, 30);
+            btnClose.addActionListener(e -> dispose());
+            contentPane.add(btnClose);
+        }
+    }
+
+    //Main de la Temporada 2007
     public static void main(String[] args) {
-        EventQueue.invokeLater(() -> {
+        EventQueue.invokeLater(() -> //Pone el código en una cola para que se ejecute en el EDT (Hilo Despacho de Eventos)
+        {
             try {
                 NuevaTemporada2007 frame = new NuevaTemporada2007();
                 frame.setVisible(true);
@@ -169,3 +210,4 @@ public class NuevaTemporada2007 extends JFrame {
         });
     }
 }
+
