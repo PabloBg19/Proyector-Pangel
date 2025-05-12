@@ -4,6 +4,7 @@ import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Random;
 
 import javax.swing.JButton;
@@ -21,7 +22,8 @@ public class RaceWindow extends JFrame {
     private JPanel contentPane;
     private JPanel[] pilotPoints; // Array para los 20 puntos (pilotos)
     private int[] pilotPositions; // Posiciones X de los pilotos
-    private JLabel[] positionLabels; // Etiquetas para mostrar posición y puntos
+    private JLabel[] positionLabels; // Etiquetas para mostrar posición y puntos finales (a la derecha)
+    private JLabel[] livePositionLabels; // Etiquetas para mostrar posición en tiempo real (a la izquierda)
     private boolean[] hasFinished; // Marca si un piloto ha cruzado la meta
     private ArrayList<Integer> finishOrder; // Orden de llegada
     private static final int START_X = 50; // Punto de inicio
@@ -59,14 +61,16 @@ public class RaceWindow extends JFrame {
         btnClose.addActionListener(e -> dispose());
         contentPane.add(btnClose);
 
-        // Inicializar puntos para los pilotos
+        // Inicializar puntos y etiquetas para los pilotos
         pilotPoints = new JPanel[NUM_PILOTS];
         pilotPositions = new int[NUM_PILOTS];
         positionLabels = new JLabel[NUM_PILOTS];
+        livePositionLabels = new JLabel[NUM_PILOTS];
         hasFinished = new boolean[NUM_PILOTS];
         finishOrder = new ArrayList<>();
         Random random = new Random();
         for (int i = 0; i < NUM_PILOTS; i++) {
+            // Puntos de los pilotos
             pilotPoints[i] = new JPanel();
             pilotPoints[i].setBounds(START_X, Y_POSITION + (i * 15), POINT_SIZE, POINT_SIZE);
             pilotPoints[i].setBackground(new Color(random.nextInt(256), random.nextInt(256), random.nextInt(256)));
@@ -75,11 +79,17 @@ public class RaceWindow extends JFrame {
             pilotPositions[i] = START_X; // Todas las posiciones iniciales en el inicio
             hasFinished[i] = false;
 
-            // Etiqueta para posición y puntos
+            // Etiqueta para posición y puntos finales (a la derecha)
             positionLabels[i] = new JLabel("");
             positionLabels[i].setFont(new Font("Dialog", Font.PLAIN, 12));
             positionLabels[i].setBounds(FINISH_X + 10, Y_POSITION + (i * 15) - 5, 50, 20);
             contentPane.add(positionLabels[i]);
+
+            // Etiqueta para posición en tiempo real (a la izquierda)
+            livePositionLabels[i] = new JLabel(String.valueOf(i + 1)); // Posición inicial
+            livePositionLabels[i].setFont(new Font("Dialog", Font.BOLD, 12));
+            livePositionLabels[i].setBounds(START_X - 30, Y_POSITION + (i * 15) - 5, 20, 20);
+            contentPane.add(livePositionLabels[i]);
         }
 
         // Línea de meta
@@ -93,22 +103,54 @@ public class RaceWindow extends JFrame {
         Timer timer = new Timer(50, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
+                // Actualizar posiciones de los pilotos
                 for (int i = 0; i < NUM_PILOTS; i++) {
-                    // Velocidad aleatoria entre 1 y 5 píxeles por tick
-                    int speed = random.nextInt(5) + 1;
-                    pilotPositions[i] += speed;
-                    if (pilotPositions[i] < FINISH_X && !hasFinished[i]) {
-                        pilotPoints[i].setLocation(pilotPositions[i], Y_POSITION + (i * 15));
-                    } else if (!hasFinished[i]) {
-                        pilotPositions[i] = FINISH_X; // Detener en la meta
-                        pilotPoints[i].setLocation(pilotPositions[i], Y_POSITION + (i * 15));
-                        hasFinished[i] = true;
-                        finishOrder.add(i); // Registrar el orden de llegada
-                        int position = finishOrder.size(); // Posición basada en el orden de llegada
-                        int points = getPointsForPosition(position);
-                        positionLabels[i].setText(position + " + " + points); // Actualizar etiqueta
+                    if (!hasFinished[i]) {
+                        // Velocidad aleatoria entre 1 y 5 píxeles por tick
+                        int speed = random.nextInt(5) + 1;
+                        pilotPositions[i] += speed;
+                        if (pilotPositions[i] < FINISH_X) {
+                            pilotPoints[i].setLocation(pilotPositions[i], Y_POSITION + (i * 15));
+                        } else {
+                            pilotPositions[i] = FINISH_X; // Detener en la meta
+                            pilotPoints[i].setLocation(pilotPositions[i], Y_POSITION + (i * 15));
+                            hasFinished[i] = true;
+                            finishOrder.add(i); // Registrar el orden de llegada
+                            int position = finishOrder.size(); // Posición final basada en el orden de llegada
+                            int points = getPointsForPosition(position);
+                            // Actualizar etiqueta final a la derecha para el piloto i
+                            positionLabels[i].setText(position + " + " + points);
+                            // Actualizar la posición final a la izquierda para el piloto i
+                            livePositionLabels[i].setText(String.valueOf(position));
+                        }
                     }
                 }
+
+                // Calcular y actualizar posiciones en tiempo real (solo para los que no han terminado)
+                Integer[] indices = new Integer[NUM_PILOTS];
+                for (int i = 0; i < NUM_PILOTS; i++) {
+                    indices[i] = i;
+                }
+                // Ordenar pilotos por posición X (de mayor a menor, ya que X aumenta hacia la meta)
+                Arrays.sort(indices, (a, b) -> {
+                    if (hasFinished[a] && hasFinished[b]) {
+                        // Si ambos han terminado, mantener el orden de llegada
+                        return Integer.compare(finishOrder.indexOf(a), finishOrder.indexOf(b));
+                    } else if (hasFinished[a]) {
+                        return 1; // Pilotos terminados al final
+                    } else if (hasFinished[b]) {
+                        return -1;
+                    }
+                    return Integer.compare(pilotPositions[b], pilotPositions[a]);
+                });
+
+                // Actualizar etiquetas de posición en tiempo real
+                for (int i = 0; i < NUM_PILOTS; i++) {
+                    if (!hasFinished[indices[i]]) {
+                        livePositionLabels[indices[i]].setText(String.valueOf(i + 1));
+                    }
+                }
+
                 contentPane.repaint(); // Actualizar la ventana
 
                 // Detener el timer cuando todos lleguen a la meta
