@@ -95,6 +95,14 @@ public class App extends JFrame {
 		contentPane.add(btnCargarSimulacin);
 		
 		JButton btnMenuDeGestion = new JButton("Nueva Simulación");
+		btnMenuDeGestion.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) 
+			{
+				Simulacion temp =new Simulacion();
+				temp.setVisible(true);
+
+			}
+		});
 		btnMenuDeGestion.setForeground(new Color(0, 0, 0));
 		btnMenuDeGestion.setFont(new Font("Dialog", Font.PLAIN, 27));
 		btnMenuDeGestion.setBackground(new Color(0, 64, 128));
