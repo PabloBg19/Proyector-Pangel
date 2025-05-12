@@ -122,7 +122,7 @@ public class NuevaTemporada2007 extends JFrame {
 
         // Buttons
         JButton btnNewButton = new JButton("Avanzar a Carrera");
-        btnNewButton.setBounds(477, 353, 128, 51);
+        btnNewButton.setBounds(470, 353, 128, 51);
         btnNewButton.addActionListener(e -> advanceToNextRace()); 
         contentPane.add(btnNewButton);
 
