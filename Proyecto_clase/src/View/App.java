@@ -42,7 +42,7 @@ public class App extends JFrame {
 	 */
 	public App() {
 		JPanel contentPane = new JPanel() {
-            private Image backgroundImage = new ImageIcon(App.class.getResource("/image/BG-1.jpeg")).getImage();
+            private Image backgroundImage = new ImageIcon(App.class.getResource("/image/fondo.jpg")).getImage();
 
             @Override
             protected void paintComponent(Graphics g) {
@@ -59,8 +59,8 @@ public class App extends JFrame {
 		JButton btnNuevaSimulacion = new JButton("Menú de Gestión");
 		btnNuevaSimulacion.setIcon(null);
 		btnNuevaSimulacion.setFont(new Font("Verdana Pro", Font.PLAIN, 27));
-		btnNuevaSimulacion.setBackground(new Color(0, 64, 128));
-		btnNuevaSimulacion.setForeground(new Color(0, 0, 0));
+		btnNuevaSimulacion.setBackground(new Color(0, 0, 0));
+		btnNuevaSimulacion.setForeground(new Color(255, 255, 255));
 		btnNuevaSimulacion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
@@ -69,13 +69,8 @@ public class App extends JFrame {
 				
 			}
 		});
-		btnNuevaSimulacion.setBounds(1296, 379, 313, 108);
+		btnNuevaSimulacion.setBounds(827, 612, 313, 108);
 		getContentPane().add(btnNuevaSimulacion);
-		
-		JPanel panel_2 = new JPanel();
-		panel_2.setBackground(new Color(0, 64, 128));
-		panel_2.setBounds(-51, 740, 1950, 10);
-		getContentPane().add(panel_2);
 		
 		JButton btnSIMCARRERA = new JButton("New button");
 		btnSIMCARRERA.setIcon(new ImageIcon(App.class.getResource("/image/StartButton (2).png")));
@@ -84,15 +79,8 @@ public class App extends JFrame {
 				
 			}
 		});
-		btnSIMCARRERA.setBounds(631, 761, 694, 178);
+		btnSIMCARRERA.setBounds(663, 731, 694, 178);
 		getContentPane().add(btnSIMCARRERA);
-		
-		JButton btnCargarSimulacin = new JButton("Cargar Simulación");
-		btnCargarSimulacin.setForeground(new Color(0, 0, 0));
-		btnCargarSimulacin.setFont(new Font("Dialog", Font.PLAIN, 27));
-		btnCargarSimulacin.setBackground(new Color(0, 64, 128));
-		btnCargarSimulacin.setBounds(878, 379, 313, 108);
-		contentPane.add(btnCargarSimulacin);
 		
 		JButton btnMenuDeGestion = new JButton("Nueva Simulación");
 		btnMenuDeGestion.addActionListener(new ActionListener() {
@@ -103,24 +91,11 @@ public class App extends JFrame {
 
 			}
 		});
-		btnMenuDeGestion.setForeground(new Color(0, 0, 0));
+		btnMenuDeGestion.setForeground(new Color(255, 255, 255));
 		btnMenuDeGestion.setFont(new Font("Dialog", Font.PLAIN, 27));
-		btnMenuDeGestion.setBackground(new Color(0, 64, 128));
-		btnMenuDeGestion.setBounds(448, 379, 313, 108);
+		btnMenuDeGestion.setBackground(new Color(0, 0, 0));
+		btnMenuDeGestion.setBounds(827, 194, 313, 108);
 		contentPane.add(btnMenuDeGestion);
-		
-		JButton btnVerTemporada = new JButton("Ver Temporada");
-		btnVerTemporada.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				VerTemporada temp=new VerTemporada();
-				temp.setVisible(true);
-			}
-		});
-		btnVerTemporada.setForeground(Color.BLACK);
-		btnVerTemporada.setFont(new Font("Dialog", Font.PLAIN, 27));
-		btnVerTemporada.setBackground(new Color(0, 64, 128));
-		btnVerTemporada.setBounds(878, 576, 313, 108);
-		contentPane.add(btnVerTemporada);
 		
 	}
 }

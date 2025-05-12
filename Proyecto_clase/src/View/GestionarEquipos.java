@@ -31,8 +31,8 @@ public class GestionarEquipos extends JFrame {
         setLocationRelativeTo(null); // centra la ventana
         getContentPane().setLayout(null);
 
-        // Crear modelo de la tabla con columnas Id, Nombre, Motor, NivelMotor, Pais, Piloto_1, Piloto_2, Fiabilidad, Aerodinamica, Puntos, Campeonatos
-        String[] columnNames = {"Id", "Nombre", "Motor", "NivelMotor", "Pais", "Piloto_1", "Piloto_2", "Fiabilidad", "Aerodinamica", "Puntos", "Campeonatos"};
+        // Crear modelo de la tabla con columnas Id, Nombre, Motor, NivelMotor, Pais, Temporada, Piloto_1, Piloto_2, Fiabilidad, Aerodinamica, Puntos, Campeonatos
+        String[] columnNames = {"Id", "Nombre", "Motor", "NivelMotor", "Pais", "Temporada", "Piloto_1", "Piloto_2", "Fiabilidad", "Aerodinamica", "Puntos", "Campeonatos"};
         tableModel = new DefaultTableModel(columnNames, 0);
         table = new JTable(tableModel);
         table.setFillsViewportHeight(true);
@@ -84,13 +84,14 @@ public class GestionarEquipos extends JFrame {
                     String Motor = resultado.getString("Motor");
                     int NivelMotor = resultado.getInt("NivelMotor");
                     String Pais = resultado.getString("Pais");
+                    String Temporada = resultado.getString("Temporada");
                     String Piloto_1 = resultado.getString("Piloto_1");
                     String Piloto_2 = resultado.getString("Piloto_2");
                     int Fiabilidad = resultado.getInt("Fiabilidad");
                     int Aerodinamica = resultado.getInt("Aerodinamica");
                     int Puntos = resultado.getInt("Puntos");
                     int Campeonatos = resultado.getInt("Campeonatos");
-                    tableModel.addRow(new Object[]{Id, Nombre, Motor, NivelMotor, Pais, Piloto_1, Piloto_2, Fiabilidad, Aerodinamica, Puntos, Campeonatos});
+                    tableModel.addRow(new Object[]{Id, Nombre, Motor, NivelMotor, Pais, Temporada, Piloto_1, Piloto_2, Fiabilidad, Aerodinamica, Puntos, Campeonatos});
                 }
                 conexion.desconectar();
             } catch (SQLException ex) {
@@ -122,13 +123,14 @@ public class GestionarEquipos extends JFrame {
                     String Motor = resultado.getString("Motor");
                     int NivelMotor = resultado.getInt("NivelMotor");
                     String Pais = resultado.getString("Pais");
+                    String Temporada = resultado.getString("Temporada");
                     String Piloto_1 = resultado.getString("Piloto_1");
                     String Piloto_2 = resultado.getString("Piloto_2");
                     int Fiabilidad = resultado.getInt("Fiabilidad");
                     int Aerodinamica = resultado.getInt("Aerodinamica");
                     int Puntos = resultado.getInt("Puntos");
                     int Campeonatos = resultado.getInt("Campeonatos");
-                    tableModel.addRow(new Object[]{Id, Nombre, Motor, NivelMotor, Pais, Piloto_1, Piloto_2, Fiabilidad, Aerodinamica, Puntos, Campeonatos});
+                    tableModel.addRow(new Object[]{Id, Nombre, Motor, NivelMotor, Pais, Temporada, Piloto_1, Piloto_2, Fiabilidad, Aerodinamica, Puntos, Campeonatos});
                 }
                 conexion.desconectar();
             } catch (SQLException ex) {
@@ -201,15 +203,16 @@ public class GestionarEquipos extends JFrame {
                     String motor = (String) tableModel.getValueAt(selectedRow, 2);
                     String nivelMotor = String.valueOf(tableModel.getValueAt(selectedRow, 3));
                     String pais = (String) tableModel.getValueAt(selectedRow, 4);
-                    String piloto1 = (String) tableModel.getValueAt(selectedRow, 5);
-                    String piloto2 = (String) tableModel.getValueAt(selectedRow, 6);
-                    String fiabilidad = String.valueOf(tableModel.getValueAt(selectedRow, 7));
-                    String aerodinamica = String.valueOf(tableModel.getValueAt(selectedRow, 8));
-                    String puntos = String.valueOf(tableModel.getValueAt(selectedRow, 9));
-                    String campeonatos = String.valueOf(tableModel.getValueAt(selectedRow, 10));
+                    String temporada = (String) tableModel.getValueAt(selectedRow, 5);
+                    String piloto1 = (String) tableModel.getValueAt(selectedRow, 6);
+                    String piloto2 = (String) tableModel.getValueAt(selectedRow, 7);
+                    String fiabilidad = String.valueOf(tableModel.getValueAt(selectedRow, 8));
+                    String aerodinamica = String.valueOf(tableModel.getValueAt(selectedRow, 9));
+                    String puntos = String.valueOf(tableModel.getValueAt(selectedRow, 10));
+                    String campeonatos = String.valueOf(tableModel.getValueAt(selectedRow, 11));
 
                     // Abrir ventana de modificación
-                    abrirVentanaModificacion(id, nombre, motor, nivelMotor, pais, piloto1, piloto2, fiabilidad, aerodinamica, puntos, campeonatos);
+                    abrirVentanaModificacion(id, nombre, motor, nivelMotor, pais, temporada, piloto1, piloto2, fiabilidad, aerodinamica, puntos, campeonatos);
                 } else {
                     JOptionPane.showMessageDialog(null, "Selecciona un equipo para modificar.");
                 }
@@ -256,13 +259,14 @@ public class GestionarEquipos extends JFrame {
                 String Motor = resultado.getString("Motor");
                 int NivelMotor = resultado.getInt("NivelMotor");
                 String Pais = resultado.getString("Pais");
+                String Temporada = resultado.getString("Temporada");
                 String Piloto_1 = resultado.getString("Piloto_1");
                 String Piloto_2 = resultado.getString("Piloto_2");
                 int Fiabilidad = resultado.getInt("Fiabilidad");
                 int Aerodinamica = resultado.getInt("Aerodinamica");
                 int Puntos = resultado.getInt("Puntos");
                 int Campeonatos = resultado.getInt("Campeonatos");
-                tableModel.addRow(new Object[]{Id, Nombre, Motor, NivelMotor, Pais, Piloto_1, Piloto_2, Fiabilidad, Aerodinamica, Puntos, Campeonatos});
+                tableModel.addRow(new Object[]{Id, Nombre, Motor, NivelMotor, Pais, Temporada, Piloto_1, Piloto_2, Fiabilidad, Aerodinamica, Puntos, Campeonatos});
             }
             conexion.desconectar();
         } catch (SQLException ex) {
@@ -271,7 +275,7 @@ public class GestionarEquipos extends JFrame {
     }
 
     // Método para abrir la ventana de modificación
-    private void abrirVentanaModificacion(String id, String nombre, String motor, String nivelMotor, String pais, String piloto1, String piloto2, String fiabilidad, String aerodinamica, String puntos, String campeonatos) {
+    private void abrirVentanaModificacion(String id, String nombre, String motor, String nivelMotor, String pais, String temporada, String piloto1, String piloto2, String fiabilidad, String aerodinamica, String puntos, String campeonatos) {
         JDialog dialog = new JDialog(this, "Modificar Equipo", true);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         dialog.setBounds(0, 0, 800, 500);
@@ -305,6 +309,11 @@ public class GestionarEquipos extends JFrame {
         lblPais.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
         lblPais.setBounds(234, 252, 74, 32);
         contentPane.add(lblPais);
+
+        JLabel lblTemporada = new JLabel("TEMPORADA");
+        lblTemporada.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+        lblTemporada.setBounds(450, 252, 129, 32);
+        contentPane.add(lblTemporada);
 
         JLabel lblPiloto1 = new JLabel("PILOTO 1");
         lblPiloto1.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
@@ -361,6 +370,11 @@ public class GestionarEquipos extends JFrame {
         textPais.setBounds(329, 210, 149, 20);
         contentPane.add(textPais);
 
+        JTextField textTemporada = new JTextField(temporada);
+        textTemporada.setColumns(10);
+        textTemporada.setBounds(510, 260, 149, 20);
+        contentPane.add(textTemporada);
+
         JTextField textPiloto1 = new JTextField(piloto1);
         textPiloto1.setColumns(10);
         textPiloto1.setBounds(329, 240, 149, 20);
@@ -401,6 +415,7 @@ public class GestionarEquipos extends JFrame {
                             "', Motor='" + textMotor.getText() +
                             "', NivelMotor=" + textNivelMotor.getText() +
                             ", Pais='" + textPais.getText() +
+                            "', Temporada='" + textTemporada.getText() +
                             "', Piloto_1='" + textPiloto1.getText() +
                             "', Piloto_2='" + textPiloto2.getText() +
                             "', Fiabilidad=" + textFiabilidad.getText() +
