@@ -134,7 +134,7 @@ public class NuevaTemporada2007 extends JFrame {
 
         // Buttons
         JButton btnNewButton = new JButton("Avanzar a Carrera");
-        btnNewButton.setBounds(470, 353, 128, 51);
+        btnNewButton.setBounds(478, 353, 157, 51);
         btnNewButton.addActionListener(e -> advanceToNextRace());
         contentPane.add(btnNewButton);
 
@@ -145,16 +145,16 @@ public class NuevaTemporada2007 extends JFrame {
         		temp.setVisible(true);
         	}
         });
-        btnVerClasificacin.setBounds(297, 353, 128, 51);
+        btnVerClasificacin.setBounds(292, 353, 157, 51);
         contentPane.add(btnVerClasificacin);
 
-        JButton btnNewButton_1_1 = new JButton("Penalizaciones");
+        JButton btnNewButton_1_1 = new JButton("Gestionar Temporada");
         btnNewButton_1_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 Reiniciar();
             }
         });
-        btnNewButton_1_1.setBounds(123, 353, 128, 51);
+        btnNewButton_1_1.setBounds(105, 353, 157, 51);
         contentPane.add(btnNewButton_1_1);
 
         // Title label
