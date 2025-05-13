@@ -142,7 +142,7 @@ public class NuevaTemporada2007 extends JFrame {
         btnVerClasificacin.addActionListener(new ActionListener() {
         	public void actionPerformed(ActionEvent e) {
         		verClasificacion temp=new verClasificacion();
-        		temp.isVisible();
+        		temp.setVisible(true);
         	}
         });
         btnVerClasificacin.setBounds(297, 353, 128, 51);
