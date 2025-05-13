@@ -27,7 +27,7 @@ public class NuevaTemporada2007 extends JFrame {
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JLabel[] raceLabels; // Array para guardar labels carreras
-    private int currentRaceIndex = -1; // Mrca la carrera actual (-1 significa ninguna seleccionada)
+    private int currentRaceIndex = -1; // Marca la carrera actual (-1 significa ninguna seleccionada)
 
     public NuevaTemporada2007() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
