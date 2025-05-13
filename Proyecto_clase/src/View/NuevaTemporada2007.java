@@ -1,18 +1,12 @@
 package View;
 
 import java.awt.Color;
-import java.awt.EventQueue;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.Timer;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -20,7 +14,14 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Random;
 
-// Main window for the 2007 season
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.Timer;
+import javax.swing.border.EmptyBorder;
+
 public class NuevaTemporada2007 extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -134,7 +135,7 @@ public class NuevaTemporada2007 extends JFrame {
         // Buttons
         JButton btnNewButton = new JButton("Avanzar a Carrera");
         btnNewButton.setBounds(470, 353, 128, 51);
-        btnNewButton.addActionListener(e -> advanceToNextRace()); 
+        btnNewButton.addActionListener(e -> advanceToNextRace());
         contentPane.add(btnNewButton);
 
         JButton btnVerClasificacin = new JButton("Ver Clasificación");
@@ -143,9 +144,9 @@ public class NuevaTemporada2007 extends JFrame {
 
         JButton btnNewButton_1_1 = new JButton("Penalizaciones");
         btnNewButton_1_1.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		Reiniciar();
-        	}
+            public void actionPerformed(ActionEvent e) {
+                Reiniciar();
+            }
         });
         btnNewButton_1_1.setBounds(123, 353, 128, 51);
         contentPane.add(btnNewButton_1_1);
@@ -155,6 +156,61 @@ public class NuevaTemporada2007 extends JFrame {
         lblNewLabel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
         lblNewLabel.setBounds(232, 33, 278, 56);
         contentPane.add(lblNewLabel);
+
+        // Load saved state on startup
+        loadSeasonState();
+
+        // Save state when closing the window
+        addWindowListener(new WindowAdapter() {
+            @Override
+            public void windowClosing(WindowEvent e) {
+                saveSeasonState();
+            }
+        });
+    }
+
+    private void loadSeasonState() {
+        ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
+        try {
+            conexion.conectar();
+            // Buscamos el índice actual para el año 2007
+            String query = "SELECT indice_actual FROM carreras WHERE Año = 2007 LIMIT 1";
+            ResultSet result = conexion.ejecutarSelect(query);
+            if (result.next()) {
+                currentRaceIndex = result.getInt("indice_actual");
+                if (currentRaceIndex >= 0 && currentRaceIndex < raceLabels.length) {
+                    raceLabels[currentRaceIndex].setOpaque(true);
+                    raceLabels[currentRaceIndex].setBackground(new Color(173, 216, 230));
+                    raceLabels[currentRaceIndex].setFont(new Font("Dialog", Font.BOLD, 12));
+                }
+            }
+            result.close();
+            conexion.desconectar();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al cargar el estado de la temporada: " + e.getMessage());
+            e.printStackTrace();
+            currentRaceIndex = -1; // Default to no race if load fails
+        }
+    }
+
+    private void saveSeasonState() {
+        ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
+        try {
+            conexion.conectar();
+            // Actualizamos el índice actual para todas las filas del año 2007
+            String updateQuery = "UPDATE carreras SET indice_actual = " + currentRaceIndex +
+                               " WHERE Año = 2007";
+            int rowsAffected = conexion.ejecutarInsertDeleteUpdate(updateQuery);
+            if (rowsAffected > 0) {
+                // Éxito al guardar
+            } else {
+                JOptionPane.showMessageDialog(this, "No se encontraron filas para actualizar el estado.");
+            }
+            conexion.desconectar();
+        } catch (SQLException e) {
+            JOptionPane.showMessageDialog(this, "Error al guardar el estado de la temporada: " + e.getMessage());
+            e.printStackTrace();
+        }
     }
 
     private void advanceToNextRace() {
@@ -175,6 +231,9 @@ public class NuevaTemporada2007 extends JFrame {
 
         // Abre una ventana nueva para cada carrera
         new RaceWindow(raceLabels[currentRaceIndex].getText()).setVisible(true);
+
+        // Guarda el nuevo estado
+        saveSeasonState();
     }
 
     // Ventana nueva para cada carrera
@@ -202,47 +261,29 @@ public class NuevaTemporada2007 extends JFrame {
         // Map to store points for each pilot using their ID
         private Map<String, Integer> puntosPorPiloto = new HashMap<>();
 
-        // Pilotos de la tabla proporcionada (ordenado según la nueva imagen)
+        // Pilotos de la tabla proporcionada
         private static final String[] PILOTOS = {
-        	    "Fernando Alonso", "Lewis Hamilton", "Kimi Räikkönen", "Felipe Massa",
-        	    "Giancarlo Fisichella", "Heikki Kovalainen", "Nick Heidfeld", "Robert Kubica",
-        	    "Nico Rosberg", "Alexander Wurz", "Rubens Barrichello", "Jenson Button",
-        	    "David Coulthard", "Mark Webber", "Ralf Schumacher", "Jarno Trulli",
-        	    "Anthony Davidson", "Takuma Sato", "Vitantonio Liuzzi", "Scott Speed"
-        	};
-        	// IDs de los pilotos (P1 a P20) según la tabla
-        	private static final String[] PILOT_IDS = {
-        	    "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8",
-        	    "P9", "P10", "P11", "P12", "P13", "P14", "P15", "P16",
-        	    "P17", "P18", "P19", "P20"
-        	};
-        	private static final Color[] COLORES_EQUIPOS = {
-        	    new Color(200, 200, 200), // McLaren (Fernando Alonso)
-        	    new Color(200, 200, 200), // McLaren (Lewis Hamilton)
-        	    new Color(220, 0, 0),     // Ferrari (Kimi Räikkönen)
-        	    new Color(220, 0, 0),     // Ferrari (Felipe Massa)
-        	    new Color(0, 153, 0),     // Renault (Giancarlo Fisichella)
-        	    new Color(0, 153, 0),     // Renault (Heikki Kovalainen)
-        	    new Color(0, 102, 204),   // BMW Sauber (Nick Heidfeld)
-        	    new Color(0, 102, 204),   // BMW Sauber (Robert Kubica)
-        	    new Color(255, 255, 255), // Williams (Nico Rosberg)
-        	    new Color(255, 255, 255), // Williams (Alexander Wurz)
-        	    new Color(255, 204, 0),   // Honda (Rubens Barrichello)
-        	    new Color(255, 204, 0),   // Honda (Jenson Button)
-        	    new Color(255, 0, 0),     // Red Bull (David Coulthard)
-        	    new Color(255, 0, 0),     // Red Bull (Mark Webber)
-        	    new Color(0, 102, 204),   // Toyota (Ralf Schumacher)
-        	    new Color(0, 102, 204),   // Toyota (Jarno Trulli)
-        	    new Color(255, 153, 0),   // Super Aguri (Anthony Davidson)
-        	    new Color(255, 153, 0),   // Super Aguri (Takuma Sato)
-        	    new Color(0, 102, 204),   // Toro Rosso (Vitantonio Liuzzi)
-        	    new Color(0, 102, 204)    // Toro Rosso (Scott Speed)
-        	};
-        	private static final int[] PUNTUACIONES_RENDIMIENTO = {
-        	    10, 10, 10, 9, 6, 6, 7, 7,
-        	    6, 5, 3, 3, 5, 5, 4, 4,
-        	    3, 3, 3, 3
-        	};
+            "Fernando Alonso", "Lewis Hamilton", "Kimi Räikkönen", "Felipe Massa",
+            "Giancarlo Fisichella", "Heikki Kovalainen", "Nick Heidfeld", "Robert Kubica",
+            "Nico Rosberg", "Alexander Wurz", "Rubens Barrichello", "Jenson Button",
+            "David Coulthard", "Mark Webber", "Ralf Schumacher", "Jarno Trulli",
+            "Anthony Davidson", "Takuma Sato", "Vitantonio Liuzzi", "Scott Speed"
+        };
+        private static final String[] PILOT_IDS = {
+            "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8",
+            "P9", "P10", "P11", "P12", "P13", "P14", "P15", "P16",
+            "P17", "P18", "P19", "P20"
+        };
+        private static final Color[] COLORES_EQUIPOS = {
+            new Color(200, 200, 200), new Color(200, 200, 200), new Color(220, 0, 0), new Color(220, 0, 0),
+            new Color(0, 153, 0), new Color(0, 153, 0), new Color(0, 102, 204), new Color(0, 102, 204),
+            new Color(255, 255, 255), new Color(255, 255, 255), new Color(255, 204, 0), new Color(255, 204, 0),
+            new Color(255, 0, 0), new Color(255, 0, 0), new Color(0, 102, 204), new Color(0, 102, 204),
+            new Color(255, 153, 0), new Color(255, 153, 0), new Color(0, 102, 204), new Color(0, 102, 204)
+        };
+        private static final int[] PUNTUACIONES_RENDIMIENTO = {
+            10, 10, 10, 9, 6, 6, 7, 7, 6, 5, 3, 3, 5, 5, 4, 4, 3, 3, 3, 3
+        };
 
         public RaceWindow(String nombreCarrera) {
             setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -255,19 +296,16 @@ public class NuevaTemporada2007 extends JFrame {
             setContentPane(panelContenido);
             panelContenido.setLayout(null);
 
-            // Etiqueta del título
             JLabel etiquetaTituloCarrera = new JLabel(nombreCarrera);
             etiquetaTituloCarrera.setFont(new Font("Arial", Font.BOLD, 24));
             etiquetaTituloCarrera.setBounds(300, 20, 500, 120);
             panelContenido.add(etiquetaTituloCarrera);
 
-            // Botón de cerrar
             JButton botonCerrar = new JButton("Cerrar");
             botonCerrar.setBounds(400, 500, 100, 30);
             botonCerrar.addActionListener(e -> dispose());
             panelContenido.add(botonCerrar);
 
-            // Inicializar arrays y variables
             puntosPilotos = new JPanel[NUM_PILOTOS];
             posicionesPilotos = new int[NUM_PILOTOS];
             etiquetasPosicion = new JLabel[NUM_PILOTOS];
@@ -279,24 +317,20 @@ public class NuevaTemporada2007 extends JFrame {
             vueltasCompletadas = new int[NUM_PILOTOS];
             Random aleatorio = new Random();
 
-            // Inicializar puntos para cada piloto
             for (int i = 0; i < NUM_PILOTOS; i++) {
                 puntosPorPiloto.put(PILOT_IDS[i], 0);
             }
 
-            // Inicializar y posicionar el JLabel
             lblNewLabel = new JLabel();
             lblNewLabel.setBounds(752, 461, 46, 14);
             panelContenido.add(lblNewLabel);
 
-            // Panel de clasificación
             JPanel panelClasificacion = new JPanel();
             panelClasificacion.setBounds(10, 80, 140, 440);
             panelClasificacion.setBackground(new Color(20, 20, 20));
             panelClasificacion.setLayout(null);
             panelContenido.add(panelClasificacion);
 
-            // Inicializar pilotos y clasificación
             for (int i = 0; i < NUM_PILOTOS; i++) {
                 puntosPilotos[i] = new JPanel();
                 puntosPilotos[i].setBounds(X_INICIO, Y_POSICION + (i * 20), TAMANO_PUNTO, TAMANO_PUNTO);
@@ -332,14 +366,12 @@ public class NuevaTemporada2007 extends JFrame {
                 filasClasificacion[i].add(etiquetasNombrePiloto[i]);
             }
 
-            // Línea de meta
             JLabel lineaMeta = new JLabel("META");
             lineaMeta.setBounds(X_FIN - 20, Y_POSICION - 20, 40, 20);
             lineaMeta.setFont(new Font("Arial", Font.BOLD, 12));
             lineaMeta.setForeground(Color.RED);
             panelContenido.add(lineaMeta);
 
-            // Botón GUARDAR
             JButton btnNewButton = new JButton("GUARDAR");
             btnNewButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
@@ -362,7 +394,6 @@ public class NuevaTemporada2007 extends JFrame {
             btnNewButton.setBounds(576, 500, 100, 27);
             panelContenido.add(btnNewButton);
 
-            // Temporizador para la animación
             Timer temporizador = new Timer(50, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -392,7 +423,6 @@ public class NuevaTemporada2007 extends JFrame {
                         }
                     }
 
-                    // Ordenar la clasificación en tiempo real
                     Integer[] indices = new Integer[NUM_PILOTOS];
                     for (int i = 0; i < NUM_PILOTOS; i++) {
                         indices[i] = i;
@@ -411,7 +441,6 @@ public class NuevaTemporada2007 extends JFrame {
                         return Integer.compare(posicionesPilotos[b], posicionesPilotos[a]);
                     });
 
-                    // Actualizar la clasificación visual
                     for (int i = 0; i < NUM_PILOTOS; i++) {
                         int idx = indices[i];
                         etiquetasPosicionEnVivo[idx].setText(String.valueOf(i + 1));
@@ -442,23 +471,22 @@ public class NuevaTemporada2007 extends JFrame {
                 default: return 0;
             }
         }
-
-    	
-        
-}
-    private static final long serialVersionUID1 = 1L;
-    private JButton btnReiniciar;
+    }
 
     private void Reiniciar() {
-    	
-        setTitle("Reiniciar puntos");
-        setSize(900, 600);
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        // Crear una nueva ventana para reiniciar puntos y temporada
+        JFrame reiniciarFrame = new JFrame("Reiniciar Puntos y Temporada");
+        reiniciarFrame.setSize(900, 600);
+        reiniciarFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        reiniciarFrame.setLocationRelativeTo(null); // Centrar la ventana
+
+        // Crear un nuevo panel para la ventana
         JPanel panelContenido = new JPanel();
         panelContenido.setLayout(null);
-        setContentPane(panelContenido);
+        reiniciarFrame.setContentPane(panelContenido);
 
-        btnReiniciar = new JButton("REINICIAR");
+        // Botón para reiniciar puntos
+        JButton btnReiniciar = new JButton("REINICIAR PUNTOS");
         btnReiniciar.setBounds(700, 500, 120, 27);
         btnReiniciar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -476,9 +504,35 @@ public class NuevaTemporada2007 extends JFrame {
             }
         });
         panelContenido.add(btnReiniciar);
+
+        // Botón para reiniciar temporada
+        JButton btnReiniciarTemporada = new JButton("Reiniciar Temporada");
+        btnReiniciarTemporada.setBounds(137, 95, 136, 49);
+        btnReiniciarTemporada.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
+                try {
+                    conexion.conectar();
+                    String sentencia = "UPDATE carreras SET indice_actual = -1";
+                    conexion.ejecutarInsertDeleteUpdate(sentencia);
+                    conexion.desconectar();
+                    JOptionPane.showMessageDialog(null, "Temporada Reiniciada");
+                    // Opcional: Actualizar el estado visual en la ventana principal
+                    currentRaceIndex = -1;
+                    for (JLabel label : raceLabels) {
+                        label.setOpaque(false);
+                        label.setBackground(null);
+                        label.setFont(new Font("Dialog", Font.PLAIN, 12));
+                    }
+                } catch (SQLException ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(null, "Error al reiniciar la temporada.");
+                }
+            }
+        });
+        panelContenido.add(btnReiniciarTemporada);
+
+        // Hacer visible la nueva ventana
+        reiniciarFrame.setVisible(true);
     }
 }
-
-
-    
-
