@@ -139,6 +139,12 @@ public class NuevaTemporada2007 extends JFrame {
         contentPane.add(btnNewButton);
 
         JButton btnVerClasificacin = new JButton("Ver Clasificación");
+        btnVerClasificacin.addActionListener(new ActionListener() {
+        	public void actionPerformed(ActionEvent e) {
+        		verClasificacion temp=new verClasificacion();
+        		temp.isVisible();
+        	}
+        });
         btnVerClasificacin.setBounds(297, 353, 128, 51);
         contentPane.add(btnVerClasificacin);
 
