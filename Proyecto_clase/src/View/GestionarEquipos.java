@@ -16,7 +16,7 @@ public class GestionarEquipos extends JFrame {
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTextField textNombre;
-    private JTextField textEquipo;
+    private JTextField textEquipo; // Adjusted to match new context
     private JTable table;
     private DefaultTableModel tableModel;
 
@@ -28,38 +28,31 @@ public class GestionarEquipos extends JFrame {
         setBounds(0, 0, 919, 500);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setLocationRelativeTo(null); // centra la ventana
+        setLocationRelativeTo(null); // Center the window
         getContentPane().setLayout(null);
 
-        // Crear modelo de la tabla con columnas Id, Nombre, Motor, NivelMotor, Pais, Temporada, Piloto_1, Piloto_2, Fiabilidad, Aerodinamica, Puntos, Campeonatos
-        String[] columnNames = {"Id", "Nombre", "Motor", "NivelMotor", "Pais", "Temporada", "Piloto_1", "Piloto_2", "Fiabilidad", "Aerodinamica", "Puntos", "Campeonatos"};
+        // Create table model with new columns
+        String[] columnNames = {"Id", "Nombre", "Motor", "Pais", "Potencia", "Aerodinamica", "Fiabilidad"};
         tableModel = new DefaultTableModel(columnNames, 0);
         table = new JTable(tableModel);
         table.setFillsViewportHeight(true);
 
-        // Añadir la tabla a un JScrollPane
+        // Add table to a JScrollPane
         JScrollPane scrollPane = new JScrollPane(table);
         scrollPane.setBounds(0, 120, 903, 293);
         getContentPane().add(scrollPane);
-       
-        // Centrar el contenido de las celdas
+
+        // Center the content of the cells
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
 
-        // Aplicar el renderer a todas las columnas de la tabla
+        // Apply the renderer to all columns of the table
         for (int i = 0; i < table.getColumnCount(); i++) {
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
 
-        // Cargar todos los equipos al iniciar la ventana
+        // Load all teams at startup
         cargarEquipos();
-
-        // Botón VER EQUIPOS (currently disabled and hidden due to bounds)
-        JButton btnVerEquipo = new JButton("VER EQUIPOS");
-        btnVerEquipo.setEnabled(false);
-        btnVerEquipo.addActionListener(e -> cargarEquipos());
-        btnVerEquipo.setBounds(33, 439, 0, 11); // Bounds make it invisible, consider adjusting
-        getContentPane().add(btnVerEquipo);
 
         // Campo de texto para búsqueda por nombre
         textNombre = new JTextField();
@@ -75,23 +68,18 @@ public class GestionarEquipos extends JFrame {
                 conexion.conectar();
                 String sentencia = "SELECT * FROM equipo WHERE Nombre LIKE '%" + textNombre.getText() + "%'";
                 ResultSet resultado = conexion.ejecutarSelect(sentencia);
-                // Limpiar tabla
+                // Clear table
                 tableModel.setRowCount(0);
-                // Añadir filas a la tabla
+                // Add rows to the table
                 while (resultado.next()) {
                     String Id = resultado.getString("Id");
                     String Nombre = resultado.getString("Nombre");
                     String Motor = resultado.getString("Motor");
-                    int NivelMotor = resultado.getInt("NivelMotor");
                     String Pais = resultado.getString("Pais");
-                    String Temporada = resultado.getString("Temporada");
-                    String Piloto_1 = resultado.getString("Piloto_1");
-                    String Piloto_2 = resultado.getString("Piloto_2");
-                    int Fiabilidad = resultado.getInt("Fiabilidad");
+                    int Potencia = resultado.getInt("Potencia");
                     int Aerodinamica = resultado.getInt("Aerodinamica");
-                    int Puntos = resultado.getInt("Puntos");
-                    int Campeonatos = resultado.getInt("Campeonatos");
-                    tableModel.addRow(new Object[]{Id, Nombre, Motor, NivelMotor, Pais, Temporada, Piloto_1, Piloto_2, Fiabilidad, Aerodinamica, Puntos, Campeonatos});
+                    int Fiabilidad = resultado.getInt("Fiabilidad");
+                    tableModel.addRow(new Object[]{Id, Nombre, Motor, Pais, Potencia, Aerodinamica, Fiabilidad});
                 }
                 conexion.desconectar();
             } catch (SQLException ex) {
@@ -106,7 +94,7 @@ public class GestionarEquipos extends JFrame {
         textEquipo.setBounds(498, 82, 117, 20);
         getContentPane().add(textEquipo);
 
-        // Botón BUSCAR por equipo (fixed to actually search by Nombre, assuming textEquipo is meant for team name)
+        // Botón BUSCAR por equipo (search by Nombre)
         JButton btnEquipo = new JButton("Buscar por Equipo");
         btnEquipo.addActionListener(e -> {
             ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
@@ -114,23 +102,18 @@ public class GestionarEquipos extends JFrame {
                 conexion.conectar();
                 String sentencia = "SELECT * FROM equipo WHERE Nombre LIKE '%" + textEquipo.getText() + "%'";
                 ResultSet resultado = conexion.ejecutarSelect(sentencia);
-                // Limpiar tabla
+                // Clear table
                 tableModel.setRowCount(0);
-                // Añadir filas a la tabla
+                // Add rows to the table
                 while (resultado.next()) {
                     String Id = resultado.getString("Id");
                     String Nombre = resultado.getString("Nombre");
                     String Motor = resultado.getString("Motor");
-                    int NivelMotor = resultado.getInt("NivelMotor");
                     String Pais = resultado.getString("Pais");
-                    String Temporada = resultado.getString("Temporada");
-                    String Piloto_1 = resultado.getString("Piloto_1");
-                    String Piloto_2 = resultado.getString("Piloto_2");
-                    int Fiabilidad = resultado.getInt("Fiabilidad");
+                    int Potencia = resultado.getInt("Potencia");
                     int Aerodinamica = resultado.getInt("Aerodinamica");
-                    int Puntos = resultado.getInt("Puntos");
-                    int Campeonatos = resultado.getInt("Campeonatos");
-                    tableModel.addRow(new Object[]{Id, Nombre, Motor, NivelMotor, Pais, Temporada, Piloto_1, Piloto_2, Fiabilidad, Aerodinamica, Puntos, Campeonatos});
+                    int Fiabilidad = resultado.getInt("Fiabilidad");
+                    tableModel.addRow(new Object[]{Id, Nombre, Motor, Pais, Potencia, Aerodinamica, Fiabilidad});
                 }
                 conexion.desconectar();
             } catch (SQLException ex) {
@@ -157,7 +140,7 @@ public class GestionarEquipos extends JFrame {
                     String sentencia = "DELETE FROM equipo WHERE Id='" + idEquipo + "'";
                     int rowsAffected = conexion.ejecutarInsertDeleteUpdate(sentencia);
                     if (rowsAffected > 0) {
-                        tableModel.removeRow(selectedRow); // Eliminar fila de la tabla
+                        tableModel.removeRow(selectedRow); // Remove row from the table
                         JOptionPane.showMessageDialog(this, "Equipo eliminado con éxito.");
                     } else {
                         JOptionPane.showMessageDialog(this, "No se pudo eliminar el equipo.");
@@ -174,7 +157,7 @@ public class GestionarEquipos extends JFrame {
         btnEliminar.setBounds(579, 424, 150, 26);
         getContentPane().add(btnEliminar);
 
-        // Detectar selección en la tabla
+        // Detect selection in the table
         table.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting() && table.getSelectedRow() != -1) {
                 btnEliminar.setEnabled(true);
@@ -201,18 +184,13 @@ public class GestionarEquipos extends JFrame {
                     String id = (String) tableModel.getValueAt(selectedRow, 0);
                     String nombre = (String) tableModel.getValueAt(selectedRow, 1);
                     String motor = (String) tableModel.getValueAt(selectedRow, 2);
-                    String nivelMotor = String.valueOf(tableModel.getValueAt(selectedRow, 3));
-                    String pais = (String) tableModel.getValueAt(selectedRow, 4);
-                    String temporada = (String) tableModel.getValueAt(selectedRow, 5);
-                    String piloto1 = (String) tableModel.getValueAt(selectedRow, 6);
-                    String piloto2 = (String) tableModel.getValueAt(selectedRow, 7);
-                    String fiabilidad = String.valueOf(tableModel.getValueAt(selectedRow, 8));
-                    String aerodinamica = String.valueOf(tableModel.getValueAt(selectedRow, 9));
-                    String puntos = String.valueOf(tableModel.getValueAt(selectedRow, 10));
-                    String campeonatos = String.valueOf(tableModel.getValueAt(selectedRow, 11));
+                    String pais = (String) tableModel.getValueAt(selectedRow, 3);
+                    String potencia = String.valueOf(tableModel.getValueAt(selectedRow, 4));
+                    String aerodinamica = String.valueOf(tableModel.getValueAt(selectedRow, 5));
+                    String fiabilidad = String.valueOf(tableModel.getValueAt(selectedRow, 6));
 
-                    // Abrir ventana de modificación
-                    abrirVentanaModificacion(id, nombre, motor, nivelMotor, pais, temporada, piloto1, piloto2, fiabilidad, aerodinamica, puntos, campeonatos);
+                    // Open modification window
+                    abrirVentanaModificacion(id, nombre, motor, pais, potencia, aerodinamica, fiabilidad);
                 } else {
                     JOptionPane.showMessageDialog(null, "Selecciona un equipo para modificar.");
                 }
@@ -236,37 +214,32 @@ public class GestionarEquipos extends JFrame {
         btnNewButton_2.setBounds(615, 15, 52, 51);
         btnNewButton_2.setText("");
         getContentPane().add(btnNewButton_2);
-        
+
         JLabel lblNewLabel_3_1 = new JLabel("Refrescar");
         lblNewLabel_3_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
         lblNewLabel_3_1.setBounds(677, 25, 69, 31);
         getContentPane().add(lblNewLabel_3_1);
     }
 
-    // Método para cargar todos los equipos en la tabla
+    // Method to load all teams into the table
     private void cargarEquipos() {
         ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
         try {
             conexion.conectar();
-            String sentencia = "SELECT * FROM equipo"; // Modified to load all teams
+            String sentencia = "SELECT * FROM equipo";
             ResultSet resultado = conexion.ejecutarSelect(sentencia);
-            // Limpiar tabla
+            // Clear table
             tableModel.setRowCount(0);
-            // Añadir filas a la tabla
+            // Add rows to the table
             while (resultado.next()) {
                 String Id = resultado.getString("Id");
                 String Nombre = resultado.getString("Nombre");
                 String Motor = resultado.getString("Motor");
-                int NivelMotor = resultado.getInt("NivelMotor");
                 String Pais = resultado.getString("Pais");
-                String Temporada = resultado.getString("Temporada");
-                String Piloto_1 = resultado.getString("Piloto_1");
-                String Piloto_2 = resultado.getString("Piloto_2");
-                int Fiabilidad = resultado.getInt("Fiabilidad");
+                int Potencia = resultado.getInt("Potencia");
                 int Aerodinamica = resultado.getInt("Aerodinamica");
-                int Puntos = resultado.getInt("Puntos");
-                int Campeonatos = resultado.getInt("Campeonatos");
-                tableModel.addRow(new Object[]{Id, Nombre, Motor, NivelMotor, Pais, Temporada, Piloto_1, Piloto_2, Fiabilidad, Aerodinamica, Puntos, Campeonatos});
+                int Fiabilidad = resultado.getInt("Fiabilidad");
+                tableModel.addRow(new Object[]{Id, Nombre, Motor, Pais, Potencia, Aerodinamica, Fiabilidad});
             }
             conexion.desconectar();
         } catch (SQLException ex) {
@@ -274,8 +247,8 @@ public class GestionarEquipos extends JFrame {
         }
     }
 
-    // Método para abrir la ventana de modificación
-    private void abrirVentanaModificacion(String id, String nombre, String motor, String nivelMotor, String pais, String temporada, String piloto1, String piloto2, String fiabilidad, String aerodinamica, String puntos, String campeonatos) {
+    // Method to open the modification window
+    private void abrirVentanaModificacion(String id, String nombre, String motor, String pais, String potencia, String aerodinamica, String fiabilidad) {
         JDialog dialog = new JDialog(this, "Modificar Equipo", true);
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         dialog.setBounds(0, 0, 800, 500);
@@ -300,50 +273,25 @@ public class GestionarEquipos extends JFrame {
         lblMotor.setBounds(238, 166, 83, 32);
         contentPane.add(lblMotor);
 
-        JLabel lblNivelMotor = new JLabel("NIVELMOTOR");
-        lblNivelMotor.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblNivelMotor.setBounds(171, 209, 148, 32);
-        contentPane.add(lblNivelMotor);
-
         JLabel lblPais = new JLabel("PAIS");
         lblPais.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblPais.setBounds(234, 252, 74, 32);
+        lblPais.setBounds(234, 209, 74, 32);
         contentPane.add(lblPais);
 
-        JLabel lblTemporada = new JLabel("TEMPORADA");
-        lblTemporada.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblTemporada.setBounds(450, 252, 129, 32);
-        contentPane.add(lblTemporada);
-
-        JLabel lblPiloto1 = new JLabel("PILOTO 1");
-        lblPiloto1.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblPiloto1.setBounds(215, 295, 106, 32);
-        contentPane.add(lblPiloto1);
-
-        JLabel lblPiloto2 = new JLabel("PILOTO 2");
-        lblPiloto2.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblPiloto2.setBounds(192, 338, 129, 32);
-        contentPane.add(lblPiloto2);
-
-        JLabel lblFiabilidad = new JLabel("FIABILIDAD");
-        lblFiabilidad.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblFiabilidad.setBounds(192, 381, 129, 32);
-        contentPane.add(lblFiabilidad);
+        JLabel lblPotencia = new JLabel("POTENCIA");
+        lblPotencia.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+        lblPotencia.setBounds(450, 209, 129, 32);
+        contentPane.add(lblPotencia);
 
         JLabel lblAerodinamica = new JLabel("AERODINAMICA");
         lblAerodinamica.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblAerodinamica.setBounds(192, 424, 129, 32);
+        lblAerodinamica.setBounds(234, 252, 129, 32);
         contentPane.add(lblAerodinamica);
 
-        JLabel lblPuntos = new JLabel("PUNTOS");
-        lblPuntos.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblPuntos.setBounds(450, 295, 83, 32);
-        contentPane.add(lblPuntos);
-
-        JLabel lblCampeonatos = new JLabel("CAMPEONATOS");
-        lblCampeonatos.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblCampeonatos.setBounds(450, 338, 129, 32);
-        contentPane.add(lblCampeonatos);
+        JLabel lblFiabilidad = new JLabel("FIABILIDAD");
+        lblFiabilidad.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+        lblFiabilidad.setBounds(450, 252, 129, 32);
+        contentPane.add(lblFiabilidad);
 
         JTextField textId = new JTextField(id);
         textId.setColumns(10);
@@ -360,50 +308,25 @@ public class GestionarEquipos extends JFrame {
         textMotor.setBounds(329, 150, 149, 20);
         contentPane.add(textMotor);
 
-        JTextField textNivelMotor = new JTextField(nivelMotor);
-        textNivelMotor.setColumns(10);
-        textNivelMotor.setBounds(329, 180, 149, 20);
-        contentPane.add(textNivelMotor);
-
         JTextField textPais = new JTextField(pais);
         textPais.setColumns(10);
-        textPais.setBounds(329, 210, 149, 20);
+        textPais.setBounds(329, 180, 149, 20);
         contentPane.add(textPais);
 
-        JTextField textTemporada = new JTextField(temporada);
-        textTemporada.setColumns(10);
-        textTemporada.setBounds(510, 260, 149, 20);
-        contentPane.add(textTemporada);
-
-        JTextField textPiloto1 = new JTextField(piloto1);
-        textPiloto1.setColumns(10);
-        textPiloto1.setBounds(329, 240, 149, 20);
-        contentPane.add(textPiloto1);
-
-        JTextField textPiloto2 = new JTextField(piloto2);
-        textPiloto2.setColumns(10);
-        textPiloto2.setBounds(329, 270, 149, 20);
-        contentPane.add(textPiloto2);
-
-        JTextField textFiabilidad = new JTextField(fiabilidad);
-        textFiabilidad.setColumns(10);
-        textFiabilidad.setBounds(329, 300, 149, 20);
-        contentPane.add(textFiabilidad);
+        JTextField textPotencia = new JTextField(potencia);
+        textPotencia.setColumns(10);
+        textPotencia.setBounds(510, 180, 149, 20);
+        contentPane.add(textPotencia);
 
         JTextField textAerodinamica = new JTextField(aerodinamica);
         textAerodinamica.setColumns(10);
-        textAerodinamica.setBounds(329, 330, 149, 20);
+        textAerodinamica.setBounds(329, 210, 149, 20);
         contentPane.add(textAerodinamica);
 
-        JTextField textPuntos = new JTextField(puntos);
-        textPuntos.setColumns(10);
-        textPuntos.setBounds(510, 300, 149, 20);
-        contentPane.add(textPuntos);
-
-        JTextField textCampeonatos = new JTextField(campeonatos);
-        textCampeonatos.setColumns(10);
-        textCampeonatos.setBounds(510, 330, 149, 20);
-        contentPane.add(textCampeonatos);
+        JTextField textFiabilidad = new JTextField(fiabilidad);
+        textFiabilidad.setColumns(10);
+        textFiabilidad.setBounds(510, 210, 149, 20);
+        contentPane.add(textFiabilidad);
 
         JButton btnGuardar = new JButton("Guardar");
         btnGuardar.addActionListener(new ActionListener() {
@@ -413,22 +336,17 @@ public class GestionarEquipos extends JFrame {
                     conexion.conectar();
                     String sentencia = "UPDATE equipo SET Nombre='" + textNombre.getText() +
                             "', Motor='" + textMotor.getText() +
-                            "', NivelMotor=" + textNivelMotor.getText() +
-                            ", Pais='" + textPais.getText() +
-                            "', Temporada='" + textTemporada.getText() +
-                            "', Piloto_1='" + textPiloto1.getText() +
-                            "', Piloto_2='" + textPiloto2.getText() +
-                            "', Fiabilidad=" + textFiabilidad.getText() +
+                            "', Pais='" + textPais.getText() +
+                            "', Potencia=" + textPotencia.getText() +
                             ", Aerodinamica=" + textAerodinamica.getText() +
-                            ", Puntos=" + textPuntos.getText() +
-                            ", Campeonatos=" + textCampeonatos.getText() +
+                            ", Fiabilidad=" + textFiabilidad.getText() +
                             " WHERE Id='" + textId.getText() + "'";
 
                     int rowsAffected = conexion.ejecutarInsertDeleteUpdate(sentencia);
                     if (rowsAffected > 0) {
                         JOptionPane.showMessageDialog(dialog, "Equipo modificado con éxito.");
                         dialog.dispose();
-                        cargarEquipos(); // Recargar la tabla
+                        cargarEquipos(); // Reload the table
                     } else {
                         JOptionPane.showMessageDialog(dialog, "No se pudo modificar el equipo.");
                     }
