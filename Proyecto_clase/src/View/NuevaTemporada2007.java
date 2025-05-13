@@ -501,6 +501,16 @@ public class NuevaTemporada2007 extends JFrame {
                     conexion.conectar();
                     String sentencia = "UPDATE piloto SET Puntos = 0";
                     conexion.ejecutarInsertDeleteUpdate(sentencia);
+                    String sentencia1 = "UPDATE carreras SET indice_actual = -1";
+                    conexion.ejecutarInsertDeleteUpdate(sentencia1);
+                    JOptionPane.showMessageDialog(null, "Temporada Reiniciada");
+                    // Opcional: Actualizar el estado visual en la ventana principal
+                    currentRaceIndex = -1;
+                    for (JLabel label : raceLabels) {
+                        label.setOpaque(false);
+                        label.setBackground(null);
+                        label.setFont(new Font("Dialog", Font.PLAIN, 12));
+                    }
                     conexion.desconectar();
                     JOptionPane.showMessageDialog(null, "¡Puntos reiniciados correctamente!");
                 } catch (SQLException ex) {
