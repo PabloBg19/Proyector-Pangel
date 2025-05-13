@@ -33,7 +33,7 @@ public class RaceWindow extends JFrame {
     private static final int Y_POSITION = 100;
     private static final int POINT_SIZE = 10;
     private static final int NUM_PILOTS = 20;
-    private static final int TOTAL_LAPS = 10;
+    private static final int TOTAL_LAPS = 3;
 
     // F1 2025 drivers and their team colors
     private static final String[] DRIVERS = {
@@ -225,16 +225,5 @@ public class RaceWindow extends JFrame {
         }
     }
 
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    RaceWindow frame = new RaceWindow("Gran Premio de Albert Park");
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
+    
     }
-}
