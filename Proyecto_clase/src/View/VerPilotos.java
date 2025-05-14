@@ -224,7 +224,8 @@ public class VerPilotos extends JFrame {
         ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
         try {
             conexion.conectar();
-            String sentencia = "SELECT * FROM piloto ORDER BY CAST(SUBSTRING(Id, 2) AS UNSIGNED) ASC";
+            String sentencia = "SELECT * FROM piloto ORDER BY CAST(SUBSTRING(Id, 2) AS UNSIGNED) ASC"; //ordena los id de los pilotos: p1, p2, p3...
+            																									
             ResultSet resultado = conexion.ejecutarSelect(sentencia);
             tableModel.setRowCount(0);
             while (resultado.next()) {

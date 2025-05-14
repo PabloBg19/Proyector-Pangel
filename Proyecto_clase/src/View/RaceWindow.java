@@ -118,7 +118,7 @@ public class RaceWindow extends JFrame {
             panelContenido.add(lblNewLabel);
 
             JPanel panelClasificacion = new JPanel();
-            panelClasificacion.setBounds(10, 20, 169, 530);
+            panelClasificacion.setBounds(0, 11, 140, 466);
             panelClasificacion.setBackground(new Color(20, 20, 20));
             panelClasificacion.setLayout(null);
             panelContenido.add(panelClasificacion);

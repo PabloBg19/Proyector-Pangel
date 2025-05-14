@@ -79,7 +79,7 @@ public class NuevaTemporada2007 extends JFrame {
         JLabel lblGPAustralia_1_1_1_1 = new JLabel("Gran Premio de Silverstone");
         lblGPAustralia_1_1_1_1.setBounds(147, 239, 140, 14);
         contentPane.add(lblGPAustralia_1_1_1_1);
-        raceLabels[4] = lblGPAustralia_1_1_1_1;
+        raceLabels[4] = (lblGPAustralia_1_1_1_1);
 
         JLabel lblRAustralia_1_1_1_1 = new JLabel("R");
         lblRAustralia_1_1_1_1.setBounds(328, 239, 25, 14);
@@ -124,7 +124,7 @@ public class NuevaTemporada2007 extends JFrame {
         JLabel lblGPAustralia_2_1_1_2 = new JLabel("Gran Premio de Brasil");
         lblGPAustralia_2_1_1_2.setBounds(383, 239, 140, 14);
         contentPane.add(lblGPAustralia_2_1_1_2);
-        raceLabels[9] = lblGPAustralia_2_1_1_2;
+        raceLabels[9] = (lblGPAustralia_2_1_1_2);
 
         JLabel lblRAustralia_2_1_1_3 = new JLabel("R");
         lblRAustralia_2_1_1_3.setBounds(559, 239, 25, 14);
@@ -137,10 +137,10 @@ public class NuevaTemporada2007 extends JFrame {
 
         JButton btnVerClasificacin = new JButton("Ver Clasificación");
         btnVerClasificacin.addActionListener(new ActionListener() {
-        	public void actionPerformed(ActionEvent e) {
-        		verClasificacion temp=new verClasificacion();
-        		temp.setVisible(true);
-        	}
+            public void actionPerformed(ActionEvent e) {
+                verClasificacion temp = new verClasificacion();
+                temp.setVisible(true);
+            }
         });
         btnVerClasificacin.setBounds(292, 353, 157, 51);
         contentPane.add(btnVerClasificacin);
@@ -237,32 +237,29 @@ public class NuevaTemporada2007 extends JFrame {
         private JLabel[] etiquetasPosicion;
         private JLabel[] etiquetasPosicionEnVivo;
         private JLabel[] etiquetasNombrePiloto;
+        private JLabel[] etiquetasVueltas;
         private JPanel[] filasClasificacion;
         private boolean[] haTerminado;
         private ArrayList<Integer> ordenLlegada;
         private int[] vueltasCompletadas;
-        private static final int X_INICIO = 150;
+        private static final int X_INICIO = 250;
         private static final int X_FIN = 700;
         private static final int Y_POSICION = 100;
         private static final int TAMANO_PUNTO = 10;
         private static final int NUM_PILOTOS = 20;
-        private static final int TOTAL_VUELTAS = 1;
+        private static final int TOTAL_VUELTAS = 3;
         private JLabel lblNewLabel;
+        private JLabel etiquetaVueltasCarrera;
 
         private Map<String, Integer> puntosPorPiloto = new HashMap<>();
 
-        private static final String[] PILOTOS = {
-            "Fernando Alonso", "Lewis Hamilton", "Kimi Räikkönen", "Felipe Massa",
-            "Giancarlo Fisichella", "Heikki Kovalainen", "Nick Heidfeld", "Robert Kubica",
-            "Nico Rosberg", "Alexander Wurz", "Rubens Barrichello", "Jenson Button",
-            "David Coulthard", "Mark Webber", "Ralf Schumacher", "Jarno Trulli",
-            "Anthony Davidson", "Takuma Sato", "Vitantonio Liuzzi", "Scott Speed"
-        };
         private static final String[] PILOT_IDS = {
             "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8",
             "P9", "P10", "P11", "P12", "P13", "P14", "P15", "P16",
             "P17", "P18", "P19", "P20"
         };
+        private String[] PILOTOS; // Cambiado a no estático para llenarlo dinámicamente
+
         private static final Color[] COLORES_EQUIPOS = {
             new Color(200, 200, 200), new Color(200, 200, 200), new Color(220, 0, 0), new Color(220, 0, 0),
             new Color(0, 153, 0), new Color(0, 153, 0), new Color(0, 102, 204), new Color(0, 102, 204),
@@ -285,6 +282,28 @@ public class NuevaTemporada2007 extends JFrame {
             setContentPane(panelContenido);
             panelContenido.setLayout(null);
 
+            // Cargar nombres de pilotos desde la base de datos
+            PILOTOS = new String[NUM_PILOTOS];
+            ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");  
+            try {
+                conexion.conectar();
+                String query = "SELECT * FROM piloto ORDER BY CAST(SUBSTRING(Id, 2) AS UNSIGNED) ASC"; // Ajusta "Nombre" según tu columna del id 
+                ResultSet result = conexion.ejecutarSelect(query);
+                int index = 0;
+                while (result.next() && index < NUM_PILOTOS) {   //recorre la tabla extraida de los pilotos ordenador con el id y les asigna su nombre 
+                    PILOTOS[index] = result.getString("Nombre");
+                    index++; //suma uno el index es decir avanza al siguiente piloto
+                }
+                result.close();
+                conexion.desconectar();
+            } catch (SQLException e) {
+                e.printStackTrace();
+                // Si falla la conexión, usar valores por defecto   
+                PILOTOS = new String[]{"Piloto1", "Piloto2", "Piloto3", "Piloto4", "Piloto5", "Piloto6", "Piloto7", "Piloto8",
+                        "Piloto9", "Piloto10", "Piloto11", "Piloto12", "Piloto13", "Piloto14", "Piloto15", "Piloto16",
+                        "Piloto17", "Piloto18", "Piloto19", "Piloto20"};
+            }
+
             JLabel etiquetaTituloCarrera = new JLabel(nombreCarrera);
             etiquetaTituloCarrera.setFont(new Font("Arial", Font.BOLD, 24));
             etiquetaTituloCarrera.setBounds(369, 11, 277, 67);
@@ -300,6 +319,7 @@ public class NuevaTemporada2007 extends JFrame {
             etiquetasPosicion = new JLabel[NUM_PILOTOS];
             etiquetasPosicionEnVivo = new JLabel[NUM_PILOTOS];
             etiquetasNombrePiloto = new JLabel[NUM_PILOTOS];
+            etiquetasVueltas = new JLabel[NUM_PILOTOS];
             filasClasificacion = new JPanel[NUM_PILOTOS];
             haTerminado = new boolean[NUM_PILOTOS];
             ordenLlegada = new ArrayList<>();
@@ -314,9 +334,17 @@ public class NuevaTemporada2007 extends JFrame {
             lblNewLabel.setBounds(752, 461, 46, 14);
             panelContenido.add(lblNewLabel);
 
+            etiquetaVueltasCarrera = new JLabel("Vuelta 0/" + TOTAL_VUELTAS);
+            etiquetaVueltasCarrera.setFont(new Font("Arial", Font.BOLD, 14));
+            etiquetaVueltasCarrera.setForeground(Color.WHITE);
+            etiquetaVueltasCarrera.setBounds(5, 70, 200, 20);
+            etiquetaVueltasCarrera.setOpaque(true);
+            etiquetaVueltasCarrera.setBackground(Color.BLACK);
+            panelContenido.add(etiquetaVueltasCarrera);
+
             JPanel panelClasificacion = new JPanel();
-            panelClasificacion.setBounds(10, 20, 169, 450); // Ajustado para mejor visualización
-            panelClasificacion.setBackground(Color.BLACK); // Fondo completamente negro
+            panelClasificacion.setBounds(5, Y_POSICION, 200, 420);
+            panelClasificacion.setBackground(Color.BLACK);
             panelClasificacion.setOpaque(true);
             panelClasificacion.setLayout(null);
             panelContenido.add(panelClasificacion);
@@ -324,7 +352,7 @@ public class NuevaTemporada2007 extends JFrame {
             for (int i = 0; i < NUM_PILOTOS; i++) {
                 puntosPilotos[i] = new JPanel();
                 puntosPilotos[i].setBounds(X_INICIO, Y_POSICION + (i * 20), TAMANO_PUNTO, TAMANO_PUNTO);
-                puntosPilotos[i].setBackground(COLORES_EQUIPOS[i]); // Mantenemos los colores para los puntos
+                puntosPilotos[i].setBackground(COLORES_EQUIPOS[i]);
                 puntosPilotos[i].setOpaque(true);
                 panelContenido.add(puntosPilotos[i]);
                 posicionesPilotos[i] = X_INICIO;
@@ -337,8 +365,8 @@ public class NuevaTemporada2007 extends JFrame {
                 panelContenido.add(etiquetasPosicion[i]);
 
                 filasClasificacion[i] = new JPanel();
-                filasClasificacion[i].setBounds(0, 10 + (i * 20), 169, 20); // Ajustado para que quepan todos
-                filasClasificacion[i].setBackground(Color.BLACK); // Fondo negro para las filas
+                filasClasificacion[i].setBounds(0, i * 20, 200, 20);
+                filasClasificacion[i].setBackground(Color.BLACK);
                 filasClasificacion[i].setOpaque(true);
                 filasClasificacion[i].setLayout(null);
                 panelClasificacion.add(filasClasificacion[i]);
@@ -350,10 +378,16 @@ public class NuevaTemporada2007 extends JFrame {
                 filasClasificacion[i].add(etiquetasPosicionEnVivo[i]);
 
                 etiquetasNombrePiloto[i] = new JLabel(PILOTOS[i]);
-                etiquetasNombrePiloto[i].setFont(new Font("Arial", Font.BOLD, 12));
+                etiquetasNombrePiloto[i].setFont(new Font("Arial", Font.BOLD, 10));
                 etiquetasNombrePiloto[i].setForeground(Color.WHITE);
-                etiquetasNombrePiloto[i].setBounds(40, 0, 120, 20); // Aumentado para nombres largos
+                etiquetasNombrePiloto[i].setBounds(40, 0, 120, 20);
                 filasClasificacion[i].add(etiquetasNombrePiloto[i]);
+
+                etiquetasVueltas[i] = new JLabel("0/" + TOTAL_VUELTAS);
+                etiquetasVueltas[i].setFont(new Font("Arial", Font.BOLD, 10));
+                etiquetasVueltas[i].setForeground(Color.WHITE);
+                etiquetasVueltas[i].setBounds(160, 0, 40, 20);
+                filasClasificacion[i].add(etiquetasVueltas[i]);
             }
 
             JLabel lineaMeta = new JLabel("META");
@@ -384,6 +418,8 @@ public class NuevaTemporada2007 extends JFrame {
             btnNewButton.setBounds(494, 521, 109, 28);
             panelContenido.add(btnNewButton);
 
+            panelContenido.setComponentZOrder(panelClasificacion, 0);
+
             Timer temporizador = new Timer(50, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
@@ -394,6 +430,7 @@ public class NuevaTemporada2007 extends JFrame {
                             posicionesPilotos[i] += velocidad;
                             if (posicionesPilotos[i] >= X_FIN) {
                                 vueltasCompletadas[i]++;
+                                etiquetasVueltas[i].setText(vueltasCompletadas[i] + "/" + TOTAL_VUELTAS);
                                 if (vueltasCompletadas[i] < TOTAL_VUELTAS) {
                                     posicionesPilotos[i] = X_INICIO;
                                 } else {
@@ -412,6 +449,9 @@ public class NuevaTemporada2007 extends JFrame {
                             puntosPilotos[i].setLocation(posicionesPilotos[i], Y_POSICION + (i * 20));
                         }
                     }
+
+                    int vueltaMaxima = Arrays.stream(vueltasCompletadas).max().getAsInt();
+                    etiquetaVueltasCarrera.setText("Vuelta " + vueltaMaxima + "/" + TOTAL_VUELTAS);
 
                     Integer[] indices = new Integer[NUM_PILOTOS];
                     for (int i = 0; i < NUM_PILOTOS; i++) {
@@ -434,8 +474,10 @@ public class NuevaTemporada2007 extends JFrame {
                     for (int i = 0; i < NUM_PILOTOS; i++) {
                         int idx = indices[i];
                         etiquetasPosicionEnVivo[idx].setText(String.valueOf(i + 1));
-                        filasClasificacion[idx].setBounds(0, 10 + (i * 20), 169, 20);
+                        filasClasificacion[idx].setBounds(0, i * 20, 200, 20);
+                        panelClasificacion.add(filasClasificacion[idx], 0);
                         etiquetasNombrePiloto[idx].setText(PILOTOS[idx]);
+                        etiquetasVueltas[idx].setText(vueltasCompletadas[idx] + "/" + TOTAL_VUELTAS);
                     }
 
                     panelContenido.repaint();
@@ -462,6 +504,7 @@ public class NuevaTemporada2007 extends JFrame {
             }
         }
     }
+    
 
     private void Reiniciar() {
         JFrame reiniciarFrame = new JFrame("Reiniciar Puntos y Temporada");
