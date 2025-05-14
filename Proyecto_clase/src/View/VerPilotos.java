@@ -117,7 +117,7 @@ public class VerPilotos extends JFrame {
                 ex.printStackTrace();
             }
         });
-        btnEquipo.setBounds(570, 77, 146, 31);
+        btnEquipo.setBounds(570, 77, 146, 31);///cabroooooon
         getContentPane().add(btnEquipo);
 
         JLabel lblNewLabel_3 = new JLabel("VER PILOTOS");
