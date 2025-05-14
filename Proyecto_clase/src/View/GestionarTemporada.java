@@ -37,7 +37,7 @@ public class GestionarTemporada extends JFrame {
 		
 		JLabel lblNewLabel_1 = new JLabel("Gestionar Temporada");
 		lblNewLabel_1.setFont(new Font("Segoe UI Semibold", Font.PLAIN, 31));
-		lblNewLabel_1.setBounds(201, 24, 325, 90);
+		lblNewLabel_1.setBounds(219, 24, 325, 90);
 		contentPane.add(lblNewLabel_1);
 		
 		JButton btnEnviar_1 = new JButton("Añadir Temporada");
@@ -49,15 +49,15 @@ public class GestionarTemporada extends JFrame {
 				
 			}
 		});
-		btnEnviar_1.setBounds(74, 268, 169, 52);
+		btnEnviar_1.setBounds(92, 268, 169, 52);
 		contentPane.add(btnEnviar_1);
 		
 		JButton btnEnviar_2 = new JButton("Modificar Temporada");
-		btnEnviar_2.setBounds(267, 268, 160, 52);
+		btnEnviar_2.setBounds(285, 268, 160, 52);
 		contentPane.add(btnEnviar_2);
 		
 		JButton btnEnviar_3 = new JButton("Eliminar Temporada");
-		btnEnviar_3.setBounds(451, 268, 160, 52);
+		btnEnviar_3.setBounds(469, 268, 160, 52);
 		contentPane.add(btnEnviar_3);
 	}
 }

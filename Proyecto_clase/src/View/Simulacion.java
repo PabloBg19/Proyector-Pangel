@@ -30,17 +30,9 @@ public class Simulacion extends JFrame {
 		contentPane.setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("SELECCIONA TEMPORADA");
-		lblNewLabel.setBounds(132, 25, 496, 39);
+		lblNewLabel.setBounds(132, 31, 496, 39);
 		lblNewLabel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
 		contentPane.add(lblNewLabel);
-		
-		JButton btnTewmporada2026 = new JButton("Temporada 2026");
-		btnTewmporada2026.setBounds(490, 221, 138, 56);
-		contentPane.add(btnTewmporada2026);
-		
-		JButton btnTemporada2010 = new JButton("Temporada 2010");
-		btnTemporada2010.setBounds(312, 221, 138, 56);
-		contentPane.add(btnTemporada2010);
 		
 		JButton btnTemporada2007 = new JButton("Temporada 2007");
 		btnTemporada2007.addActionListener(new ActionListener() {
@@ -50,7 +42,7 @@ public class Simulacion extends JFrame {
 				temp.setVisible(true);
 			}
 		});
-		btnTemporada2007.setBounds(132, 221, 138, 56);
+		btnTemporada2007.setBounds(290, 204, 161, 66);
 		contentPane.add(btnTemporada2007);
 	}
 }
