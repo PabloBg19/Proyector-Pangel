@@ -22,7 +22,7 @@
 			<attribute name="module" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="/Proyector-Pangel/Proyecto_clase/bin/lib/mysql-connector-java-8.0.20.jar">
+	<classpathentry kind="lib" path="src/lib/mysql-connector-java-8.0.20.jar">
 		<attributes>
 			<attribute name="module" value="true"/>
 		</attributes>
