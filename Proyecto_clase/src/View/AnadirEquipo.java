@@ -41,77 +41,77 @@ public class AnadirEquipo extends JFrame {
 
         JLabel lbl_Id = new JLabel("ID");
         lbl_Id.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lbl_Id.setBounds(283, 50, 39, 32);
+        lbl_Id.setBounds(283, 105, 39, 32);
         contentPane.add(lbl_Id);
 
         JLabel lblNewLabel_1 = new JLabel("AÑADIR EQUIPOS");
         lblNewLabel_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
-        lblNewLabel_1.setBounds(233, 0, 338, 54);
+        lblNewLabel_1.setBounds(234, 11, 338, 54);
         contentPane.add(lblNewLabel_1);
 
         JLabel lblNombre = new JLabel("NOMBRE");
         lblNombre.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblNombre.setBounds(239, 93, 83, 32);
+        lblNombre.setBounds(239, 148, 83, 32);
         contentPane.add(lblNombre);
 
         JLabel lblMotor = new JLabel("MOTOR");
         lblMotor.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblMotor.setBounds(239, 136, 83, 32);
+        lblMotor.setBounds(239, 191, 83, 32);
         contentPane.add(lblMotor);
 
         JLabel lblPais = new JLabel("PAIS");
         lblPais.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblPais.setBounds(265, 179, 50, 32);
+        lblPais.setBounds(265, 234, 50, 32);
         contentPane.add(lblPais);
 
         JLabel lblPotencia = new JLabel("POTENCIA");
         lblPotencia.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblPotencia.setBounds(220, 222, 102, 32);
+        lblPotencia.setBounds(220, 277, 102, 32);
         contentPane.add(lblPotencia);
 
         JLabel lblAerodinamica = new JLabel("AERODINÁMICA");
         lblAerodinamica.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblAerodinamica.setBounds(180, 265, 155, 32);
+        lblAerodinamica.setBounds(180, 320, 155, 32);
         contentPane.add(lblAerodinamica);
 
         JLabel lblFiabilidad = new JLabel("FIABILIDAD");
         lblFiabilidad.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblFiabilidad.setBounds(220, 308, 102, 32);
+        lblFiabilidad.setBounds(220, 363, 102, 32);
         contentPane.add(lblFiabilidad);
 
         textId = new JTextField();
-        textId.setBounds(345, 60, 148, 20);
+        textId.setBounds(345, 115, 148, 20);
         contentPane.add(textId);
         textId.setColumns(10);
 
         textNombre = new JTextField();
         textNombre.setColumns(10);
-        textNombre.setBounds(345, 100, 148, 20);
+        textNombre.setBounds(345, 155, 148, 20);
         contentPane.add(textNombre);
 
         textMotor = new JTextField();
         textMotor.setColumns(10);
-        textMotor.setBounds(345, 140, 148, 20);
+        textMotor.setBounds(345, 195, 148, 20);
         contentPane.add(textMotor);
 
         textPais = new JTextField();
         textPais.setColumns(10);
-        textPais.setBounds(345, 180, 148, 20);
+        textPais.setBounds(345, 235, 148, 20);
         contentPane.add(textPais);
 
         textPotencia = new JTextField();
         textPotencia.setColumns(10);
-        textPotencia.setBounds(345, 230, 148, 20);
+        textPotencia.setBounds(345, 285, 148, 20);
         contentPane.add(textPotencia);
 
         textField_Aerodinamica = new JTextField();
         textField_Aerodinamica.setColumns(10);
-        textField_Aerodinamica.setBounds(345, 270, 148, 20);
+        textField_Aerodinamica.setBounds(345, 325, 148, 20);
         contentPane.add(textField_Aerodinamica);
 
         textField_Fiabilidad = new JTextField();
         textField_Fiabilidad.setColumns(10);
-        textField_Fiabilidad.setBounds(345, 310, 148, 20);
+        textField_Fiabilidad.setBounds(345, 365, 148, 20);
         contentPane.add(textField_Fiabilidad);
 
         JButton btnEnviar = new JButton("ENVIAR");
@@ -156,7 +156,7 @@ public class AnadirEquipo extends JFrame {
                 }
             }
         });
-        btnEnviar.setBounds(596, 228, 102, 39);
+        btnEnviar.setBounds(596, 283, 102, 39);
         contentPane.add(btnEnviar);
     }
 }

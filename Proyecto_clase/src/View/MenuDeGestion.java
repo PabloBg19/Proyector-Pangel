@@ -44,12 +44,12 @@ public class MenuDeGestion extends JFrame {
 			}
 		});
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnNewButton.setBounds(113, 137, 272, 54);
+		btnNewButton.setBounds(113, 180, 272, 54);
 		contentPane.add(btnNewButton);
 		
 		JLabel lblNewLabel = new JLabel("MENÚ DE GESTIÓN");
 		lblNewLabel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
-		lblNewLabel.setBounds(200, 24, 394, 63);
+		lblNewLabel.setBounds(200, 32, 394, 63);
 		contentPane.add(lblNewLabel);
 		
 		JButton btnGestionarEquipos = new JButton("Gestionar Equipos");
@@ -60,23 +60,11 @@ public class MenuDeGestion extends JFrame {
 			}
 		});
 		btnGestionarEquipos.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnGestionarEquipos.setBounds(113, 220, 272, 54);
+		btnGestionarEquipos.setBounds(113, 277, 272, 54);
 		contentPane.add(btnGestionarEquipos);
 		
-		JButton btnGestionarTemporadas = new JButton("Gestionar Temporadas");
-		btnGestionarTemporadas.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) 
-			{
-				GestionarTemporada temp=new GestionarTemporada(); //construir nueva ventana
-				temp.setVisible(true); //hacer visible la ventana
-			}
-		});
-		btnGestionarTemporadas.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnGestionarTemporadas.setBounds(113, 307, 272, 54);
-		contentPane.add(btnGestionarTemporadas);
-		
 		JLabel label_casco = new JLabel("");
-		label_casco.setBounds(483, 137, 69, 54);
+		label_casco.setBounds(483, 180, 69, 54);
 		contentPane.add(label_casco);
 
 		// Código para poner la imagen que se adapta de forma dinámica
@@ -85,7 +73,7 @@ public class MenuDeGestion extends JFrame {
 		label_casco.setIcon(new ImageIcon(img));
 		
 		JLabel label_coche = new JLabel("");
-		label_coche.setBounds(468, 212, 103, 77);
+		label_coche.setBounds(468, 269, 103, 77);
 		contentPane.add(label_coche);
 		
 		// Código para poner la imagen que se adapta de forma dinámica
@@ -94,14 +82,7 @@ public class MenuDeGestion extends JFrame {
 		Image img2 = icon2.getImage().getScaledInstance(label_coche.getWidth(), label_coche.getHeight(), Image.SCALE_SMOOTH);
 		label_coche.setIcon(new ImageIcon(img2));
 		
-		
-		JLabel label_track = new JLabel("");
-		label_track.setBounds(468, 300, 103, 77);
-		contentPane.add(label_track);
-		
 		ImageIcon icon3 = new ImageIcon(MenuDeGestion.class.getResource("/image/Track.png"));
-		Image img3 = icon3.getImage().getScaledInstance(label_track.getWidth(), label_track.getHeight(), Image.SCALE_SMOOTH);
-		label_track.setIcon(new ImageIcon(img3));
 
 	}
 }
