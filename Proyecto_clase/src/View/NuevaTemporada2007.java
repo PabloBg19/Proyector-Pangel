@@ -251,6 +251,18 @@ public class NuevaTemporada2007 extends JFrame {
         private JLabel lblNewLabel;
         private JLabel etiquetaVueltasCarrera;
 
+        // Animation variables for squares and rows
+        private double[] currentYSquares;
+        private double[] targetYSquares;
+        private double[] currentYRows;
+        private double[] targetYRows;
+        // Animation variables for points labels
+        private double[] currentYPoints;
+        private double[] targetYPoints;
+        private static final int ANIMATION_DURATION = 500;
+        private static final int ANIMATION_STEP_TIME = 20;
+        private double animationProgress;
+
         private Map<String, Integer> puntosPorPiloto = new HashMap<>();
 
         private static final String[] PILOT_IDS = {
@@ -315,11 +327,28 @@ public class NuevaTemporada2007 extends JFrame {
             vueltasCompletadas = new int[NUM_PILOTOS];
             Random aleatorio = new Random();
 
+            // Initialize animation arrays
+            currentYSquares = new double[NUM_PILOTOS];
+            targetYSquares = new double[NUM_PILOTOS];
+            currentYRows = new double[NUM_PILOTOS];
+            targetYRows = new double[NUM_PILOTOS];
+            currentYPoints = new double[NUM_PILOTOS];
+            targetYPoints = new double[NUM_PILOTOS];
+            animationProgress = 1.0;
+
             for (int i = 0; i < NUM_PILOTOS; i++) {
                 puntosPorPiloto.put(PILOT_IDS[i], 0);
+                currentYSquares[i] = Y_POSICION + (i * 20);
+                targetYSquares[i] = Y_POSICION + (i * 20);
+                currentYRows[i] = i * 20;
+                targetYRows[i] = i * 20;
+                currentYPoints[i] = Y_POSICION + (i * 20) - 5;
+                targetYPoints[i] = Y_POSICION + (i * 20) - 5;
             }
 
-            
+            lblNewLabel = new JLabel();
+            lblNewLabel.setBounds(0, 0, 0, 0);
+            panelContenido.add(lblNewLabel);
 
             etiquetaVueltasCarrera = new JLabel("Vuelta 0/" + TOTAL_VUELTAS);
             etiquetaVueltasCarrera.setFont(new Font("Arial", Font.BOLD, 14));
@@ -338,7 +367,7 @@ public class NuevaTemporada2007 extends JFrame {
 
             for (int i = 0; i < NUM_PILOTOS; i++) {
                 puntosPilotos[i] = new JPanel();
-                puntosPilotos[i].setBounds(X_INICIO, Y_POSICION + (i * 20), TAMANO_PUNTO, TAMANO_PUNTO);
+                puntosPilotos[i].setBounds(X_INICIO, (int)currentYSquares[i], TAMANO_PUNTO, TAMANO_PUNTO);
                 puntosPilotos[i].setBackground(COLORES_EQUIPOS[i]);
                 puntosPilotos[i].setOpaque(true);
                 panelContenido.add(puntosPilotos[i]);
@@ -348,11 +377,11 @@ public class NuevaTemporada2007 extends JFrame {
 
                 etiquetasPosicion[i] = new JLabel("");
                 etiquetasPosicion[i].setFont(new Font("Arial", Font.PLAIN, 12));
-                etiquetasPosicion[i].setBounds(X_FIN + 10, Y_POSICION + (i * 20) - 5, 50, 20);
+                etiquetasPosicion[i].setBounds(X_FIN + 10, (int)currentYPoints[i], 50, 20);
                 panelContenido.add(etiquetasPosicion[i]);
 
                 filasClasificacion[i] = new JPanel();
-                filasClasificacion[i].setBounds(0, i * 20, 200, 20);
+                filasClasificacion[i].setBounds(0, (int)currentYRows[i], 200, 20);
                 filasClasificacion[i].setBackground(Color.BLACK);
                 filasClasificacion[i].setOpaque(true);
                 filasClasificacion[i].setLayout(null);
@@ -413,9 +442,10 @@ public class NuevaTemporada2007 extends JFrame {
 
             panelContenido.setComponentZOrder(panelClasificacion, 0);
 
-            Timer temporizador = new Timer(50, new ActionListener() {
+            Timer temporizador = new Timer(ANIMATION_STEP_TIME, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
+                    // Update pilot positions on the track (x-coordinates)
                     for (int i = 0; i < NUM_PILOTOS; i++) {
                         if (!haTerminado[i]) {
                             int velocidadMaxima = Math.max(1, PUNTUACIONES_RENDIMIENTO[i]);
@@ -430,22 +460,16 @@ public class NuevaTemporada2007 extends JFrame {
                                     posicionesPilotos[i] = X_FIN;
                                     haTerminado[i] = true;
                                     ordenLlegada.add(i);
-                                    int posicion = ordenLlegada.indexOf(i) + 1;
-                                    int puntos = obtenerPuntosPorPosicion(posicion);
-                                    puntosPorPiloto.put(PILOT_IDS[i], puntos);
-                                    if (i == 0) {
-                                        lblNewLabel.setText(String.valueOf(puntos));
-                                    }
-                                    etiquetasPosicion[i].setText(posicion + " + " + puntos);
                                 }
                             }
-                            puntosPilotos[i].setLocation(posicionesPilotos[i], Y_POSICION + (i * 20));
                         }
                     }
 
+                    // Update the overall race lap counter
                     int vueltaMaxima = Arrays.stream(vueltasCompletadas).max().getAsInt();
                     etiquetaVueltasCarrera.setText("Vuelta " + vueltaMaxima + "/" + TOTAL_VUELTAS);
 
+                    // Sort pilots based on their current positions
                     Integer[] indices = new Integer[NUM_PILOTOS];
                     for (int i = 0; i < NUM_PILOTOS; i++) {
                         indices[i] = i;
@@ -464,18 +488,52 @@ public class NuevaTemporada2007 extends JFrame {
                         return Integer.compare(posicionesPilotos[b], posicionesPilotos[a]);
                     });
 
+                    // Update target positions for animation (squares, rows, and points)
                     for (int i = 0; i < NUM_PILOTOS; i++) {
                         int idx = indices[i];
+                        targetYSquares[idx] = Y_POSICION + (i * 20);
+                        targetYRows[idx] = i * 20;
+                        targetYPoints[idx] = Y_POSICION + (i * 20) - 5;
                         etiquetasPosicionEnVivo[idx].setText(String.valueOf(i + 1));
-                        filasClasificacion[idx].setBounds(0, i * 20, 200, 20);
-                        panelClasificacion.add(filasClasificacion[idx], 0);
                         etiquetasNombrePiloto[idx].setText(PILOTOS[idx]);
                         panelesColorEquipo[idx].setBackground(COLORES_EQUIPOS[idx]);
                         etiquetasVueltas[idx].setText(vueltasCompletadas[idx] + "/" + TOTAL_VUELTAS);
                     }
 
+                    // Update animation progress
+                    if (animationProgress >= 1.0) {
+                        animationProgress = 0.0;
+                    }
+                    animationProgress += (double)ANIMATION_STEP_TIME / ANIMATION_DURATION;
+                    if (animationProgress > 1.0) {
+                        animationProgress = 1.0;
+                    }
+
+                    // Interpolate positions for smooth animation
+                    for (int i = 0; i < NUM_PILOTOS; i++) {
+                        currentYSquares[i] = currentYSquares[i] + (targetYSquares[i] - currentYSquares[i]) * animationProgress;
+                        currentYRows[i] = currentYRows[i] + (targetYRows[i] - currentYRows[i]) * animationProgress;
+                        currentYPoints[i] = currentYPoints[i] + (targetYPoints[i] - currentYPoints[i]) * animationProgress;
+                        puntosPilotos[i].setLocation(posicionesPilotos[i], (int)currentYSquares[i]);
+                        filasClasificacion[i].setBounds(0, (int)currentYRows[i], 200, 20);
+                        etiquetasPosicion[i].setBounds(X_FIN + 10, (int)currentYPoints[i], 50, 20);
+                    }
+
+                    // Assign points based on final positions when race ends
+                    if (ordenLlegada.size() == NUM_PILOTOS) {
+                        for (int i = 0; i < NUM_PILOTOS; i++) {
+                            int pilotIndex = ordenLlegada.get(i);
+                            int position = i + 1;
+                            int puntos = obtenerPuntosPorPosicion(position);
+                            puntosPorPiloto.put(PILOT_IDS[pilotIndex], puntos);
+                            etiquetasPosicion[pilotIndex].setText(position + " + " + puntos);
+                        }
+                    }
+
+                    // Repaint the panel to reflect the updated positions
                     panelContenido.repaint();
 
+                    // Stop the timer when all pilots have finished
                     if (ordenLlegada.size() == NUM_PILOTOS) {
                         ((Timer)e.getSource()).stop();
                     }
@@ -499,7 +557,6 @@ public class NuevaTemporada2007 extends JFrame {
                 }
                 if (index != NUM_PILOTOS) {
                     System.out.println("No se encontraron suficientes pilotos en la base de datos.");
-                    // Fallback to default values
                     for (int i = index; i < NUM_PILOTOS; i++) {
                         PILOTOS[i] = "Piloto" + (i + 1);
                         EQUIPOS[i] = "EquipoDesconocido";
@@ -510,7 +567,6 @@ public class NuevaTemporada2007 extends JFrame {
             } catch (SQLException e) {
                 System.out.println("Error al cargar pilotos: " + e.getMessage());
                 e.printStackTrace();
-                // Fallback to default values
                 for (int i = 0; i < NUM_PILOTOS; i++) {
                     PILOTOS[i] = "Piloto" + (i + 1);
                     EQUIPOS[i] = "EquipoDesconocido";
@@ -525,7 +581,6 @@ public class NuevaTemporada2007 extends JFrame {
 
             try {
                 conexion.conectar();
-                // Fetch team performance data
                 String queryTeams = "SELECT Nombre, Potencia, Aerodinamica, Fiabilidad FROM equipo";
                 ResultSet rsTeams = conexion.ejecutarSelect(queryTeams);
                 while (rsTeams.next()) {
@@ -533,14 +588,12 @@ public class NuevaTemporada2007 extends JFrame {
                     int potencia = rsTeams.getInt("Potencia");
                     int aerodinamica = rsTeams.getInt("Aerodinamica");
                     int fiabilidad = rsTeams.getInt("Fiabilidad");
-                    // Calculate team performance as average of Potencia, Aerodinamica, Fiabilidad
                     double teamScore = (potencia + aerodinamica + fiabilidad) / 3.0;
                     teamPerformance.put(nombreEquipo, teamScore);
                     System.out.println("Team: " + nombreEquipo + ", Score: " + teamScore);
                 }
                 rsTeams.close();
 
-                // Fetch pilot metrics (Habilidad, Consistencia) and calculate total performance
                 String queryPilots = "SELECT Id, Habilidad, Consistencia FROM piloto ORDER BY CAST(SUBSTRING(Id, 2) AS UNSIGNED) ASC";
                 ResultSet rsPilots = conexion.ejecutarSelect(queryPilots);
                 int index = 0;
@@ -548,8 +601,7 @@ public class NuevaTemporada2007 extends JFrame {
                     int habilidad = rsPilots.getInt("Habilidad");
                     int consistencia = rsPilots.getInt("Consistencia");
                     String equipo = EQUIPOS[index];
-                    double teamScore = teamPerformance.getOrDefault(equipo, 500.0); // Default team score if not found
-                    // Combine pilot and team metrics (e.g., 60% team, 40% pilot)
+                    double teamScore = teamPerformance.getOrDefault(equipo, 500.0);
                     double pilotScore = (habilidad + consistencia) / 2.0;
                     rendimientosCrudos[index] = 0.6 * teamScore + 0.4 * pilotScore;
                     System.out.println("Piloto: " + PILOTOS[index] + ", Team: " + equipo + ", Rendimiento Crudo: " + rendimientosCrudos[index]);
@@ -558,12 +610,11 @@ public class NuevaTemporada2007 extends JFrame {
                 rsPilots.close();
                 conexion.desconectar();
 
-                // Normalize rendimientosCrudos to a range of 5 to 15
                 double minRendimiento = Arrays.stream(rendimientosCrudos).min().orElse(1.0);
                 double maxRendimiento = Arrays.stream(rendimientosCrudos).max().orElse(1.0);
                 double rangoOriginal = maxRendimiento - minRendimiento;
                 if (rangoOriginal == 0) {
-                    rangoOriginal = 1.0; // Avoid division by zero
+                    rangoOriginal = 1.0;
                 }
                 for (int i = 0; i < NUM_PILOTOS; i++) {
                     double normalized = 5 + ((rendimientosCrudos[i] - minRendimiento) * 10.0 / rangoOriginal);
@@ -573,7 +624,6 @@ public class NuevaTemporada2007 extends JFrame {
             } catch (SQLException e) {
                 System.out.println("Error al calcular rendimientos: " + e.getMessage());
                 e.printStackTrace();
-                // Fallback to default values
                 for (int i = 0; i < NUM_PILOTOS; i++) {
                     PUNTUACIONES_RENDIMIENTO[i] = 10;
                 }
