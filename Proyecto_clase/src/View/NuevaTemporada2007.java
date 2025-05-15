@@ -39,11 +39,19 @@ public class NuevaTemporada2007 extends JFrame {
         setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        raceLabels = new JLabel[10];
+        
+        raceLabels = new JLabel[11];
+        
+        JLabel lblGPPrueba = new JLabel("");
+        lblGPPrueba.setBounds(0, 0, 0, 0);
+        contentPane.add(lblGPPrueba);
+        raceLabels[0] = lblGPPrueba;
+        
+        
         JLabel lblGPAustralia = new JLabel("Gran Premio de Albert Park");
         lblGPAustralia.setBounds(147, 139, 140, 14);
         contentPane.add(lblGPAustralia);
-        raceLabels[0] = lblGPAustralia;
+        raceLabels[1] = lblGPAustralia;
 
         JLabel lblRAustralia = new JLabel("R");
         lblRAustralia.setBounds(328, 139, 25, 14);
@@ -52,7 +60,7 @@ public class NuevaTemporada2007 extends JFrame {
         JLabel lblGranPremioDe = new JLabel("Gran Premio de Barein");
         lblGranPremioDe.setBounds(147, 164, 140, 14);
         contentPane.add(lblGranPremioDe);
-        raceLabels[1] = lblGranPremioDe;
+        raceLabels[2] = lblGranPremioDe;
 
         JLabel lblRAustralia_1 = new JLabel("R");
         lblRAustralia_1.setBounds(328, 164, 25, 14);
@@ -61,7 +69,7 @@ public class NuevaTemporada2007 extends JFrame {
         JLabel lblGPAustralia_1_1 = new JLabel("Gran Premio de España");
         lblGPAustralia_1_1.setBounds(147, 189, 140, 14);
         contentPane.add(lblGPAustralia_1_1);
-        raceLabels[2] = lblGPAustralia_1_1;
+        raceLabels[3] = lblGPAustralia_1_1;
 
         JLabel lblRAustralia_1_1 = new JLabel("R");
         lblRAustralia_1_1.setBounds(328, 189, 25, 14);
@@ -70,7 +78,7 @@ public class NuevaTemporada2007 extends JFrame {
         JLabel lblGPAustralia_1_1_1 = new JLabel("Gran Premio de Mónaco");
         lblGPAustralia_1_1_1.setBounds(147, 214, 140, 14);
         contentPane.add(lblGPAustralia_1_1_1);
-        raceLabels[3] = lblGPAustralia_1_1_1;
+        raceLabels[4] = lblGPAustralia_1_1_1;
 
         JLabel lblRAustralia_1_1_1 = new JLabel("R");
         lblRAustralia_1_1_1.setBounds(328, 214, 25, 14);
@@ -79,7 +87,7 @@ public class NuevaTemporada2007 extends JFrame {
         JLabel lblGPAustralia_1_1_1_1 = new JLabel("Gran Premio de Silverstone");
         lblGPAustralia_1_1_1_1.setBounds(147, 239, 140, 14);
         contentPane.add(lblGPAustralia_1_1_1_1);
-        raceLabels[4] = (lblGPAustralia_1_1_1_1);
+        raceLabels[5] = (lblGPAustralia_1_1_1_1);
 
         JLabel lblRAustralia_1_1_1_1 = new JLabel("R");
         lblRAustralia_1_1_1_1.setBounds(328, 239, 25, 14);
@@ -88,7 +96,7 @@ public class NuevaTemporada2007 extends JFrame {
         JLabel lblGranPremioDe_1 = new JLabel("Gran Premio de Monza");
         lblGranPremioDe_1.setBounds(383, 139, 140, 14);
         contentPane.add(lblGranPremioDe_1);
-        raceLabels[5] = lblGranPremioDe_1;
+        raceLabels[6] = lblGranPremioDe_1;
 
         JLabel lblRAustralia_2 = new JLabel("R");
         lblRAustralia_2.setBounds(559, 139, 25, 14);
@@ -97,7 +105,7 @@ public class NuevaTemporada2007 extends JFrame {
         JLabel lblGPAustralia_2_1 = new JLabel("Gran Premio de Spa");
         lblGPAustralia_2_1.setBounds(383, 164, 140, 14);
         contentPane.add(lblGPAustralia_2_1);
-        raceLabels[6] = lblGPAustralia_2_1;
+        raceLabels[7] = lblGPAustralia_2_1;
 
         JLabel lblRAustralia_2_1 = new JLabel("R");
         lblRAustralia_2_1.setBounds(559, 164, 25, 14);
@@ -106,7 +114,7 @@ public class NuevaTemporada2007 extends JFrame {
         JLabel lblGPAustralia_2_1_1 = new JLabel("Gran Premio de Suzuka");
         lblGPAustralia_2_1_1.setBounds(383, 189, 140, 14);
         contentPane.add(lblGPAustralia_2_1_1);
-        raceLabels[7] = lblGPAustralia_2_1_1;
+        raceLabels[8] = lblGPAustralia_2_1_1;
 
         JLabel lblRAustralia_2_1_1 = new JLabel("R");
         lblRAustralia_2_1_1.setBounds(559, 189, 25, 14);
@@ -115,7 +123,7 @@ public class NuevaTemporada2007 extends JFrame {
         JLabel lblGPAustralia_2_1_1_1 = new JLabel("Gran Premio de China");
         lblGPAustralia_2_1_1_1.setBounds(383, 214, 140, 14);
         contentPane.add(lblGPAustralia_2_1_1_1);
-        raceLabels[8] = lblGPAustralia_2_1_1_1;
+        raceLabels[9] = lblGPAustralia_2_1_1_1;
 
         JLabel lblRAustralia_2_1_1_2 = new JLabel("R");
         lblRAustralia_2_1_1_2.setBounds(559, 214, 25, 14);
@@ -124,7 +132,7 @@ public class NuevaTemporada2007 extends JFrame {
         JLabel lblGPAustralia_2_1_1_2 = new JLabel("Gran Premio de Brasil");
         lblGPAustralia_2_1_1_2.setBounds(383, 239, 140, 14);
         contentPane.add(lblGPAustralia_2_1_1_2);
-        raceLabels[9] = (lblGPAustralia_2_1_1_2);
+        raceLabels[10] = (lblGPAustralia_2_1_1_2);
 
         JLabel lblRAustralia_2_1_1_3 = new JLabel("R");
         lblRAustralia_2_1_1_3.setBounds(559, 239, 25, 14);
@@ -148,7 +156,8 @@ public class NuevaTemporada2007 extends JFrame {
         JButton btnNewButton_1_1 = new JButton("Gestionar Temporada");
         btnNewButton_1_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Reiniciar();
+                Fia temp = new Fia(NuevaTemporada2007.this);
+                temp.setVisible(true);
             }
         });
         btnNewButton_1_1.setBounds(105, 353, 157, 51);
@@ -177,11 +186,27 @@ public class NuevaTemporada2007 extends JFrame {
             ResultSet result = conexion.ejecutarSelect(query);
             if (result.next()) {
                 currentRaceIndex = result.getInt("indice_actual");
+                System.out.println("Estado cargado: currentRaceIndex = " + currentRaceIndex);
+                // Limpiar el resaltado de todas las carreras
+                for (JLabel label : raceLabels) {
+                    label.setOpaque(false);
+                    label.setBackground(null);
+                    label.setFont(new Font("Dialog", Font.PLAIN, 12));
+                }
+                // Resaltar la carrera actual si está dentro del rango válido
                 if (currentRaceIndex >= 0 && currentRaceIndex < raceLabels.length) {
                     raceLabels[currentRaceIndex].setOpaque(true);
                     raceLabels[currentRaceIndex].setBackground(new Color(173, 216, 230));
                     raceLabels[currentRaceIndex].setFont(new Font("Dialog", Font.BOLD, 12));
+                } else if (currentRaceIndex == -1) {
+                    System.out.println("Temporada reiniciada, comenzando desde la primera carrera (Australia).");
+                } else {
+                    System.out.println("Índice fuera de rango o inválido: " + currentRaceIndex);
+                    currentRaceIndex = -1; // Forzar reinicio si el índice es inválido
                 }
+            } else {
+                System.out.println("No se encontró registro para Año = 2007");
+                currentRaceIndex = -1;
             }
             result.close();
             conexion.desconectar();
@@ -199,6 +224,7 @@ public class NuevaTemporada2007 extends JFrame {
             String updateQuery = "UPDATE carreras SET indice_actual = " + currentRaceIndex +
                                " WHERE Año = 2007";
             int rowsAffected = conexion.ejecutarInsertDeleteUpdate(updateQuery);
+            System.out.println("Filas afectadas al guardar: " + rowsAffected);
             if (rowsAffected == 0) {
                 JOptionPane.showMessageDialog(this, "No se encontraron filas para actualizar el estado.");
             }
@@ -210,14 +236,23 @@ public class NuevaTemporada2007 extends JFrame {
     }
 
     private void advanceToNextRace() {
-        if (currentRaceIndex >= 0 && currentRaceIndex < raceLabels.length) {
-            raceLabels[currentRaceIndex].setOpaque(false);
-            raceLabels[currentRaceIndex].setBackground(null);
-            raceLabels[currentRaceIndex].setFont(new Font("Dialog", Font.PLAIN, 12));
+        // Si la temporada está reiniciada (índice -1), comenzar desde la primera carrera (Australia, índice 0)
+        if (currentRaceIndex == -1) {
+            currentRaceIndex = 0;
+        } else if (currentRaceIndex >= 0 && currentRaceIndex < raceLabels.length - 1) {
+            currentRaceIndex++;
+        } else {
+            currentRaceIndex = 0; // Volver al inicio si se completa el ciclo
         }
 
-        currentRaceIndex = (currentRaceIndex + 1) % raceLabels.length;
+        // Limpiar el resaltado de la carrera anterior
+        if (currentRaceIndex > 0 || (currentRaceIndex == 0 && currentRaceIndex != -1)) {
+            raceLabels[currentRaceIndex - 1].setOpaque(false);
+            raceLabels[currentRaceIndex - 1].setBackground(null);
+            raceLabels[currentRaceIndex - 1].setFont(new Font("Dialog", Font.PLAIN, 12));
+        }
 
+        // Resaltar la nueva carrera
         raceLabels[currentRaceIndex].setOpaque(true);
         raceLabels[currentRaceIndex].setBackground(new Color(173, 216, 230));
         raceLabels[currentRaceIndex].setFont(new Font("Dialog", Font.BOLD, 12));
@@ -225,6 +260,11 @@ public class NuevaTemporada2007 extends JFrame {
         new RaceWindow(raceLabels[currentRaceIndex].getText()).setVisible(true);
 
         saveSeasonState();
+    }
+
+    public void refreshSeasonState() {
+        loadSeasonState();
+        contentPane.repaint(); // Forzar actualización gráfica
     }
 
     public class RaceWindow extends JFrame {
@@ -246,7 +286,7 @@ public class NuevaTemporada2007 extends JFrame {
         private static final int X_FIN = 800;
         private static final int Y_POSICION = 100;
         private static final int TAMANO_PUNTO = 10;
-        private static final int NUM_PILOTOS = 20;
+        private static final int NUM_PILOTOS = 23;
         private static final int TOTAL_VUELTAS = 3;
         private JLabel lblNewLabel;
         private JLabel etiquetaVueltasCarrera;
@@ -268,7 +308,7 @@ public class NuevaTemporada2007 extends JFrame {
         private static final String[] PILOT_IDS = {
             "P1", "P2", "P3", "P4", "P5", "P6", "P7", "P8",
             "P9", "P10", "P11", "P12", "P13", "P14", "P15", "P16",
-            "P17", "P18", "P19", "P20"
+            "P17", "P18", "P19", "P20", "P21", "P22"
         };
         private String[] PILOTOS;
         private String[] EQUIPOS;
@@ -278,7 +318,7 @@ public class NuevaTemporada2007 extends JFrame {
             new Color(0, 153, 0), new Color(0, 153, 0), new Color(0, 102, 204), new Color(0, 102, 204),
             new Color(255, 255, 255), new Color(255, 255, 255), new Color(255, 204, 0), new Color(255, 204, 0),
             new Color(255, 0, 0), new Color(255, 0, 0), new Color(0, 102, 204), new Color(0, 102, 204),
-            new Color(255, 153, 0), new Color(255, 153, 0), new Color(0, 102, 204), new Color(0, 102, 204)
+            new Color(255, 153, 0), new Color(255, 153, 0), new Color(0, 102, 204), new Color(0, 102, 204), new Color(255, 140, 0)
         };
         private int[] PUNTUACIONES_RENDIMIENTO;
 
@@ -643,71 +683,5 @@ public class NuevaTemporada2007 extends JFrame {
                 default: return 0;
             }
         }
-    }
-
-    private void Reiniciar() {
-        JFrame reiniciarFrame = new JFrame("Reiniciar Puntos y Temporada");
-        reiniciarFrame.setSize(900, 600);
-        reiniciarFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        reiniciarFrame.setLocationRelativeTo(null);
-
-        JPanel panelContenido = new JPanel();
-        panelContenido.setLayout(null);
-        reiniciarFrame.setContentPane(panelContenido);
-
-        JButton btnReiniciar = new JButton("REINICIAR PUNTOS");
-        btnReiniciar.setBounds(700, 500, 120, 27);
-        btnReiniciar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
-                try {
-                    conexion.conectar();
-                    String sentencia = "UPDATE piloto SET Puntos = 0";
-                    conexion.ejecutarInsertDeleteUpdate(sentencia);
-                    String sentencia1 = "UPDATE carreras SET indice_actual = -1";
-                    conexion.ejecutarInsertDeleteUpdate(sentencia1);
-                    JOptionPane.showMessageDialog(null, "Temporada Reiniciada");
-                    currentRaceIndex = -1;
-                    for (JLabel label : raceLabels) {
-                        label.setOpaque(false);
-                        label.setBackground(null);
-                        label.setFont(new Font("Dialog", Font.PLAIN, 12));
-                    }
-                    conexion.desconectar();
-                    JOptionPane.showMessageDialog(null, "¡Puntos reiniciados correctamente!");
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Error al reiniciar los puntos.");
-                }
-            }
-        });
-        panelContenido.add(btnReiniciar);
-
-        JButton btnReiniciarTemporada = new JButton("Reiniciar Temporada");
-        btnReiniciarTemporada.setBounds(137, 95, 136, 49);
-        btnReiniciarTemporada.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
-                try {
-                    conexion.conectar();
-                    String sentencia = "UPDATE carreras SET indice_actual = -1";
-                    conexion.ejecutarInsertDeleteUpdate(sentencia);
-                    conexion.desconectar();
-                    JOptionPane.showMessageDialog(null, "Temporada Reiniciada");
-                    currentRaceIndex = -1;
-                    for (JLabel label : raceLabels) {
-                        label.setOpaque(false);
-                        label.setBackground(null);
-                        label.setFont(new Font("Dialog", Font.PLAIN, 12));
-                    }
-                } catch (SQLException ex) {
-                    ex.printStackTrace();
-                    JOptionPane.showMessageDialog(null, "Error al reiniciar la temporada.");
-                }
-            }
-        });
-        panelContenido.add(btnReiniciarTemporada);
-
-        reiniciarFrame.setVisible(true);
     }
 }

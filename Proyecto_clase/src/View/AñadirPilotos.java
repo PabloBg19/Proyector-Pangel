@@ -108,12 +108,12 @@ public class AñadirPilotos extends JFrame {
 		textId.setColumns(10);
 		
 		textNombre = new JTextField();
-		textNombre.setBounds(329, 155, 149, 20);
+		textNombre.setBounds(331, 117, 149, 20);
 		textNombre.setColumns(10);
 		contentPane.add(textNombre);
 		
 		textEdad = new JTextField();
-		textEdad.setBounds(329, 115, 149, 20);
+		textEdad.setBounds(329, 157, 149, 20);
 		textEdad.setColumns(10);
 		contentPane.add(textEdad);
 		
