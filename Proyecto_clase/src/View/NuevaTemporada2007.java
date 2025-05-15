@@ -22,8 +22,6 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
-import View.CalculoRendimiento.Piloto;
-
 public class NuevaTemporada2007 extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -201,8 +199,7 @@ public class NuevaTemporada2007 extends JFrame {
             String updateQuery = "UPDATE carreras SET indice_actual = " + currentRaceIndex +
                                " WHERE Año = 2007";
             int rowsAffected = conexion.ejecutarInsertDeleteUpdate(updateQuery);
-            if (rowsAffected > 0) {
-            } else {
+            if (rowsAffected == 0) {
                 JOptionPane.showMessageDialog(this, "No se encontraron filas para actualizar el estado.");
             }
             conexion.desconectar();
@@ -241,7 +238,7 @@ public class NuevaTemporada2007 extends JFrame {
         private JLabel[] etiquetasNombrePiloto;
         private JLabel[] etiquetasVueltas;
         private JPanel[] filasClasificacion;
-        private JPanel[] panelesColorEquipo; // Nuevo array para los paneles de color
+        private JPanel[] panelesColorEquipo;
         private boolean[] haTerminado;
         private ArrayList<Integer> ordenLlegada;
         private int[] vueltasCompletadas;
@@ -262,6 +259,7 @@ public class NuevaTemporada2007 extends JFrame {
             "P17", "P18", "P19", "P20"
         };
         private String[] PILOTOS;
+        private String[] EQUIPOS;
 
         private static final Color[] COLORES_EQUIPOS = {
             new Color(200, 200, 200), new Color(200, 200, 200), new Color(220, 0, 0), new Color(220, 0, 0),
@@ -283,94 +281,16 @@ public class NuevaTemporada2007 extends JFrame {
             setContentPane(panelContenido);
             panelContenido.setLayout(null);
 
-            // Cargar nombres de pilotos desde la base de datos
+            // Initialize arrays
             PILOTOS = new String[NUM_PILOTOS];
-            ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
-            try {
-                conexion.conectar();
-                System.out.println("Conexión a la base de datos exitosa para cargar pilotos.");
-                String query = "SELECT * FROM piloto ORDER BY CAST(SUBSTRING(Id, 2) AS UNSIGNED) ASC";
-                ResultSet result = conexion.ejecutarSelect(query);
-                int index = 0;
-                while (result.next() && index < NUM_PILOTOS) {
-                    PILOTOS[index] = result.getString("Nombre");
-                    System.out.println("Piloto cargado: " + PILOTOS[index]);
-                    index++;
-                }
-                if (index == 0) {
-                    System.out.println("No se encontraron pilotos en la base de datos.");
-                }
-                result.close();
-                conexion.desconectar();
-            } catch (SQLException e) {
-                System.out.println("Error al cargar los nombres de los pilotos: " + e.getMessage());
-                e.printStackTrace();
-                PILOTOS = new String[]{"Piloto1", "Piloto2", "Piloto3", "Piloto4", "Piloto5", "Piloto6", "Piloto7", "Piloto8",
-                        "Piloto9", "Piloto10", "Piloto11", "Piloto12", "Piloto13", "Piloto14", "Piloto15", "Piloto16",
-                        "Piloto17", "Piloto18", "Piloto19", "Piloto20"};
-                System.out.println("Usando nombres de pilotos por defecto.");
-            }
-
-            CalculoRendimiento piloto1 = new CalculoRendimiento();
-
+            EQUIPOS = new String[NUM_PILOTOS];
             PUNTUACIONES_RENDIMIENTO = new int[NUM_PILOTOS];
-            double[] rendimientosCrudos = new double[NUM_PILOTOS]; // Para almacenar los valores crudos
-            ConexionMySQL conexion1 = new ConexionMySQL("root", "", "formula_1");
-            try {
-                conexion1.conectar();
-                System.out.println("Conexión a la base de datos exitosa para cargar rendimientos.");
-                String sentencia_piloto = "SELECT * FROM piloto ORDER BY CAST(SUBSTRING(Id, 2) AS UNSIGNED) ASC";
-                ResultSet resultado_p = conexion1.ejecutarSelect(sentencia_piloto);
-                int index = 0;
-                while (resultado_p.next() && index < NUM_PILOTOS) {
-                    String id_p = resultado_p.getString("Id");
-                    String nombre_p = resultado_p.getString("Nombre");
-                    int habilidad_p = resultado_p.getInt("Habilidad");
-                    int consistencia_p = resultado_p.getInt("Consistencia");
-                    String equipo_p = resultado_p.getString("Equipo");
-                    String sentencia_equipo = "SELECT * FROM equipo ORDER BY CAST(SUBSTRING(Id, 2) AS UNSIGNED) ASC";
-                    ResultSet resultado_e = conexion1.ejecutarSelect(sentencia_equipo);
-                    if (resultado_e.next()) {
-                        String id_e = resultado_e.getString("Id");
-                        String nombre_e = resultado_e.getString("Nombre");
-                        int potencia_e = resultado_e.getInt("Potencia");
-                        int aerodinamica_e = resultado_e.getInt("Aerodinamica");
-                        int fiabilidad_e = resultado_e.getInt("Fiabilidad");
-                        CalculoRendimiento.Piloto temp_p = new CalculoRendimiento.Piloto(id_p, nombre_p, habilidad_p, consistencia_p, equipo_p);
-                        CalculoRendimiento.Equipo temp_e = new CalculoRendimiento.Equipo(id_e, nombre_e, potencia_e, aerodinamica_e, fiabilidad_e);
-                        rendimientosCrudos[index] = CalculoRendimiento.calcularRendimientoTotal(temp_p, temp_e);
-                        System.out.println("Piloto: " + nombre_p + ", Rendimiento crudo: " + rendimientosCrudos[index]);
-                        index++;
-                    } else {
-                        System.out.println("No se encontró equipo para el piloto con ID: " + id_p);
-                    }
-                    resultado_e.close();
-                }
-                if (index == 0) {
-                    System.out.println("No se encontraron datos de pilotos para calcular rendimientos.");
-                }
-                resultado_p.close();
-                conexion1.desconectar();
 
-                // Normalizar los rendimientos a un rango de 5 a 15
-                double minRendimiento = Arrays.stream(rendimientosCrudos).min().getAsDouble();
-                double maxRendimiento = Arrays.stream(rendimientosCrudos).max().getAsDouble();
-                double rangoOriginal = maxRendimiento - minRendimiento;
-                if (rangoOriginal == 0) {
-                    rangoOriginal = 1.0; // Evitar división por cero
-                    System.out.println("Todos los rendimientos son iguales, usando rango por defecto.");
-                }
-                for (int i = 0; i < NUM_PILOTOS; i++) {
-                    double normalized = 5 + ((rendimientosCrudos[i] - minRendimiento) * 10.0 / rangoOriginal);
-                    PUNTUACIONES_RENDIMIENTO[i] = (int) Math.round(normalized);
-                    System.out.println("Piloto " + i + ": Rendimiento normalizado = " + PUNTUACIONES_RENDIMIENTO[i]);
-                }
-            } catch (SQLException e) {
-                System.out.println("Error al cargar los rendimientos: " + e.getMessage());
-                e.printStackTrace();
-                PUNTUACIONES_RENDIMIENTO = new int[]{10, 10, 10, 9, 6, 6, 7, 7, 6, 5, 3, 3, 5, 5, 4, 4, 3, 3, 3, 3};
-                System.out.println("Usando rendimientos por defecto.");
-            }
+            // Load pilot and team data from database
+            fetchPilotAndTeamData();
+
+            // Calculate performance based on team and pilot metrics
+            calculatePerformance();
 
             JLabel etiquetaTituloCarrera = new JLabel(nombreCarrera);
             etiquetaTituloCarrera.setFont(new Font("Arial", Font.BOLD, 24));
@@ -399,9 +319,7 @@ public class NuevaTemporada2007 extends JFrame {
                 puntosPorPiloto.put(PILOT_IDS[i], 0);
             }
 
-            lblNewLabel = new JLabel();
-            lblNewLabel.setBounds(752, 461, 46, 14);
-            panelContenido.add(lblNewLabel);
+            
 
             etiquetaVueltasCarrera = new JLabel("Vuelta 0/" + TOTAL_VUELTAS);
             etiquetaVueltasCarrera.setFont(new Font("Arial", Font.BOLD, 14));
@@ -500,7 +418,7 @@ public class NuevaTemporada2007 extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     for (int i = 0; i < NUM_PILOTOS; i++) {
                         if (!haTerminado[i]) {
-                            int velocidadMaxima = Math.max(1, PUNTUACIONES_RENDIMIENTO[i]); // Asegura que sea positivo
+                            int velocidadMaxima = Math.max(1, PUNTUACIONES_RENDIMIENTO[i]);
                             int velocidad = aleatorio.nextInt(velocidadMaxima) + 1;
                             posicionesPilotos[i] += velocidad;
                             if (posicionesPilotos[i] >= X_FIN) {
@@ -564,6 +482,102 @@ public class NuevaTemporada2007 extends JFrame {
                 }
             });
             temporizador.start();
+        }
+
+        private void fetchPilotAndTeamData() {
+            ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
+            try {
+                conexion.conectar();
+                String query = "SELECT Id, Nombre, Equipo FROM piloto ORDER BY CAST(SUBSTRING(Id, 2) AS UNSIGNED) ASC";
+                ResultSet result = conexion.ejecutarSelect(query);
+                int index = 0;
+                while (result.next() && index < NUM_PILOTOS) {
+                    PILOTOS[index] = result.getString("Nombre");
+                    EQUIPOS[index] = result.getString("Equipo");
+                    System.out.println("Piloto cargado: " + PILOTOS[index] + ", Equipo: " + EQUIPOS[index]);
+                    index++;
+                }
+                if (index != NUM_PILOTOS) {
+                    System.out.println("No se encontraron suficientes pilotos en la base de datos.");
+                    // Fallback to default values
+                    for (int i = index; i < NUM_PILOTOS; i++) {
+                        PILOTOS[i] = "Piloto" + (i + 1);
+                        EQUIPOS[i] = "EquipoDesconocido";
+                    }
+                }
+                result.close();
+                conexion.desconectar();
+            } catch (SQLException e) {
+                System.out.println("Error al cargar pilotos: " + e.getMessage());
+                e.printStackTrace();
+                // Fallback to default values
+                for (int i = 0; i < NUM_PILOTOS; i++) {
+                    PILOTOS[i] = "Piloto" + (i + 1);
+                    EQUIPOS[i] = "EquipoDesconocido";
+                }
+            }
+        }
+
+        private void calculatePerformance() {
+            ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
+            Map<String, Double> teamPerformance = new HashMap<>();
+            double[] rendimientosCrudos = new double[NUM_PILOTOS];
+
+            try {
+                conexion.conectar();
+                // Fetch team performance data
+                String queryTeams = "SELECT Nombre, Potencia, Aerodinamica, Fiabilidad FROM equipo";
+                ResultSet rsTeams = conexion.ejecutarSelect(queryTeams);
+                while (rsTeams.next()) {
+                    String nombreEquipo = rsTeams.getString("Nombre");
+                    int potencia = rsTeams.getInt("Potencia");
+                    int aerodinamica = rsTeams.getInt("Aerodinamica");
+                    int fiabilidad = rsTeams.getInt("Fiabilidad");
+                    // Calculate team performance as average of Potencia, Aerodinamica, Fiabilidad
+                    double teamScore = (potencia + aerodinamica + fiabilidad) / 3.0;
+                    teamPerformance.put(nombreEquipo, teamScore);
+                    System.out.println("Team: " + nombreEquipo + ", Score: " + teamScore);
+                }
+                rsTeams.close();
+
+                // Fetch pilot metrics (Habilidad, Consistencia) and calculate total performance
+                String queryPilots = "SELECT Id, Habilidad, Consistencia FROM piloto ORDER BY CAST(SUBSTRING(Id, 2) AS UNSIGNED) ASC";
+                ResultSet rsPilots = conexion.ejecutarSelect(queryPilots);
+                int index = 0;
+                while (rsPilots.next() && index < NUM_PILOTOS) {
+                    int habilidad = rsPilots.getInt("Habilidad");
+                    int consistencia = rsPilots.getInt("Consistencia");
+                    String equipo = EQUIPOS[index];
+                    double teamScore = teamPerformance.getOrDefault(equipo, 500.0); // Default team score if not found
+                    // Combine pilot and team metrics (e.g., 60% team, 40% pilot)
+                    double pilotScore = (habilidad + consistencia) / 2.0;
+                    rendimientosCrudos[index] = 0.6 * teamScore + 0.4 * pilotScore;
+                    System.out.println("Piloto: " + PILOTOS[index] + ", Team: " + equipo + ", Rendimiento Crudo: " + rendimientosCrudos[index]);
+                    index++;
+                }
+                rsPilots.close();
+                conexion.desconectar();
+
+                // Normalize rendimientosCrudos to a range of 5 to 15
+                double minRendimiento = Arrays.stream(rendimientosCrudos).min().orElse(1.0);
+                double maxRendimiento = Arrays.stream(rendimientosCrudos).max().orElse(1.0);
+                double rangoOriginal = maxRendimiento - minRendimiento;
+                if (rangoOriginal == 0) {
+                    rangoOriginal = 1.0; // Avoid division by zero
+                }
+                for (int i = 0; i < NUM_PILOTOS; i++) {
+                    double normalized = 5 + ((rendimientosCrudos[i] - minRendimiento) * 10.0 / rangoOriginal);
+                    PUNTUACIONES_RENDIMIENTO[i] = (int) Math.round(normalized);
+                    System.out.println("Piloto " + i + ": Rendimiento Normalizado = " + PUNTUACIONES_RENDIMIENTO[i]);
+                }
+            } catch (SQLException e) {
+                System.out.println("Error al calcular rendimientos: " + e.getMessage());
+                e.printStackTrace();
+                // Fallback to default values
+                for (int i = 0; i < NUM_PILOTOS; i++) {
+                    PUNTUACIONES_RENDIMIENTO[i] = 10;
+                }
+            }
         }
 
         private int obtenerPuntosPorPosicion(int posicion) {
