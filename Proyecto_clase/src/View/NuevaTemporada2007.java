@@ -22,6 +22,8 @@ import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
 
+import View.CalculoRendimiento.Piloto;
+
 public class NuevaTemporada2007 extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -268,9 +270,7 @@ public class NuevaTemporada2007 extends JFrame {
             new Color(255, 0, 0), new Color(255, 0, 0), new Color(0, 102, 204), new Color(0, 102, 204),
             new Color(255, 153, 0), new Color(255, 153, 0), new Color(0, 102, 204), new Color(0, 102, 204)
         };
-        private static final int[] PUNTUACIONES_RENDIMIENTO = {
-            10, 10, 10, 9, 6, 6, 7, 7, 6, 5, 3, 3, 5, 5, 4, 4, 3, 3, 3, 3
-        };
+        private int[] PUNTUACIONES_RENDIMIENTO;
 
         public RaceWindow(String nombreCarrera) {
             setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -288,20 +288,88 @@ public class NuevaTemporada2007 extends JFrame {
             ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
             try {
                 conexion.conectar();
+                System.out.println("Conexión a la base de datos exitosa para cargar pilotos.");
                 String query = "SELECT * FROM piloto ORDER BY CAST(SUBSTRING(Id, 2) AS UNSIGNED) ASC";
                 ResultSet result = conexion.ejecutarSelect(query);
                 int index = 0;
                 while (result.next() && index < NUM_PILOTOS) {
                     PILOTOS[index] = result.getString("Nombre");
+                    System.out.println("Piloto cargado: " + PILOTOS[index]);
                     index++;
+                }
+                if (index == 0) {
+                    System.out.println("No se encontraron pilotos en la base de datos.");
                 }
                 result.close();
                 conexion.desconectar();
             } catch (SQLException e) {
+                System.out.println("Error al cargar los nombres de los pilotos: " + e.getMessage());
                 e.printStackTrace();
                 PILOTOS = new String[]{"Piloto1", "Piloto2", "Piloto3", "Piloto4", "Piloto5", "Piloto6", "Piloto7", "Piloto8",
                         "Piloto9", "Piloto10", "Piloto11", "Piloto12", "Piloto13", "Piloto14", "Piloto15", "Piloto16",
                         "Piloto17", "Piloto18", "Piloto19", "Piloto20"};
+                System.out.println("Usando nombres de pilotos por defecto.");
+            }
+
+            CalculoRendimiento piloto1 = new CalculoRendimiento();
+
+            PUNTUACIONES_RENDIMIENTO = new int[NUM_PILOTOS];
+            double[] rendimientosCrudos = new double[NUM_PILOTOS]; // Para almacenar los valores crudos
+            ConexionMySQL conexion1 = new ConexionMySQL("root", "", "formula_1");
+            try {
+                conexion1.conectar();
+                System.out.println("Conexión a la base de datos exitosa para cargar rendimientos.");
+                String sentencia_piloto = "SELECT * FROM piloto ORDER BY CAST(SUBSTRING(Id, 2) AS UNSIGNED) ASC";
+                ResultSet resultado_p = conexion1.ejecutarSelect(sentencia_piloto);
+                int index = 0;
+                while (resultado_p.next() && index < NUM_PILOTOS) {
+                    String id_p = resultado_p.getString("Id");
+                    String nombre_p = resultado_p.getString("Nombre");
+                    int habilidad_p = resultado_p.getInt("Habilidad");
+                    int consistencia_p = resultado_p.getInt("Consistencia");
+                    String equipo_p = resultado_p.getString("Equipo");
+                    String sentencia_equipo = "SELECT * FROM equipo ORDER BY CAST(SUBSTRING(Id, 2) AS UNSIGNED) ASC";
+                    ResultSet resultado_e = conexion1.ejecutarSelect(sentencia_equipo);
+                    if (resultado_e.next()) {
+                        String id_e = resultado_e.getString("Id");
+                        String nombre_e = resultado_e.getString("Nombre");
+                        int potencia_e = resultado_e.getInt("Potencia");
+                        int aerodinamica_e = resultado_e.getInt("Aerodinamica");
+                        int fiabilidad_e = resultado_e.getInt("Fiabilidad");
+                        CalculoRendimiento.Piloto temp_p = new CalculoRendimiento.Piloto(id_p, nombre_p, habilidad_p, consistencia_p, equipo_p);
+                        CalculoRendimiento.Equipo temp_e = new CalculoRendimiento.Equipo(id_e, nombre_e, potencia_e, aerodinamica_e, fiabilidad_e);
+                        rendimientosCrudos[index] = CalculoRendimiento.calcularRendimientoTotal(temp_p, temp_e);
+                        System.out.println("Piloto: " + nombre_p + ", Rendimiento crudo: " + rendimientosCrudos[index]);
+                        index++;
+                    } else {
+                        System.out.println("No se encontró equipo para el piloto con ID: " + id_p);
+                    }
+                    resultado_e.close();
+                }
+                if (index == 0) {
+                    System.out.println("No se encontraron datos de pilotos para calcular rendimientos.");
+                }
+                resultado_p.close();
+                conexion1.desconectar();
+
+                // Normalizar los rendimientos a un rango de 5 a 15
+                double minRendimiento = Arrays.stream(rendimientosCrudos).min().getAsDouble();
+                double maxRendimiento = Arrays.stream(rendimientosCrudos).max().getAsDouble();
+                double rangoOriginal = maxRendimiento - minRendimiento;
+                if (rangoOriginal == 0) {
+                    rangoOriginal = 1.0; // Evitar división por cero
+                    System.out.println("Todos los rendimientos son iguales, usando rango por defecto.");
+                }
+                for (int i = 0; i < NUM_PILOTOS; i++) {
+                    double normalized = 5 + ((rendimientosCrudos[i] - minRendimiento) * 10.0 / rangoOriginal);
+                    PUNTUACIONES_RENDIMIENTO[i] = (int) Math.round(normalized);
+                    System.out.println("Piloto " + i + ": Rendimiento normalizado = " + PUNTUACIONES_RENDIMIENTO[i]);
+                }
+            } catch (SQLException e) {
+                System.out.println("Error al cargar los rendimientos: " + e.getMessage());
+                e.printStackTrace();
+                PUNTUACIONES_RENDIMIENTO = new int[]{10, 10, 10, 9, 6, 6, 7, 7, 6, 5, 3, 3, 5, 5, 4, 4, 3, 3, 3, 3};
+                System.out.println("Usando rendimientos por defecto.");
             }
 
             JLabel etiquetaTituloCarrera = new JLabel(nombreCarrera);
@@ -321,7 +389,7 @@ public class NuevaTemporada2007 extends JFrame {
             etiquetasNombrePiloto = new JLabel[NUM_PILOTOS];
             etiquetasVueltas = new JLabel[NUM_PILOTOS];
             filasClasificacion = new JPanel[NUM_PILOTOS];
-            panelesColorEquipo = new JPanel[NUM_PILOTOS]; // Inicializar el array para los colores
+            panelesColorEquipo = new JPanel[NUM_PILOTOS];
             haTerminado = new boolean[NUM_PILOTOS];
             ordenLlegada = new ArrayList<>();
             vueltasCompletadas = new int[NUM_PILOTOS];
@@ -381,12 +449,11 @@ public class NuevaTemporada2007 extends JFrame {
                 etiquetasNombrePiloto[i] = new JLabel(PILOTOS[i]);
                 etiquetasNombrePiloto[i].setFont(new Font("Arial", Font.BOLD, 10));
                 etiquetasNombrePiloto[i].setForeground(Color.WHITE);
-                etiquetasNombrePiloto[i].setBounds(40, 0, 100, 20); // Reducido el ancho para dejar espacio al color
+                etiquetasNombrePiloto[i].setBounds(40, 0, 100, 20);
                 filasClasificacion[i].add(etiquetasNombrePiloto[i]);
 
-                // Agregar un pequeño panel con el color del equipo
                 panelesColorEquipo[i] = new JPanel();
-                panelesColorEquipo[i].setBounds(180, 2, 16, 16); // Posición al lado del nombre
+                panelesColorEquipo[i].setBounds(180, 2, 16, 16);
                 panelesColorEquipo[i].setBackground(COLORES_EQUIPOS[i]);
                 panelesColorEquipo[i].setOpaque(true);
                 filasClasificacion[i].add(panelesColorEquipo[i]);
@@ -394,7 +461,7 @@ public class NuevaTemporada2007 extends JFrame {
                 etiquetasVueltas[i] = new JLabel("0/" + TOTAL_VUELTAS);
                 etiquetasVueltas[i].setFont(new Font("Arial", Font.BOLD, 10));
                 etiquetasVueltas[i].setForeground(Color.WHITE);
-                etiquetasVueltas[i].setBounds(150, 0, 40, 20); // Ajustado para dejar espacio al color
+                etiquetasVueltas[i].setBounds(150, 0, 40, 20);
                 filasClasificacion[i].add(etiquetasVueltas[i]);
             }
 
@@ -433,7 +500,7 @@ public class NuevaTemporada2007 extends JFrame {
                 public void actionPerformed(ActionEvent e) {
                     for (int i = 0; i < NUM_PILOTOS; i++) {
                         if (!haTerminado[i]) {
-                            int velocidadMaxima = PUNTUACIONES_RENDIMIENTO[i];
+                            int velocidadMaxima = Math.max(1, PUNTUACIONES_RENDIMIENTO[i]); // Asegura que sea positivo
                             int velocidad = aleatorio.nextInt(velocidadMaxima) + 1;
                             posicionesPilotos[i] += velocidad;
                             if (posicionesPilotos[i] >= X_FIN) {
@@ -485,7 +552,7 @@ public class NuevaTemporada2007 extends JFrame {
                         filasClasificacion[idx].setBounds(0, i * 20, 200, 20);
                         panelClasificacion.add(filasClasificacion[idx], 0);
                         etiquetasNombrePiloto[idx].setText(PILOTOS[idx]);
-                        panelesColorEquipo[idx].setBackground(COLORES_EQUIPOS[idx]); // Actualizar color si el orden cambia
+                        panelesColorEquipo[idx].setBackground(COLORES_EQUIPOS[idx]);
                         etiquetasVueltas[idx].setText(vueltasCompletadas[idx] + "/" + TOTAL_VUELTAS);
                     }
 
@@ -513,7 +580,6 @@ public class NuevaTemporada2007 extends JFrame {
             }
         }
     }
-    
 
     private void Reiniciar() {
         JFrame reiniciarFrame = new JFrame("Reiniciar Puntos y Temporada");

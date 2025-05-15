@@ -5,13 +5,13 @@ import java.util.Random;
 public class CalculoRendimiento {
     // Clase para representar un piloto (basada en la tabla piloto)
     static class Piloto {
-        int id;
+        String id;
         String nombre;
         int habilidad;
         int consistencia;
         String equipo;
 
-        Piloto(int id, String nombre, int habilidad, int consistencia, String equipo) {
+        Piloto(String id, String nombre, int habilidad, int consistencia, String equipo) {
             this.id = id;
             this.nombre = nombre;
             this.habilidad = Math.max(0, habilidad); // Asegurar que Habilidad no sea negativa
@@ -22,13 +22,13 @@ public class CalculoRendimiento {
 
     // Clase para representar un equipo (basada en la tabla equipo)
     static class Equipo {
-        int id;
+        String id;
         String nombre;
         int potencia;
         int aerodinamica;
         int fiabilidad;
 
-        Equipo(int id, String nombre, int potencia, int aerodinamica, int fiabilidad) {
+        Equipo(String id, String nombre, int potencia, int aerodinamica, int fiabilidad) {
             this.id = id;
             this.nombre = nombre;
             this.potencia = Math.max(0, potencia); // Asegurar que Potencia no sea negativa
@@ -83,10 +83,10 @@ public class CalculoRendimiento {
     // Método main para probar el cálculo
     public static void main(String[] args) {
         // Crear un piloto de ejemplo (Fernando Alonso)
-        Piloto piloto = new Piloto(1, "Fernando Alonso", 95, 95, "McLaren");
+        Piloto piloto = new Piloto("P1", "Fernando Alonso", 95, 95, "McLaren");
 
         // Crear un equipo de ejemplo (McLaren)
-        Equipo equipo = new Equipo(1, "McLaren", 860, 800, 95); // Fiabilidad a 50 para probar
+        Equipo equipo = new Equipo("E1", "McLaren", 0, 0, 0); // Fiabilidad a 50 para probar
 
         // Calcular el RendimientoTotal
         double rendimientoTotal = calcularRendimientoTotal(piloto, equipo);
