@@ -330,7 +330,7 @@ public class NuevaTemporada2007 extends JFrame {
             panelContenido.setBorder(new EmptyBorder(5, 5, 5, 5));
             setLocationRelativeTo(null);
 
-            panelContenido.setBackground(new Color(245, 245, 220)); // Fondo beige claro
+            panelContenido.setBackground(new Color(230, 230, 250)); // Color Fondo
             setContentPane(panelContenido);
             panelContenido.setLayout(null);
 
@@ -343,14 +343,14 @@ public class NuevaTemporada2007 extends JFrame {
 
             JLabel etiquetaTituloCarrera = new JLabel(nombreCarrera);
             etiquetaTituloCarrera.setFont(new Font("Arial", Font.BOLD, 24));
-            etiquetaTituloCarrera.setForeground(new Color(0, 100, 0)); // Verde oscuro
-            etiquetaTituloCarrera.setBounds(350, 20, 200, 30);
+            etiquetaTituloCarrera.setForeground(new Color(25, 25, 112)); // Color letrero carreras
+            etiquetaTituloCarrera.setBounds(350,34, 500, 30); //(,Y,AnchoEtiqueta,)
             panelContenido.add(etiquetaTituloCarrera);
 
             JButton botonCerrar = new JButton("Cerrar");
             botonCerrar.setBounds(300, 520, 100, 30);
             botonCerrar.setFont(new Font("Arial", Font.BOLD, 12));
-            botonCerrar.setBackground(new Color(255, 69, 0)); // Naranja
+            botonCerrar.setBackground(new Color(70, 130, 180)); // Color botón cerrar
             botonCerrar.setForeground(Color.WHITE);
             botonCerrar.addActionListener(e -> dispose());
             panelContenido.add(botonCerrar);
@@ -461,7 +461,7 @@ public class NuevaTemporada2007 extends JFrame {
             JButton btnNewButton = new JButton("GUARDAR");
             btnNewButton.setBounds(500, 520, 100, 30);
             btnNewButton.setFont(new Font("Arial", Font.BOLD, 12));
-            btnNewButton.setBackground(new Color(0, 128, 0)); // Verde
+            btnNewButton.setBackground(new Color(70, 130, 180)); // Verde
             btnNewButton.setForeground(Color.WHITE);
             btnNewButton.addActionListener(new ActionListener() {
                 public void actionPerformed(ActionEvent e) {
