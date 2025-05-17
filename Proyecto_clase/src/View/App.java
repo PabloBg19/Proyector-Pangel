@@ -69,24 +69,14 @@ public class App extends JFrame {
 				
 			}
 		});
-		btnNuevaSimulacion.setBounds(827, 612, 313, 108);
+		btnNuevaSimulacion.setBounds(827, 635, 313, 108);
 		getContentPane().add(btnNuevaSimulacion);
-		
-		JButton btnSIMCARRERA = new JButton("New button");
-		btnSIMCARRERA.setIcon(new ImageIcon(App.class.getResource("/image/StartButton (2).png")));
-		btnSIMCARRERA.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				
-			}
-		});
-		btnSIMCARRERA.setBounds(663, 731, 694, 178);
-		getContentPane().add(btnSIMCARRERA);
 		
 		JButton btnMenuDeGestion = new JButton("Nueva Simulación");
 		btnMenuDeGestion.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) 
 			{
-				Simulacion temp =new Simulacion();
+				NuevaTemporada2007 temp =new NuevaTemporada2007();
 				temp.setVisible(true);
 
 			}

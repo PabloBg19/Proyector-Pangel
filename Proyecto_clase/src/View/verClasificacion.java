@@ -47,7 +47,7 @@ public class verClasificacion extends JFrame {
 	        table.setFillsViewportHeight(true);
 
 	        JScrollPane scrollPane = new JScrollPane(table);
-	        scrollPane.setBounds(70, 120, 652, 293);
+	        scrollPane.setBounds(70, 120, 243, 293);
 	        getContentPane().add(scrollPane);
 
 	        DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
@@ -70,12 +70,17 @@ public class verClasificacion extends JFrame {
 	        
 	        
 	        JLabel lblNewLabel = new JLabel("CLASIFICACIÓN");
+	        lblNewLabel.setBounds(238, 11, 354, 49);
 	        lblNewLabel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
-	        lblNewLabel.setBounds(238, 42, 354, 49);
 	        getContentPane().add(lblNewLabel);
+	        
+	        JLabel lblNewLabel_1 = new JLabel("PILOTOS");
+	        lblNewLabel_1.setFont(new Font("Bahnschrift", Font.PLAIN, 26));
+	        lblNewLabel_1.setBounds(126, 76, 123, 33);
+	        getContentPane().add(lblNewLabel_1);
 	    }
 
-	    private void cargarPilotos() {
+	    private void cargarPilotos() {  //carga los pilotos para mostrarlos en la tabla
 	        ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
 	        try {
 	            conexion.conectar();
@@ -93,6 +98,17 @@ public class verClasificacion extends JFrame {
 	        } catch (SQLException ex) {
 	            ex.printStackTrace();
 	        }
+	    }
+	    
+	    private void cargarequipos() { //carga los pilotos para mostralos en la tabla
+	    	ConexionMySQL conexion=new ConexionMySQL("root", " ", "formula_1");
+	    	
+	    	try {
+				conexion.conectar();
+			} catch (SQLException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 	    }
 
 	   
