@@ -426,7 +426,7 @@ public class NuevaTemporada2007 extends JFrame {
             JLabel etiquetaTituloCarrera = new JLabel(nombreCarrera);
             etiquetaTituloCarrera.setFont(new Font("Arial", Font.BOLD, 24));
             etiquetaTituloCarrera.setForeground(new Color(25, 25, 112));
-            etiquetaTituloCarrera.setBounds(350, 34, 500, 30);
+            etiquetaTituloCarrera.setBounds(320, 34, 500, 30);
             panelContenido.add(etiquetaTituloCarrera);
 
             // Botón para cerrar la ventana
