@@ -353,17 +353,17 @@ public class NuevaTemporada2007 extends JFrame {
         // Mapa de colores por equipo (definido manualmente según los equipos de la temporada 2007)
         private static final Map<String, Color> COLORES_POR_EQUIPO = new HashMap<>();
         static {
-            COLORES_POR_EQUIPO.put("McLaren", new Color(200, 200, 200)); // Gris
-            COLORES_POR_EQUIPO.put("Honda", new Color(200, 200, 200));   // Gris
-            COLORES_POR_EQUIPO.put("Ferrari", new Color(220, 0, 0));     // Rojo
-            COLORES_POR_EQUIPO.put("BMW Sauber", new Color(0, 153, 0));  // Verde
-            COLORES_POR_EQUIPO.put("Renault", new Color(0, 102, 204));   // Azul
-            COLORES_POR_EQUIPO.put("Williams", new Color(255, 255, 255)); // Blanco
-            COLORES_POR_EQUIPO.put("Toyota", new Color(255, 204, 0));    // Amarillo
-            COLORES_POR_EQUIPO.put("Toro Rosso", new Color(255, 0, 0));  // Rojo oscuro
-            COLORES_POR_EQUIPO.put("Red Bull", new Color(0, 102, 204));  // Azul
-            COLORES_POR_EQUIPO.put("Super Aguri", new Color(255, 153, 0)); // Naranja
-            COLORES_POR_EQUIPO.put("Spyker", new Color(255, 140, 0));    // Naranja oscuro
+            COLORES_POR_EQUIPO.put("McLaren", new Color(200, 200, 200)); //Gris
+            COLORES_POR_EQUIPO.put("Honda", new Color(40, 232, 209));   //Verde Agua
+            COLORES_POR_EQUIPO.put("Ferrari", new Color(220, 0, 0));     //Rojo
+            COLORES_POR_EQUIPO.put("BMW Sauber", new Color(255,255,255));  //Blanco
+            COLORES_POR_EQUIPO.put("Renault", new Color(235, 205, 38));   //Amarillo
+            COLORES_POR_EQUIPO.put("Williams", new Color(40, 40, 232));  //Azul Oscuro
+            COLORES_POR_EQUIPO.put("Toyota", new Color(255, 80, 80));    //Rojo claro
+            COLORES_POR_EQUIPO.put("Toro Rosso", new Color(176, 24, 77));  //Rojo oscuro
+            COLORES_POR_EQUIPO.put("Red Bull", new Color(11, 2, 89));   //Azul muy oscuro
+            COLORES_POR_EQUIPO.put("Super Aguri", new Color(255, 76, 111 )); //Rojo muy claro
+            COLORES_POR_EQUIPO.put("Spyker", new Color(255, 122, 30));    //Naranja oscuro
         }
 
         public RaceWindow(String nombreCarrera) {
