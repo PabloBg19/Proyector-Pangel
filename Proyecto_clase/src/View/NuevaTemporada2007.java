@@ -3,6 +3,7 @@ package View;
 // Importaciones necesarias para la interfaz gráfica, manejo de eventos, base de datos y otras utilidades
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -385,7 +386,7 @@ public class NuevaTemporada2007 extends JFrame {
             JLabel etiquetaTituloCarrera = new JLabel(nombreCarrera);
             etiquetaTituloCarrera.setFont(new Font("Arial", Font.BOLD, 24));
             etiquetaTituloCarrera.setForeground(new Color(25, 25, 112));
-            etiquetaTituloCarrera.setBounds(350, 34, 500, 30);
+            etiquetaTituloCarrera.setBounds(320, 34, 500, 30);
             panelContenido.add(etiquetaTituloCarrera);
 
             JButton botonCerrar = new JButton("Cerrar");
@@ -620,6 +621,12 @@ public class NuevaTemporada2007 extends JFrame {
             JPanel podioPanel = new JPanel();
             podioPanel.setLayout(null);
             podioPanel.setBackground(new Color(87, 87, 87));
+<<<<<<< HEAD
+=======
+            ImageIcon fondoIcon = new ImageIcon("/image/podio.jpg"); // o usa getResource("/ruta/archivo.jpg") si está en recursos
+            Image fondo = fondoIcon.getImage();
+            
+>>>>>>> bee6f4dd85092116e0fbb018413e0be1b5dadf99
 
             JLabel lblPos1 = new JLabel("1. " + PILOTOS[ordenLlegada.get(0)]);
             lblPos1.setFont(new Font("Arial", Font.BOLD, 14));
