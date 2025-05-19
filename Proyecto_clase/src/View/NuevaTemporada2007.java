@@ -700,22 +700,29 @@ public class NuevaTemporada2007 extends JFrame {
             JPanel podioPanel = new JPanel();
             podioPanel.setLayout(null);
             podioPanel.setBackground(new Color(230, 230, 250));
+            
 
             // Etiquetas para los tres primeros lugares
             JLabel lblPos1 = new JLabel("1. " + PILOTOS[ordenLlegada.get(0)]);
             lblPos1.setFont(new Font("Arial", Font.BOLD, 14));
-            lblPos1.setBounds(85, 25, 200, 20);
+            lblPos1.setBounds(82, 25, 200, 20);
             podioPanel.add(lblPos1);
+            lblPos1.setForeground(new Color(253, 176, 50)); //cambiar color letra podio
+
 
             JLabel lblPos2 = new JLabel("2. " + PILOTOS[ordenLlegada.get(1)]);
             lblPos2.setFont(new Font("Arial", Font.BOLD, 14));
-            lblPos2.setBounds(85, 65, 200, 20);
+            lblPos2.setBounds(82, 65, 200, 20);
             podioPanel.add(lblPos2);
+            lblPos2.setForeground(new Color(169, 169, 169)); //cambiar color letra podio
+
 
             JLabel lblPos3 = new JLabel("3. " + PILOTOS[ordenLlegada.get(2)]);
             lblPos3.setFont(new Font("Arial", Font.BOLD, 14));
-            lblPos3.setBounds(85, 105, 200, 20);
+            lblPos3.setBounds(82, 105, 200, 20);
             podioPanel.add(lblPos3);
+            lblPos3.setForeground(new Color(237, 129, 39 )); //cambiar color letra podio
+
 
             podioFrame.setContentPane(podioPanel);
             podioFrame.setVisible(true);
