@@ -691,7 +691,7 @@ public class NuevaTemporada2007 extends JFrame {
             }
         }
 
-        // Método para mostrar el podio al final de la carrera
+        // Método para mostrar una ventana con podio al final de la carrera
         private void mostrarPodio() {
             JFrame podioFrame = new JFrame("Podio - " + lblNewLabel.getText());
             podioFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -703,18 +703,18 @@ public class NuevaTemporada2007 extends JFrame {
 
             // Etiquetas para los tres primeros lugares
             JLabel lblPos1 = new JLabel("1. " + PILOTOS[ordenLlegada.get(0)]);
-            lblPos1.setFont(new Font("Arial", Font.BOLD, 16));
-            lblPos1.setBounds(100, 20, 200, 20);
+            lblPos1.setFont(new Font("Arial", Font.BOLD, 14));
+            lblPos1.setBounds(85, 25, 200, 20);
             podioPanel.add(lblPos1);
 
             JLabel lblPos2 = new JLabel("2. " + PILOTOS[ordenLlegada.get(1)]);
             lblPos2.setFont(new Font("Arial", Font.BOLD, 14));
-            lblPos2.setBounds(100, 60, 200, 20);
+            lblPos2.setBounds(85, 65, 200, 20);
             podioPanel.add(lblPos2);
 
             JLabel lblPos3 = new JLabel("3. " + PILOTOS[ordenLlegada.get(2)]);
             lblPos3.setFont(new Font("Arial", Font.BOLD, 14));
-            lblPos3.setBounds(100, 100, 200, 20);
+            lblPos3.setBounds(85, 105, 200, 20);
             podioPanel.add(lblPos3);
 
             podioFrame.setContentPane(podioPanel);
