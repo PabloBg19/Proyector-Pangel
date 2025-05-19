@@ -3,6 +3,7 @@ package View;
 // Importaciones necesarias para la interfaz gráfica, manejo de eventos, base de datos y otras utilidades
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.Graphics;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -700,6 +701,8 @@ public class NuevaTemporada2007 extends JFrame {
             JPanel podioPanel = new JPanel();
             podioPanel.setLayout(null);
             podioPanel.setBackground(new Color(87, 87, 87));
+            ImageIcon fondoIcon = new ImageIcon("/image/podio.jpg"); // o usa getResource("/ruta/archivo.jpg") si está en recursos
+            Image fondo = fondoIcon.getImage();
             
 
             // Etiquetas para los tres primeros lugares
