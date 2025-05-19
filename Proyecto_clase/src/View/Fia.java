@@ -27,34 +27,20 @@ public class Fia extends JFrame {
     public Fia(NuevaTemporada2007 parent) {
         this.parentWindow = parent;
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(0, 0, 300, 200);
+        setBounds(0, 0, 900, 600); // Ajustado el tamaño para contener todo el contenido
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setLocationRelativeTo(null);
         contentPane.setLayout(null);
         setContentPane(contentPane);
 
-        // Título en la ventana principal
-        JLabel lblTitulo = new JLabel("GESTIÓN DE TEMPORADA");
-        lblTitulo.setFont(new Font("Baskerville Old Face", Font.PLAIN, 20));
-        lblTitulo.setBounds(50, 20, 200, 30);
-        contentPane.add(lblTitulo);
+        
 
-        // Crear la ventana de reinicio
-        JFrame reiniciarFrame = new JFrame("Reiniciar Puntos y Temporada");
-        reiniciarFrame.setSize(900, 600);
-        reiniciarFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        reiniciarFrame.setLocationRelativeTo(null);
-
-        JPanel panelContenido = new JPanel();
-        panelContenido.setLayout(null);
-        reiniciarFrame.setContentPane(panelContenido);
-
-        // Título en la ventana de reinicio
+        // Título en la ventana de gestión
         JLabel lblGestionar = new JLabel("GESTIONAR LA TEMPORADA");
         lblGestionar.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
         lblGestionar.setBounds(171, 72, 564, 79);
-        panelContenido.add(lblGestionar);
+        contentPane.add(lblGestionar);
 
         // Botón para reiniciar todo
         JButton btnReiniciarTodo = new JButton("REINICIAR TODO");
@@ -103,7 +89,7 @@ public class Fia extends JFrame {
                 }
             }
         });
-        panelContenido.add(btnReiniciarTodo);
+        contentPane.add(btnReiniciarTodo);
 
         // Botón para modificar puntos
         JButton btnModificarPuntos = new JButton("MODIFICAR PUNTOS");
@@ -143,9 +129,9 @@ public class Fia extends JFrame {
                 }
             }
         });
-        panelContenido.add(btnModificarPuntos);
+        contentPane.add(btnModificarPuntos);
 
-        reiniciarFrame.setVisible(true);
+        setVisible(true); // Hacer visible la ventana principal
     }
 
     /**
