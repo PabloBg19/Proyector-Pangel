@@ -42,7 +42,7 @@ public class App extends JFrame {
 	 */
 	public App() {
 		JPanel contentPane = new JPanel() {
-            private Image backgroundImage = new ImageIcon(App.class.getResource("/image/fondo.jpg")).getImage();
+            private Image backgroundImage = new ImageIcon(App.class.getResource("/image/fondo.jpg")).getImage(); //Imagen de Fondo
 
             @Override
             protected void paintComponent(Graphics g) {
