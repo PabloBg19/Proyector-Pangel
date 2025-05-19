@@ -699,7 +699,7 @@ public class NuevaTemporada2007 extends JFrame {
             podioFrame.setLocationRelativeTo(null);
             JPanel podioPanel = new JPanel();
             podioPanel.setLayout(null);
-            podioPanel.setBackground(new Color(230, 230, 250));
+            podioPanel.setBackground(new Color(87, 87, 87));
             
 
             // Etiquetas para los tres primeros lugares
