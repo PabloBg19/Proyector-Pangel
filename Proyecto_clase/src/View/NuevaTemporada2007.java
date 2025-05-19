@@ -205,6 +205,7 @@ public class NuevaTemporada2007 extends JFrame {
             conexion.conectar();
             String query = "SELECT indice_actual FROM carreras WHERE Año = 2007 LIMIT 1";
             ResultSet result = conexion.ejecutarSelect(query);
+            //Trigger Bases de Datos
             if (result.next()) {
                 currentRaceIndex = result.getInt("indice_actual");
                 System.out.println("Estado cargado: currentRaceIndex = " + currentRaceIndex);
