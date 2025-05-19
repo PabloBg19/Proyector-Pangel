@@ -51,19 +51,15 @@ public class NuevaTemporada2007 extends JFrame {
         contentPane.setLayout(null); // Layout nulo para posicionamiento manual
 
         // Inicialización del arreglo de etiquetas para las 11 carreras
-        raceLabels = new JLabel[11];
+        raceLabels = new JLabel[10];
 
         // Etiqueta vacía como placeholder (índice 0)
-        JLabel lblGPPrueba = new JLabel("");
-        lblGPPrueba.setBounds(0, 0, 0, 0);
-        contentPane.add(lblGPPrueba);
-        raceLabels[0] = lblGPPrueba;
 
         // Etiquetas para cada Gran Premio con sus respectivas posiciones
         JLabel lblGPAustralia = new JLabel("Gran Premio de Albert Park");
         lblGPAustralia.setBounds(147, 139, 140, 14);
         contentPane.add(lblGPAustralia);
-        raceLabels[1] = lblGPAustralia;
+        raceLabels[0] = lblGPAustralia;
 
         JLabel lblRAustralia = new JLabel("R"); // Indicador de carrera
         lblRAustralia.setBounds(328, 139, 25, 14);
@@ -72,7 +68,7 @@ public class NuevaTemporada2007 extends JFrame {
         JLabel lblGranPremioDe = new JLabel("Gran Premio de Barein");
         lblGranPremioDe.setBounds(147, 164, 140, 14);
         contentPane.add(lblGranPremioDe);
-        raceLabels[2] = lblGranPremioDe;
+        raceLabels[1] = lblGranPremioDe;
 
         JLabel lblRAustralia_1 = new JLabel("R");
         lblRAustralia_1.setBounds(328, 164, 25, 14);
@@ -81,7 +77,7 @@ public class NuevaTemporada2007 extends JFrame {
         JLabel lblGPAustralia_1_1 = new JLabel("Gran Premio de España");
         lblGPAustralia_1_1.setBounds(147, 189, 140, 14);
         contentPane.add(lblGPAustralia_1_1);
-        raceLabels[3] = lblGPAustralia_1_1;
+        raceLabels[2] = lblGPAustralia_1_1;
 
         JLabel lblRAustralia_1_1 = new JLabel("R");
         lblRAustralia_1_1.setBounds(328, 189, 25, 14);
@@ -90,7 +86,7 @@ public class NuevaTemporada2007 extends JFrame {
         JLabel lblGPAustralia_1_1_1 = new JLabel("Gran Premio de Mónaco");
         lblGPAustralia_1_1_1.setBounds(147, 214, 140, 14);
         contentPane.add(lblGPAustralia_1_1_1);
-        raceLabels[4] = lblGPAustralia_1_1_1;
+        raceLabels[3] = lblGPAustralia_1_1_1;
 
         JLabel lblRAustralia_1_1_1 = new JLabel("R");
         lblRAustralia_1_1_1.setBounds(328, 214, 25, 14);
@@ -99,7 +95,7 @@ public class NuevaTemporada2007 extends JFrame {
         JLabel lblGPAustralia_1_1_1_1 = new JLabel("Gran Premio de Silverstone");
         lblGPAustralia_1_1_1_1.setBounds(147, 239, 140, 14);
         contentPane.add(lblGPAustralia_1_1_1_1);
-        raceLabels[5] = lblGPAustralia_1_1_1_1;
+        raceLabels[4] = lblGPAustralia_1_1_1_1;
 
         JLabel lblRAustralia_1_1_1_1 = new JLabel("R");
         lblRAustralia_1_1_1_1.setBounds(328, 239, 25, 14);
@@ -108,7 +104,7 @@ public class NuevaTemporada2007 extends JFrame {
         JLabel lblGranPremioDe_1 = new JLabel("Gran Premio de Monza");
         lblGranPremioDe_1.setBounds(383, 139, 140, 14);
         contentPane.add(lblGranPremioDe_1);
-        raceLabels[6] = lblGranPremioDe_1;
+        raceLabels[5] = lblGranPremioDe_1;
 
         JLabel lblRAustralia_2 = new JLabel("R");
         lblRAustralia_2.setBounds(559, 139, 25, 14);
@@ -117,7 +113,7 @@ public class NuevaTemporada2007 extends JFrame {
         JLabel lblGPAustralia_2_1 = new JLabel("Gran Premio de Spa");
         lblGPAustralia_2_1.setBounds(383, 164, 140, 14);
         contentPane.add(lblGPAustralia_2_1);
-        raceLabels[7] = lblGPAustralia_2_1;
+        raceLabels[6] = lblGPAustralia_2_1;
 
         JLabel lblRAustralia_2_1 = new JLabel("R");
         lblRAustralia_2_1.setBounds(559, 164, 25, 14);
@@ -126,7 +122,7 @@ public class NuevaTemporada2007 extends JFrame {
         JLabel lblGPAustralia_2_1_1 = new JLabel("Gran Premio de Suzuka");
         lblGPAustralia_2_1_1.setBounds(383, 189, 140, 14);
         contentPane.add(lblGPAustralia_2_1_1);
-        raceLabels[8] = lblGPAustralia_2_1_1;
+        raceLabels[7] = lblGPAustralia_2_1_1;
 
         JLabel lblRAustralia_2_1_1 = new JLabel("R");
         lblRAustralia_2_1_1.setBounds(559, 189, 25, 14);
@@ -135,7 +131,7 @@ public class NuevaTemporada2007 extends JFrame {
         JLabel lblGPAustralia_2_1_1_1 = new JLabel("Gran Premio de China");
         lblGPAustralia_2_1_1_1.setBounds(383, 214, 140, 14);
         contentPane.add(lblGPAustralia_2_1_1_1);
-        raceLabels[9] = lblGPAustralia_2_1_1_1;
+        raceLabels[8] = lblGPAustralia_2_1_1_1;
 
         JLabel lblRAustralia_2_1_1_2 = new JLabel("R");
         lblRAustralia_2_1_1_2.setBounds(559, 214, 25, 14);
@@ -144,7 +140,7 @@ public class NuevaTemporada2007 extends JFrame {
         JLabel lblGPAustralia_2_1_1_2 = new JLabel("Gran Premio de Brasil");
         lblGPAustralia_2_1_1_2.setBounds(383, 239, 140, 14);
         contentPane.add(lblGPAustralia_2_1_1_2);
-        raceLabels[10] = lblGPAustralia_2_1_1_2;
+        raceLabels[9] = lblGPAustralia_2_1_1_2;
 
         JLabel lblRAustralia_2_1_1_3 = new JLabel("R");
         lblRAustralia_2_1_1_3.setBounds(559, 239, 25, 14);
