@@ -621,12 +621,9 @@ public class NuevaTemporada2007 extends JFrame {
             JPanel podioPanel = new JPanel();
             podioPanel.setLayout(null);
             podioPanel.setBackground(new Color(87, 87, 87));
-<<<<<<< HEAD
-=======
             ImageIcon fondoIcon = new ImageIcon("/image/podio.jpg"); // o usa getResource("/ruta/archivo.jpg") si está en recursos
             Image fondo = fondoIcon.getImage();
             
->>>>>>> bee6f4dd85092116e0fbb018413e0be1b5dadf99
 
             JLabel lblPos1 = new JLabel("1. " + PILOTOS[ordenLlegada.get(0)]);
             lblPos1.setFont(new Font("Arial", Font.BOLD, 14));
