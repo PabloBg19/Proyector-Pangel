@@ -306,7 +306,6 @@ public class VerPilotos extends JFrame {
 
         textId = new JTextField(id);
         textId.setBounds(329, 75, 149, 20);
-        textId.setEditable(false); // ID should not be editable
         contentPane.add(textId);
 
         textNombre = new JTextField(nombre);
