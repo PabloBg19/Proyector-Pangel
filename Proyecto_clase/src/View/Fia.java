@@ -223,4 +223,9 @@ public class Fia extends JFrame {
 		// TODO Auto-generated method stub
 		
 	}
+
+	public void reiniciarTemporada() {
+		// TODO Auto-generated method stub
+		
+	}
 }

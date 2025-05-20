@@ -346,21 +346,7 @@ public class AñadirPilotos extends JFrame {
         dialog.setVisible(true);
     }
 
-    /**
-     * Método principal para probar la ventana
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    AñadirPilotos frame = new AñadirPilotos();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
+   
 }
 
 /*### Cambios Realizados
