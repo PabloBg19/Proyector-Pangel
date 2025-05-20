@@ -37,9 +37,7 @@ public class App extends JFrame {
 		});
 	}
 
-	/**
-	 * Create the frame.
-	 */
+	//Crea el frame
 	public App() {
 		JPanel contentPane = new JPanel() {
             private Image backgroundImage = new ImageIcon(App.class.getResource("/image/fondo.jpg")).getImage(); //Imagen de Fondo
