@@ -1,6 +1,7 @@
 package View;
 
 import java.awt.EventQueue;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
@@ -9,6 +10,11 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JTextField;
 import javax.swing.JButton;
+import javax.swing.JDialog;
+import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
@@ -170,9 +176,12 @@ public class AñadirPilotos extends JFrame {
 
                     conexion.ejecutarInsertDeleteUpdate(sentencia);
                     conexion.desconectar();
+                    // Mostrar pop-up de éxito
+                    JOptionPane.showMessageDialog(AñadirPilotos.this, "Piloto añadido con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
                 } catch (SQLException e1) {
                     e1.printStackTrace();
+                    JOptionPane.showMessageDialog(AñadirPilotos.this, "Error al añadir piloto: " + e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                     try {
                         conexion.desconectar();
                     } catch (SQLException e2) {
@@ -183,17 +192,28 @@ public class AñadirPilotos extends JFrame {
         });
         contentPane.add(btnEnviar);
 
+        // Botón Ver Logs
+        JButton btnVerLogs = new JButton("VER LOGS");
+        btnVerLogs.setBounds(579, 270, 106, 37);
+        btnVerLogs.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                mostrarLogs();
+            }
+        });
+        contentPane.add(btnVerLogs);
+
         // Crear la tabla piloto_log y el trigger al iniciar la ventana
         setupPilotLogAndTrigger();
     }
 
-    
-    //Método para crear la tabla de log y el trigger en la base de datos
+    /**
+     * Método para crear la tabla de log y el trigger en la base de datos
+     */
     private void setupPilotLogAndTrigger() {
         ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
         try {
             conexion.conectar();
-            //Crear la tabla piloto_log
+            // Crear la tabla piloto_log
             String createTableSQL = 
                 "CREATE TABLE IF NOT EXISTS piloto_log (" +
                 "    log_id INT AUTO_INCREMENT PRIMARY KEY," +
@@ -213,7 +233,7 @@ public class AñadirPilotos extends JFrame {
             // Eliminar el trigger si ya existe
             String dropTriggerSQL = "DROP TRIGGER IF EXISTS after_piloto_insert;";
 
-            // TRIGGER
+            // Crear el trigger
             String createTriggerSQL = 
                 "CREATE TRIGGER after_piloto_insert " +
                 "AFTER INSERT ON piloto " +
@@ -229,7 +249,7 @@ public class AñadirPilotos extends JFrame {
                 "    );" +
                 "END;";
 
-            //Ejecutar las sentencias
+            // Ejecutar las sentencias
             conexion.ejecutarInsertDeleteUpdate(createTableSQL);
             conexion.ejecutarInsertDeleteUpdate(dropTriggerSQL);
             conexion.ejecutarInsertDeleteUpdate(createTriggerSQL);
@@ -244,6 +264,86 @@ public class AñadirPilotos extends JFrame {
                 ex.printStackTrace();
             }
         }
+    }
+
+    /**
+     * Método para mostrar los logs en un pop-up
+     */
+    private void mostrarLogs() {
+        // Crear el diálogo (pop-up)
+        JDialog dialog = new JDialog(this, "Registros de Pilotos", true);
+        dialog.setBounds(100, 100, 800, 400);
+        dialog.setLocationRelativeTo(this);
+        dialog.getContentPane().setLayout(null);
+
+        // Crear el modelo de la tabla
+        DefaultTableModel model = new DefaultTableModel();
+        model.addColumn("Log ID");
+        model.addColumn("Piloto ID");
+        model.addColumn("Nombre");
+        model.addColumn("Edad");
+        model.addColumn("Nacionalidad");
+        model.addColumn("Temporada");
+        model.addColumn("Equipo");
+        model.addColumn("Habilidad");
+        model.addColumn("Consistencia");
+        model.addColumn("Puntos");
+        model.addColumn("Campeonato");
+        model.addColumn("Fecha y Hora");
+
+        // Consultar los datos de piloto_log
+        ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
+        try {
+            conexion.conectar();
+            String consulta = "SELECT * FROM piloto_log";
+            ResultSet rs = conexion.ejecutarSelect(consulta);
+
+            // Llenar el modelo con los datos
+            while (rs.next()) {
+                model.addRow(new Object[]{
+                    rs.getInt("log_id"),
+                    rs.getString("piloto_id"),
+                    rs.getString("nombre"),
+                    rs.getInt("edad"),
+                    rs.getString("nacionalidad"),
+                    rs.getString("temporada"),
+                    rs.getString("equipo"),
+                    rs.getInt("habilidad"),
+                    rs.getInt("consistencia"),
+                    rs.getInt("puntos"),
+                    rs.getString("campeonato"),
+                    rs.getTimestamp("log_timestamp")
+                });
+            }
+            rs.close();
+            conexion.desconectar();
+        } catch (SQLException e) {
+            e.printStackTrace();
+            try {
+                conexion.desconectar();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
+        }
+
+        // Crear la tabla y añadirla a un JScrollPane
+        JTable table = new JTable(model);
+        JScrollPane scrollPane = new JScrollPane(table);
+        scrollPane.setBounds(10, 10, 760, 300);
+        dialog.getContentPane().add(scrollPane);
+
+        // Botón para cerrar el diálogo
+        JButton btnCerrar = new JButton("CERRAR");
+        btnCerrar.setBounds(350, 320, 100, 30);
+        btnCerrar.addActionListener(new ActionListener() {
+            public void actionPerformed(ActionEvent e) {
+                dialog.dispose();
+            }
+        });
+        dialog.getContentPane().add(btnCerrar);
+
+        // Mostrar el diálogo
+        dialog.setVisible(true);
     }
 
     /**
@@ -263,56 +363,47 @@ public class AñadirPilotos extends JFrame {
     }
 }
 
-/*
-### Cambios Realizados
-
-1. **Corrección de `contentNombre`**:
-   - El error `contentNombre cannot be resolved` se debía a un error tipográfico en el código anterior, donde se usaba `contentNombre` en lugar de `textNombre`. Esto se corrigió en la línea correspondiente a la configuración del campo de texto `textNombre`:
+/*### Cambios Realizados
+1. **Pop-up de Éxito**:
+   - Añadí un `JOptionPane` en el `ActionListener` del botón `ENVIAR` para mostrar el mensaje "Piloto añadido con éxito" después de que la inserción en la base de datos sea exitosa:
      ```java
-     textNombre.setBounds(331, 117, 149, 20);
-     textNombre.setColumns(10);
-     contentPane.add(textNombre);
+     JOptionPane.showMessageDialog(AñadirPilotos.this, "Piloto añadido con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+     ```
+   - Este pop-up aparece justo antes de cerrar la ventana con `dispose()`.
+
+2. **Manejo de Errores**:
+   - Añadí un `JOptionPane` en el bloque `catch` para mostrar un mensaje de error si la inserción falla (por ejemplo, debido a un problema en la base de datos o datos inválidos):
+     ```java
+     JOptionPane.showMessageDialog(AñadirPilotos.this, "Error al añadir piloto: " + e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
      ```
 
-2. **Restauración de la Conexión Original**:
-   - Revertí el código del botón `ENVIAR` para usar tu implementación original con `ejecutarInsertDeleteUpdate` y la concatenación de cadenas para la consulta SQL, exactamente como estaba en tu código inicial:
-     ```java
-     String sentencia = "INSERT INTO piloto (Id, Nombre, Edad, Nacionalidad, Temporada, Equipo, Habilidad, Consistencia, Puntos, Campeonato) VALUES ('"
-             + textId.getText() + "', '"
-             + textNombre.getText() + "', '"
-             + textEdad.getText() + "', '"
-             + textNacionalidad.getText() + "', '"
-             + textTemporada.getText() + "', '"
-             + textEquipo.getText() + "', '"
-             + textHabilidad.getText() + "', '"
-             + textConsistencia.getText() + "', '"
-             + textPuntos.getText() + "', '"
-             + textCampeonato.getText() + "')";
-     conexion.ejecutarInsertDeleteUpdate(sentencia);
-     ```
-   - Esto respeta tu preferencia de no cambiar la conexión.
-
-3. **Mantenimiento del Trigger**:
-   - El método `setupPilotLogAndTrigger()` sigue igual, creando la tabla `piloto_log` y el trigger `after_piloto_insert` para registrar cada inserción en la tabla `piloto`.
+3. **Mantenimiento de Funcionalidad Existente**:
+   - El código de la interfaz, el botón `ENVIAR`, el método `setupPilotLogAndTrigger`, y el botón `VER LOGS` con su pop-up de tabla permanecen sin cambios.
+   - La conexión sigue usando tu clase `ConexionMySQL` con `ejecutarInsertDeleteUpdate` y la concatenación de cadenas, como solicitaste.
+   - El trigger `after_piloto_insert` y la tabla `piloto_log` siguen funcionando para registrar las inserciones.
 
 ### Notas Importantes
-- **Inyección SQL**: Como mantuve tu método original de concatenación de cadenas, el código sigue siendo vulnerable a inyección SQL. Por ejemplo, si un usuario ingresa comillas simples (`'`) en los campos de texto, la consulta SQL podría fallar o ser manipulada. Recomiendo encarecidamente usar `PreparedStatement` en el futuro para mayor seguridad, pero respeté tu instrucción de no cambiar la conexión.
-- **Validación de Entrada**: El código no valida los datos ingresados (por ejemplo, si `Edad`, `Habilidad`, `Consistencia` o `Puntos` no son números, MySQL puede rechazar la inserción). Considera añadir validaciones en la interfaz gráfica.
-- **Esquema de la Base de Datos**: Asegúrate de que la tabla `piloto` existe en la base de datos `formula_1` con las columnas `Id`, `Nombre`, `Edad`, `Nacionalidad`, `Temporada`, `Equipo`, `Habilidad`, `Consistencia`, `Puntos`, `Campeonato`, y que los tipos de datos son compatibles (por ejemplo, `Edad`, `Habilidad`, `Consistencia`, `Puntos` como `INT`, y los demás como `VARCHAR`).
-- **Driver de MySQL**: Asegúrate de que el driver de MySQL (`com.mysql.cj.jdbc.Driver`) esté en el classpath de tu proyecto, ya que tu clase `ConexionMySQL` lo requiere.
+- **Importación de JOptionPane**: Añadí `import javax.swing.JOptionPane;` para usar el pop-up. Esto ya está incluido en el código.
+- **Inyección SQL**: El código sigue usando concatenación de cadenas para la consulta SQL, lo que lo hace vulnerable a inyección SQL. Por ejemplo, si un usuario ingresa comillas simples (`'`) en los campos, la consulta puede fallar. Considera usar `PreparedStatement` en el futuro para mayor seguridad.
+- **Validación de Entrada**: No se valida si los campos numéricos (`Edad`, `Habilidad`, `Consistencia`, `Puntos`) contienen valores válidos. Si se ingresan valores no numéricos, la inserción fallará y se mostrará el pop-up de error. Podrías añadir validaciones para mejorar la experiencia.
+- **MariaDB**: El código es compatible con MariaDB (como indicaste en errores anteriores). Asegúrate de que la tabla `piloto` existe con las columnas `Id`, `Nombre`, `Edad`, `Nacionalidad`, `Temporada`, `Equipo`, `Habilidad`, `Consistencia`, `Puntos`, `Campeonato`, y que `piloto_log` tiene las columnas correspondientes.
 
 ### Cómo Probar
 1. **Configura tu Entorno**:
-   - Verifica que la base de datos `formula_1` esté creada en MySQL y que la tabla `piloto` exista con las columnas correctas.
+   - Verifica que la base de datos `formula_1` esté creada en MariaDB y que la tabla `piloto` exista con las columnas correctas.
    - Asegúrate de que el usuario `root` sin contraseña tenga acceso a la base de datos.
-   - Confirma que el driver de MySQL esté incluido en tu proyecto (por ejemplo, en `pom.xml` si usas Maven, o como librería en tu IDE).
+   - Confirma que el driver MySQL (`com.mysql.cj.jdbc.Driver`) esté en el classpath de tu proyecto.
 
 2. **Ejecuta el Programa**:
-   - Compila y ejecuta la clase `AñadirPilotos`. La ventana debería abrirse sin errores, y la tabla `piloto_log` y el trigger se crearán automáticamente al iniciar.
-   - Rellena los campos en la interfaz gráfica y haz clic en "ENVIAR" para añadir un piloto. Esto insertará el registro en la tabla `piloto` y el trigger registrará los datos en `piloto_log`.
+   - Compila y ejecuta la clase `AñadirPilotos`. La ventana se abrirá, y la tabla `piloto_log` y el trigger se crearán automáticamente.
+   - Rellena los campos (asegúrate de usar números válidos para `Edad`, `Habilidad`, `Consistencia`, `Puntos`) y haz clic en "ENVIAR". Deberías ver un pop-up que dice "Piloto añadido con éxito", y la ventana se cerrará.
+   - Si hay un error (por ejemplo, datos inválidos), verás un pop-up con el mensaje de error.
+   - Haz clic en "VER LOGS" para abrir el pop-up con la tabla de logs y confirmar que el piloto añadido está registrado en `piloto_log`.
 
-3. **Verifica el Log**:
-   - Usa una consulta como `SELECT * FROM piloto_log;` en MySQL para confirmar que los datos de los pilotos añadidos se registran con la marca de tiempo.
+3. **Verifica el Comportamiento**:
+   - Añade varios pilotos y verifica que el pop-up de éxito aparece cada vez.
+   - Usa el botón "VER LOGS" para confirmar que los registros se guardan en `piloto_log` con la marca de tiempo.
+   - Si introduces datos inválidos (por ejemplo, letras en `Edad`), deberías ver el pop-up de error con el mensaje de la excepción.
 
-Si encuentras más errores o necesitas añadir funcionalidades adicionales (como validaciones de entrada, una interfaz para ver los logs, o ajustes en el esquema), por favor, indícalos y te ayudaré a resolverlos.
+Si necesitas ajustes (como personalizar el diseño del pop-up, añadir validaciones de entrada, o más funcionalidades), o si encuentras algún error, házmelo saber y lo resolveremos. ¡Espero que el nuevo pop-up sea justo lo que necesitas!
 */
