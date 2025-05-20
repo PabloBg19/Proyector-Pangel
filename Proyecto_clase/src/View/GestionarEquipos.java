@@ -1,6 +1,5 @@
 package View;
 
-import java.awt.EventQueue;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -258,75 +257,76 @@ public class GestionarEquipos extends JFrame {
         dialog.setContentPane(contentPane);
         contentPane.setLayout(null);
 
-        JLabel lblId = new JLabel("ID");
-        lblId.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblId.setBounds(282, 80, 39, 32);
-        contentPane.add(lblId);
+
+        JLabel lbl_Id = new JLabel("ID");
+        lbl_Id.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
+        lbl_Id.setBounds(283, 105, 39, 32);
+        contentPane.add(lbl_Id);
 
         JLabel lblNombre = new JLabel("NOMBRE");
         lblNombre.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblNombre.setBounds(238, 123, 83, 32);
+        lblNombre.setBounds(239, 148, 83, 32);
         contentPane.add(lblNombre);
 
         JLabel lblMotor = new JLabel("MOTOR");
         lblMotor.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblMotor.setBounds(238, 166, 83, 32);
+        lblMotor.setBounds(239, 191, 83, 32);
         contentPane.add(lblMotor);
 
         JLabel lblPais = new JLabel("PAIS");
         lblPais.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblPais.setBounds(234, 209, 74, 32);
+        lblPais.setBounds(265, 234, 50, 32);
         contentPane.add(lblPais);
 
         JLabel lblPotencia = new JLabel("POTENCIA");
         lblPotencia.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblPotencia.setBounds(450, 209, 129, 32);
+        lblPotencia.setBounds(220, 277, 102, 32);
         contentPane.add(lblPotencia);
 
-        JLabel lblAerodinamica = new JLabel("AERODINAMICA");
+        JLabel lblAerodinamica = new JLabel("AERODINÁMICA");
         lblAerodinamica.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblAerodinamica.setBounds(234, 252, 129, 32);
+        lblAerodinamica.setBounds(180, 320, 155, 32);
         contentPane.add(lblAerodinamica);
 
         JLabel lblFiabilidad = new JLabel("FIABILIDAD");
         lblFiabilidad.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        lblFiabilidad.setBounds(450, 252, 129, 32);
+        lblFiabilidad.setBounds(220, 363, 102, 32);
         contentPane.add(lblFiabilidad);
 
-        JTextField textId = new JTextField(id);
-        textId.setColumns(10);
-        textId.setBounds(329, 90, 149, 20);
+        JTextField textId = new JTextField();
+        textId.setBounds(345, 115, 148, 20);
         contentPane.add(textId);
+        textId.setColumns(10);
 
-        JTextField textNombre = new JTextField(nombre);
+        textNombre = new JTextField();
         textNombre.setColumns(10);
-        textNombre.setBounds(329, 120, 149, 20);
+        textNombre.setBounds(345, 155, 148, 20);
         contentPane.add(textNombre);
 
-        JTextField textMotor = new JTextField(motor);
+        JTextField textMotor = new JTextField();
         textMotor.setColumns(10);
-        textMotor.setBounds(329, 150, 149, 20);
+        textMotor.setBounds(345, 195, 148, 20);
         contentPane.add(textMotor);
 
-        JTextField textPais = new JTextField(pais);
+        JTextField textPais = new JTextField();
         textPais.setColumns(10);
-        textPais.setBounds(329, 180, 149, 20);
+        textPais.setBounds(345, 235, 148, 20);
         contentPane.add(textPais);
 
-        JTextField textPotencia = new JTextField(potencia);
+        JTextField textPotencia = new JTextField();
         textPotencia.setColumns(10);
-        textPotencia.setBounds(510, 180, 149, 20);
+        textPotencia.setBounds(345, 285, 148, 20);
         contentPane.add(textPotencia);
 
-        JTextField textAerodinamica = new JTextField(aerodinamica);
-        textAerodinamica.setColumns(10);
-        textAerodinamica.setBounds(329, 210, 149, 20);
-        contentPane.add(textAerodinamica);
+        JTextField textField_Aerodinamica = new JTextField();
+        textField_Aerodinamica.setColumns(10);
+        textField_Aerodinamica.setBounds(345, 325, 148, 20);
+        contentPane.add(textField_Aerodinamica);
 
-        JTextField textFiabilidad = new JTextField(fiabilidad);
-        textFiabilidad.setColumns(10);
-        textFiabilidad.setBounds(510, 210, 149, 20);
-        contentPane.add(textFiabilidad);
+        JTextField textField_Fiabilidad = new JTextField();
+        textField_Fiabilidad.setColumns(10);
+        textField_Fiabilidad.setBounds(345, 365, 148, 20);
+        contentPane.add(textField_Fiabilidad);
 
         JButton btnGuardar = new JButton("Guardar");
         btnGuardar.addActionListener(new ActionListener() {
@@ -338,8 +338,8 @@ public class GestionarEquipos extends JFrame {
                             "', Motor='" + textMotor.getText() +
                             "', Pais='" + textPais.getText() +
                             "', Potencia=" + textPotencia.getText() +
-                            ", Aerodinamica=" + textAerodinamica.getText() +
-                            ", Fiabilidad=" + textFiabilidad.getText() +
+                            ", Aerodinamica=" + textField_Aerodinamica.getText() +
+                            ", Fiabilidad=" + textField_Fiabilidad.getText() +
                             " WHERE Id='" + textId.getText() + "'";
 
                     int rowsAffected = conexion.ejecutarInsertDeleteUpdate(sentencia);
@@ -360,10 +360,10 @@ public class GestionarEquipos extends JFrame {
         btnGuardar.setBounds(597, 228, 89, 23);
         contentPane.add(btnGuardar);
 
-        JLabel lblNewLabel_1 = new JLabel("MODIFICAR EQUIPO");
-        lblNewLabel_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
-        lblNewLabel_1.setBounds(240, 11, 325, 90);
-        contentPane.add(lblNewLabel_1);
+        JLabel lblNewLabel_11 = new JLabel("MODIFICAR EQUIPO");
+        lblNewLabel_11.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
+        lblNewLabel_11.setBounds(240, 11, 325, 90);
+        contentPane.add(lblNewLabel_11);
 
         dialog.setVisible(true);
     }

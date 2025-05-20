@@ -44,9 +44,9 @@ public class AnadirEquipo extends JFrame {
         lbl_Id.setBounds(283, 105, 39, 32);
         contentPane.add(lbl_Id);
 
-        JLabel lblNewLabel_1 = new JLabel("AÑADIR EQUIPOS");
+        JLabel lblNewLabel_1 = new JLabel("               AÑADIR EQUIPOS");
         lblNewLabel_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
-        lblNewLabel_1.setBounds(234, 11, 338, 54);
+        lblNewLabel_1.setBounds(77, 11, 621, 54);
         contentPane.add(lblNewLabel_1);
 
         JLabel lblNombre = new JLabel("NOMBRE");

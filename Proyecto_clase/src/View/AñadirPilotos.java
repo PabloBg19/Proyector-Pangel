@@ -48,7 +48,7 @@ public class AñadirPilotos extends JFrame {
 
         // Título
         JLabel lblNewLabel_1 = new JLabel("AÑADIR PILOTO");
-        lblNewLabel_1.setBounds(238, -11, 325, 90);
+        lblNewLabel_1.setBounds(237, -11, 326, 90);
         lblNewLabel_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
         contentPane.add(lblNewLabel_1);
 
