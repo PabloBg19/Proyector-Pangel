@@ -218,4 +218,9 @@ public class Fia extends JFrame {
 
         dialog.setVisible(true);
     }
+
+	public void reiniciarTemporada() {
+		// TODO Auto-generated method stub
+		
+	}
 }

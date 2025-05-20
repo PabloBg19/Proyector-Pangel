@@ -171,7 +171,32 @@ public class NuevaTemporada2007 extends JFrame {
         JButton btnNewButton_1_1 = new JButton("Gestionar Temporada");
         btnNewButton_1_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                Fia temp = new Fia(NuevaTemporada2007.this); // Abre ventana de gestión FIA
+                Fia temp = new Fia(NuevaTemporada2007.this) {
+                    @Override
+                    public void reiniciarTemporada() {
+                        ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
+                        try {
+                            conexion.conectar();
+                            String resetQuery = "UPDATE piloto SET Puntos = 0";
+                            conexion.ejecutarInsertDeleteUpdate(resetQuery);
+                            System.out.println("Puntos reiniciados para la próxima temporada.");
+                            JOptionPane.showMessageDialog(NuevaTemporada2007.this, "Puntos reiniciados con éxito.");
+                            currentRaceIndex = -1; // Reiniciar índice de carrera
+                            saveSeasonState(); // Guardar el nuevo estado
+                            refreshSeasonState(); // Actualizar la interfaz
+                        } catch (SQLException ex) {
+                            JOptionPane.showMessageDialog(NuevaTemporada2007.this, "Error al reiniciar puntos: " + ex.getMessage());
+                            ex.printStackTrace();
+                        } finally {
+                            try {
+								conexion.desconectar();
+							} catch (SQLException e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+                        }
+                    }
+                };
                 temp.setVisible(true);
             }
         });
@@ -289,7 +314,7 @@ public class NuevaTemporada2007 extends JFrame {
 
     /**
      * Avanza a la siguiente carrera, actualiza la interfaz y abre la ventana de simulación.
-     * Si es la última carrera, muestra el campeón y reinicia los puntos.
+     * Si es la última carrera, muestra el campeón y abre la ventana principal para continuar.
      */
     private void advanceToNextRace() {
         if (currentRaceIndex == -1) {
@@ -297,8 +322,11 @@ public class NuevaTemporada2007 extends JFrame {
         } else if (currentRaceIndex < raceLabels.length - 1) {
             currentRaceIndex++; // Avanza a la siguiente carrera
         } else {
-            currentRaceIndex = 0; // Reinicia al comienzo tras la última carrera
-            mostrarCampeonYReiniciarPuntos(); // Muestra el campeón y reinicia puntos
+            mostrarCampeon(); // Solo muestra el campeón, sin reiniciar puntos
+            currentRaceIndex = -1; // Reinicia el índice para no comenzar automáticamente
+            dispose(); // Cierra la ventana actual
+            new NuevaTemporada2007().setVisible(true); // Abre una nueva ventana para continuar
+            return; // Salir del método para evitar abrir la simulación
         }
 
         // Restablecer estilo de la carrera anterior
@@ -321,9 +349,9 @@ public class NuevaTemporada2007 extends JFrame {
     }
 
     /**
-     * Muestra el campeón de la temporada y reinicia los puntos de todos los pilotos.
+     * Muestra el campeón de la temporada sin reiniciar los puntos.
      */
-    private void mostrarCampeonYReiniciarPuntos() {
+    private void mostrarCampeon() {
         ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
         try {
             conexion.conectar();
@@ -335,14 +363,9 @@ public class NuevaTemporada2007 extends JFrame {
                 JOptionPane.showMessageDialog(this, "¡Campeón del Mundo 2007: " + campeon + " con " + puntos + " puntos!");
             }
             result.close();
-
-            // Reiniciar puntos de todos los pilotos
-            String resetQuery = "UPDATE piloto SET Puntos = 0";
-            conexion.ejecutarInsertDeleteUpdate(resetQuery);
-            System.out.println("Puntos reiniciados para la próxima temporada.");
             conexion.desconectar();
         } catch (SQLException e) {
-            JOptionPane.showMessageDialog(this, "Error al determinar el campeón o reiniciar puntos: " + e.getMessage());
+            JOptionPane.showMessageDialog(this, "Error al determinar el campeón: " + e.getMessage());
             e.printStackTrace();
         }
     }
@@ -760,7 +783,6 @@ public class NuevaTemporada2007 extends JFrame {
             panel.setBackground(new Color(0, 0, 0, 150)); // Semi-transparent black
             panel.add(label, BorderLayout.CENTER);
            
-            
             return panel;
         }
         /**
