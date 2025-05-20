@@ -401,7 +401,7 @@ public class NuevaTemporada2007 extends JFrame {
         private static final int Y_POSICION = 100; // Posición inicial en Y
         private static final int TAMANO_PUNTO = 10; // Tamaño de los puntos de los pilotos
         private static final int NUM_PILOTOS = 22; // Número total de pilotos
-        private static final int TOTAL_VUELTAS = 1; // Número total de vueltas
+        private static final int TOTAL_VUELTAS = 3; // Número total de vueltas
         private JLabel lblNewLabel; // Etiqueta vacía (posiblemente para uso futuro)
         private JLabel etiquetaVueltasCarrera; // Muestra la vuelta actual
 
@@ -885,10 +885,10 @@ public class NuevaTemporada2007 extends JFrame {
             }
         }
 
-        /**
-         * Asigna puntos según la posición final en la carrera.
-         * @param posicion Posición del piloto.
-         * @return Puntos correspondientes.
+        /*
+         Asigna puntos según la posición final en la carrera.
+         @param posicion Posición del piloto.
+         @return Puntos correspondientes.
          */
         private int obtenerPuntosPorPosicion(int posicion) {
             switch (posicion) {
