@@ -1,5 +1,6 @@
 package View;
 
+import java.awt.BorderLayout;
 // Importaciones necesarias para la interfaz gráfica, manejo de eventos, base de datos y otras utilidades
 import java.awt.Color;
 import java.awt.Font;
@@ -24,6 +25,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
+import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 
 /**
@@ -376,7 +378,7 @@ public class NuevaTemporada2007 extends JFrame {
         private static final int Y_POSICION = 100; // Posición inicial en Y
         private static final int TAMANO_PUNTO = 10; // Tamaño de los puntos de los pilotos
         private static final int NUM_PILOTOS = 22; // Número total de pilotos
-        private static final int TOTAL_VUELTAS = 3; // Número total de vueltas
+        private static final int TOTAL_VUELTAS = 1; // Número total de vueltas
         private JLabel lblNewLabel; // Etiqueta vacía (posiblemente para uso futuro)
         private JLabel etiquetaVueltasCarrera; // Muestra la vuelta actual
 
@@ -706,40 +708,61 @@ public class NuevaTemporada2007 extends JFrame {
          * Muestra una ventana con el podio de la carrera (primeros tres puestos).
          */
         private void mostrarPodio() {
+            // Create larger frame
             JFrame podioFrame = new JFrame("Podio - " + lblNewLabel.getText());
             podioFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-            podioFrame.setBounds(0, 0, 300, 200);
+            podioFrame.setSize(600, 450);
             podioFrame.setLocationRelativeTo(null);
-            JPanel podioPanel = new JPanel();
-            podioPanel.setLayout(null);
-            podioPanel.setBackground(new Color(87, 87, 87));
-            ImageIcon fondoIcon = new ImageIcon("/image/podio.jpg"); // Ruta de la imagen del podio
-
-            // Primer puesto
-            JLabel lblPos1 = new JLabel("1. " + PILOTOS[ordenLlegada.get(0)]);
-            lblPos1.setFont(new Font("Arial", Font.BOLD, 14));
-            lblPos1.setBounds(82, 25, 200, 20);
-            lblPos1.setForeground(new Color(253, 176, 50)); // Dorado
-            podioPanel.add(lblPos1);
-
-            // Segundo puesto
-            JLabel lblPos2 = new JLabel("2. " + PILOTOS[ordenLlegada.get(1)]);
-            lblPos2.setFont(new Font("Arial", Font.BOLD, 14));
-            lblPos2.setBounds(82, 65, 200, 20);
-            lblPos2.setForeground(new Color(169, 169, 169)); // Plateado
-            podioPanel.add(lblPos2);
-
-            // Tercer puesto
-            JLabel lblPos3 = new JLabel("3. " + PILOTOS[ordenLlegada.get(2)]);
-            lblPos3.setFont(new Font("Arial", Font.BOLD, 14));
-            lblPos3.setBounds(82, 105, 200, 20);
-            lblPos3.setForeground(new Color(237, 129, 39)); // Bronce
-            podioPanel.add(lblPos3);
-
-            podioFrame.setContentPane(podioPanel);
+            
+            // Create a custom JPanel that draws the background image
+            JPanel backgroundPanel = new JPanel() {
+                @Override
+                protected void paintComponent(Graphics g) {
+                    super.paintComponent(g);
+                    ImageIcon podioIcon = new ImageIcon("src/image/podio.jpg");
+                    Image podioImage = podioIcon.getImage();
+                    // Draw image scaled to fit the panel
+                    g.drawImage(podioImage, 0, 0, getWidth(), getHeight(), this);
+                }
+            };
+            backgroundPanel.setLayout(null); // Use absolute positioning for labels
+            
+            // First place (center, highest position)
+            JPanel panel1 = createPodiumPanel("1° " + PILOTOS[ordenLlegada.get(0)], 15, new Color(255, 215, 0));
+            panel1.setBounds(212, 237, 160, 35);
+            backgroundPanel.add(panel1);
+            
+            // Second place (left, higher than before)
+            JPanel panel2 = createPodiumPanel("2° " + PILOTOS[ordenLlegada.get(1)], 15, new Color(192, 192, 192));
+            panel2.setBounds(28, 255, 160, 35);
+            backgroundPanel.add(panel2);
+            
+            // Third place (right, higher than before)
+            JPanel panel3 = createPodiumPanel("3° " + PILOTOS[ordenLlegada.get(2)], 15, new Color(205, 127, 50));
+            panel3.setBounds(394, 285, 160, 35);
+            backgroundPanel.add(panel3);
+            
+            // Set content pane to the background panel
+            podioFrame.setContentPane(backgroundPanel);
+            podioFrame.setResizable(true);
             podioFrame.setVisible(true);
         }
 
+        // Helper method to create a panel with a label that has a semi-transparent background
+        private JPanel createPodiumPanel(String text, int fontSize, Color textColor) {
+            JLabel label = new JLabel(text);
+            label.setFont(new Font("Arial", Font.BOLD, fontSize));
+            label.setForeground(textColor);
+            label.setHorizontalAlignment(JLabel.CENTER);
+            
+            JPanel panel = new JPanel();
+            panel.setLayout(new BorderLayout());
+            panel.setBackground(new Color(0, 0, 0, 150)); // Semi-transparent black
+            panel.add(label, BorderLayout.CENTER);
+           
+            
+            return panel;
+        }
         /**
          * Carga los datos de pilotos y equipos desde la base de datos.
          */
