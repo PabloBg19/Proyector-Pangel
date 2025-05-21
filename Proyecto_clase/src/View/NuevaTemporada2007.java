@@ -252,7 +252,7 @@ public class NuevaTemporada2007 extends JFrame {
      * Carga el estado de la temporada desde la base de datos.
      * Obtiene el índice de la carrera actual y actualiza la interfaz.
      */
-    private void loadSeasonState() {
+    public void loadSeasonState() {
         ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
         try {
             conexion.conectar();
@@ -295,7 +295,7 @@ public class NuevaTemporada2007 extends JFrame {
     /**
      * Guarda el estado de la temporada (índice de la carrera actual) en la base de datos.
      */
-    private void saveSeasonState() {
+    public void saveSeasonState() {
         ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
         try {
             conexion.conectar();
@@ -316,7 +316,7 @@ public class NuevaTemporada2007 extends JFrame {
      * Avanza a la siguiente carrera, actualiza la interfaz y abre la ventana de simulación.
      * Si es la última carrera, muestra el campeón y abre la ventana principal para continuar.
      */
-    private void advanceToNextRace() {
+    public void advanceToNextRace() {
         if (currentRaceIndex == -1) {
             currentRaceIndex = 0; // Comienza desde la primera carrera
         } else if (currentRaceIndex < raceLabels.length - 1) {
@@ -351,7 +351,7 @@ public class NuevaTemporada2007 extends JFrame {
     /**
      * Muestra el campeón de la temporada sin reiniciar los puntos.
      */
-    private void mostrarCampeon() {
+    public void mostrarCampeon() {
         ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
         try {
             conexion.conectar();
