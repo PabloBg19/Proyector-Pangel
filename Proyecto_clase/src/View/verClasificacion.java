@@ -16,7 +16,6 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 public class verClasificacion extends JFrame {
-
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private JTable tablePilotos;
@@ -35,35 +34,46 @@ public class verClasificacion extends JFrame {
         setLocationRelativeTo(null);
         getContentPane().setLayout(null);
 
-        // Tabla de pilotos
+        // Tabla de pilotos - Ampliamos el ancho para mostrar nombres completos
         String[] columnNamesPilotos = {"Puntos", "Nombre", "Equipo", "Puntos"};
         tableModelPilotos = new DefaultTableModel(columnNamesPilotos, 0);
         tablePilotos = new JTable(tableModelPilotos);
         tablePilotos.setFillsViewportHeight(true);
-
         JScrollPane scrollPanePilotos = new JScrollPane(tablePilotos);
-        scrollPanePilotos.setBounds(70, 120, 280, 293);
+        scrollPanePilotos.setBounds(50, 120, 340, 293); // Ampliamos el ancho de 280 a 340
         getContentPane().add(scrollPanePilotos);
 
+        // Configurar el renderizador para centrar todas las columnas
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
         centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
         for (int i = 0; i < tablePilotos.getColumnCount(); i++) {
             tablePilotos.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
+        
+        // Ajustamos el ancho de las columnas para la tabla de pilotos
+        tablePilotos.getColumnModel().getColumn(0).setPreferredWidth(50);   // Puntos (posición)
+        tablePilotos.getColumnModel().getColumn(1).setPreferredWidth(150);  // Nombre
+        tablePilotos.getColumnModel().getColumn(2).setPreferredWidth(90);   // Equipo
+        tablePilotos.getColumnModel().getColumn(3).setPreferredWidth(50);   // Puntos
 
         // Tabla de equipos
         String[] columnNamesEquipos = {"Puntos", "Equipo", "Puntos Totales"};
         tableModelEquipos = new DefaultTableModel(columnNamesEquipos, 0);
         tableEquipos = new JTable(tableModelEquipos);
         tableEquipos.setFillsViewportHeight(true);
-
         JScrollPane scrollPaneEquipos = new JScrollPane(tableEquipos);
-        scrollPaneEquipos.setBounds(450, 120, 280, 293);
+        scrollPaneEquipos.setBounds(410, 120, 340, 293); // Ajustamos posición y ampliamos el ancho
         getContentPane().add(scrollPaneEquipos);
 
+        // Configurar el renderizador para centrar todas las columnas de equipos
         for (int i = 0; i < tableEquipos.getColumnCount(); i++) {
             tableEquipos.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
+        
+        // Ajustamos el ancho de las columnas para la tabla de equipos
+        tableEquipos.getColumnModel().getColumn(0).setPreferredWidth(50);   // Puntos (posición)
+        tableEquipos.getColumnModel().getColumn(1).setPreferredWidth(140);  // Equipo
+        tableEquipos.getColumnModel().getColumn(2).setPreferredWidth(100);  // Puntos Totales
 
         // Cargar datos iniciales
         cargarPilotos();
@@ -85,24 +95,24 @@ public class verClasificacion extends JFrame {
 
         JLabel lblPilotos = new JLabel("PILOTOS");
         lblPilotos.setFont(new Font("Bahnschrift", Font.PLAIN, 26));
-        lblPilotos.setBounds(126, 76, 123, 33);
+        lblPilotos.setBounds(159, 71, 123, 33);
         getContentPane().add(lblPilotos);
 
         JLabel lblEquipos = new JLabel("EQUIPOS");
         lblEquipos.setFont(new Font("Bahnschrift", Font.PLAIN, 26));
-        lblEquipos.setBounds(506, 76, 123, 33);
+        lblEquipos.setBounds(518, 71, 123, 33);
         getContentPane().add(lblEquipos);
     }
 
     private void cargarPilotos() { // Carga los pilotos y sus equipos en la tabla
         ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
         try {
-        	int posicion=1;
+            int posicion = 1;
             conexion.conectar();
             String sentencia = "SELECT p.Nombre, p.Equipo, p.Puntos " +
-                             "FROM piloto p " +
-                             "LEFT JOIN equipo e ON p.Equipo = e.Nombre " +
-                             "ORDER BY p.Puntos DESC";
+                              "FROM piloto p " +
+                              "LEFT JOIN equipo e ON p.Equipo = e.Nombre " +
+                              "ORDER BY p.Puntos DESC";
             ResultSet resultado = conexion.ejecutarSelect(sentencia);
             tableModelPilotos.setRowCount(0);
             while (resultado.next()) {
@@ -122,12 +132,12 @@ public class verClasificacion extends JFrame {
     private void cargarEquipos() { // Carga los equipos y sus puntos totales en la tabla
         ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
         try {
-        	int posicion=1;
+            int posicion = 1;
             conexion.conectar();
             String sentencia = "SELECT p.Equipo, SUM(p.Puntos) as PuntosTotales " +
-                             "FROM piloto p " +
-                             "GROUP BY p.Equipo " +
-                             "ORDER BY PuntosTotales DESC";
+                              "FROM piloto p " +
+                              "GROUP BY p.Equipo " +
+                              "ORDER BY PuntosTotales DESC";
             ResultSet resultado = conexion.ejecutarSelect(sentencia);
             tableModelEquipos.setRowCount(0);
             while (resultado.next()) {
