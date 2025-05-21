@@ -155,4 +155,90 @@ class NuevaTemporada2007Test {
             fail("mostrarCampeon no debe lanzar excepciones: " + e.getMessage());
         }
     }
+
+    // Prueba getRaceLabels para verificar que devuelve correctamente el array de carreras
+    void testGetRaceLabels() {
+        JLabel[] raceLabels = getRaceLabels(temporada);
+        assertNotNull(raceLabels, "El array de etiquetas de carreras no debe ser nulo");
+        assertEquals(10, raceLabels.length, "El array debe contener 10 etiquetas de carreras");
+        assertEquals("Gran Premio de Albert Park", raceLabels[0].getText(), "La primera etiqueta debe ser Albert Park");
+        assertEquals("Gran Premio de Brasil", raceLabels[9].getText(), "La última etiqueta debe ser Brasil");
+        for (JLabel label : raceLabels) {
+            assertNotNull(label, "Ninguna etiqueta de carrera debe ser nula");
+            assertTrue(label instanceof JLabel, "Cada elemento debe ser una instancia de JLabel");
+        }
+    }
+
+    //Prueba para setCurrentRaceIndex para verificar que modifica correctamente el campo currentRaceIndex
+    @Test
+    void testSetCurrentRaceIndex() {
+        setCurrentRaceIndex(temporada, 3);
+        try {
+            Field field = NuevaTemporada2007.class.getDeclaredField("currentRaceIndex");
+            field.setAccessible(true);
+            int currentIndex = field.getInt(temporada);
+            assertEquals(3, currentIndex, "El índice de carrera actual debe ser 3 después de establecerlo");
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            fail("Error accediendo al campo currentRaceIndex: " + e.getMessage());
+        }
+
+        // Test setting a different index
+        setCurrentRaceIndex(temporada, 7);
+        try {
+            Field field = NuevaTemporada2007.class.getDeclaredField("currentRaceIndex");
+            field.setAccessible(true);
+            int currentIndex = field.getInt(temporada);
+            assertEquals(7, currentIndex, "El índice de carrera actual debe ser 7 después de establecerlo");
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            fail("Error accediendo al campo currentRaceIndex: " + e.getMessage());
+        }
+
+        // Test setting an invalid index (optional boundary check, if applicable)
+        try {
+            setCurrentRaceIndex(temporada, -1);
+            Field field = NuevaTemporada2007.class.getDeclaredField("currentRaceIndex");
+            field.setAccessible(true);
+            int currentIndex = field.getInt(temporada);
+            assertEquals(-1, currentIndex, "El índice de carrera actual debe ser -1 incluso si es inválido");
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            fail("Error accediendo al campo currentRaceIndex: " + e.getMessage());
+        }
+    }
+
+    // Test for getCurrentRaceIndex to verify it correctly retrieves the currentRaceIndex field
+    @Test
+    void testGetCurrentRaceIndex() {
+        // Prueba para poner un índice válido
+        try {
+            Field field = NuevaTemporada2007.class.getDeclaredField("currentRaceIndex");
+            field.setAccessible(true);
+            field.setInt(temporada, 4);
+            int index = getCurrentRaceIndex(temporada);
+            assertEquals(4, index, "El índice de carrera actual debe ser 4");
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            fail("Error accediendo al campo currentRaceIndex: " + e.getMessage());
+        }
+
+        //Prueba con un índice diferente
+        try {
+            Field field = NuevaTemporada2007.class.getDeclaredField("currentRaceIndex");
+            field.setAccessible(true);
+            field.setInt(temporada, 8);
+            int index = getCurrentRaceIndex(temporada);
+            assertEquals(8, index, "El índice de carrera actual debe ser 8");
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            fail("Error accediendo al campo currentRaceIndex: " + e.getMessage());
+        }
+
+        //Prueba con un índice negativo
+        try {
+            Field field = NuevaTemporada2007.class.getDeclaredField("currentRaceIndex");
+            field.setAccessible(true);
+            field.setInt(temporada, -1);
+            int index = getCurrentRaceIndex(temporada);
+            assertEquals(-1, index, "El índice de carrera actual debe ser -1");
+        } catch (NoSuchFieldException | IllegalAccessException e) {
+            fail("Error accediendo al campo currentRaceIndex: " + e.getMessage());
+        }
+    }
 }
