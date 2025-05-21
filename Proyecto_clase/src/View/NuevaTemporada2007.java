@@ -36,8 +36,8 @@ import javax.swing.ImageIcon;
 public class NuevaTemporada2007 extends JFrame {
     private static final long serialVersionUID = 1L; // Identificador para serialización
     private JPanel contentPane; // Panel principal de la ventana
-    private JLabel[] raceLabels; // Array de etiquetas para los nombres de las carreras
-    private int currentRaceIndex = -1; // Índice de la carrera actual (-1 indica que no ha comenzado)
+    public JLabel[] raceLabels; // Array de etiquetas para los nombres de las carreras
+    public int currentRaceIndex = -1; // Índice de la carrera actual (-1 indica que no ha comenzado)
 
     /**
      * Constructor de la ventana principal de la temporada 2007.
@@ -316,7 +316,7 @@ public class NuevaTemporada2007 extends JFrame {
      * Avanza a la siguiente carrera, actualiza la interfaz y abre la ventana de simulación.
      * Si es la última carrera, muestra el campeón y abre la ventana principal para continuar.
      */
-    private void advanceToNextRace() {
+    public void advanceToNextRace() {
         if (currentRaceIndex == -1) {
             currentRaceIndex = 0; // Comienza desde la primera carrera
         } else if (currentRaceIndex < raceLabels.length - 1) {

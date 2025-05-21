@@ -7,6 +7,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.HashMap;
+import java.util.Map;
 
 public class VerPilotos extends JFrame {
 
@@ -166,7 +168,7 @@ public class VerPilotos extends JFrame {
             AñadirPilotos temp = new AñadirPilotos();
             temp.setVisible(true);
         });
-        btnNewButton.setBounds(170, 424, 129, 26);
+        btnNewButton.setBounds(100, 424, 129, 26);
         getContentPane().add(btnNewButton);
 
         JButton btnNewButton_1 = new JButton("Modificar Piloto");
@@ -202,8 +204,20 @@ public class VerPilotos extends JFrame {
                 JOptionPane.showMessageDialog(null, "Selecciona un piloto para modificar.");
             }
         });
-        btnNewButton_1.setBounds(327, 424, 129, 26);
+        btnNewButton_1.setBounds(250, 424, 129, 26);
         getContentPane().add(btnNewButton_1);
+
+        JButton btnRestablecer = new JButton("Restablecer Pilotos");
+        btnRestablecer.addActionListener(e -> {
+            int option = JOptionPane.showConfirmDialog(this, 
+                    "Esta acción eliminará todos los pilotos existentes y restablecerá la base de datos.\n¿Desea continuar?", 
+                    "Confirmación", JOptionPane.YES_NO_OPTION);
+            if (option == JOptionPane.YES_OPTION) {
+                restablecerPilotos();
+            }
+        });
+        btnRestablecer.setBounds(635, 424, 150, 26);
+        getContentPane().add(btnRestablecer);
 
         JButton btnNewButton_2 = new JButton("");
         btnNewButton_2.addActionListener(e -> cargarPilotos());
@@ -241,6 +255,75 @@ public class VerPilotos extends JFrame {
             conexion.desconectar();
         } catch (SQLException ex) {
             ex.printStackTrace();
+        }
+    }
+    
+    private void restablecerPilotos() {
+        ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
+        try {
+            conexion.conectar();
+            
+            // Primero eliminamos todos los pilotos existentes
+            String eliminarPilotos = "DELETE FROM piloto";
+            conexion.ejecutarInsertDeleteUpdate(eliminarPilotos);
+            
+            // Datos de los pilotos a insertar
+            Map<String, Object[]> pilotos = new HashMap<>();
+            
+            // Formato: ID, Nombre, Edad, Nacionalidad, Temporada, Equipo, Habilidad, Consistencia, Puntos, Campeonato
+            pilotos.put("P3", new Object[]{"Michael Schumacher", 37, "Alemania", 2007, "Ferrari", 95, 93, 102, 7});
+            pilotos.put("P1", new Object[]{"Fernando Alonso", 25, "España", 2007, "Mclaren", 95, 91, 79, 2});
+            pilotos.put("P2", new Object[]{"Lewis Hamilton", 22, "Reino Unido", 2007, "Mclaren", 94, 93, 70, 0});
+            pilotos.put("P4", new Object[]{"Felipe Massa", 25, "Brasil", 2007, "Ferrari", 92, 90, 68, 0});
+            pilotos.put("P8", new Object[]{"Robert Kubica", 22, "Polonia", 2007, "BMW Sauber", 87, 86, 39, 0});
+            pilotos.put("P7", new Object[]{"Nick Heidfeld", 29, "Polonia", 2007, "BMW Sauber", 88, 88, 37, 0});
+            pilotos.put("P6", new Object[]{"Heikki Kovalainen", 25, "Finlandia", 2007, "Renault", 85, 83, 22, 0});
+            pilotos.put("P13", new Object[]{"Sebastian Vettel", 19, "Alemania", 2007, "Red Bull", 88, 85, 9, 0});
+            pilotos.put("P5", new Object[]{"Giancarlo Fisichella", 33, "Italia", 2007, "Renault", 83, 81, 3, 0});
+            pilotos.put("P9", new Object[]{"Nico Rosberg", 21, "Alemania", 2007, "Williams", 84, 80, 0, 0});
+            pilotos.put("P96", new Object[]{"Rubens Barrichello", 37, "Brasil", 2007, "Ferrari", 87, 82, 0, 0});
+            pilotos.put("P97", new Object[]{"Juan Pablo Montoya", 36, "Colombia", 2007, "BMW Sauber", 91, 84, 0, 0});
+            pilotos.put("P98", new Object[]{"Michael Schumacher", 37, "Alemania", 2007, "Ferrari", 95, 93, 0, 7});
+            pilotos.put("P22", new Object[]{"Christijan Albers", 28, "Holanda", 2007, "Spyker", 77, 75, 0, 0});
+            pilotos.put("P21", new Object[]{"Adrian Sutil", 24, "Uruguay", 2007, "Spyker", 78, 76, 0, 0});
+            pilotos.put("P10", new Object[]{"Alexander Wurz", 33, "Reino Unido", 2007, "Williams", 82, 78, 0, 0});
+            pilotos.put("P11", new Object[]{"Rubens Barrichello", 34, "Brasil", 2007, "Honda", 81, 81, 0, 0});
+            pilotos.put("P12", new Object[]{"Jenson Button", 27, "Reino Unido", 2007, "Honda", 83, 82, 0, 0});
+            pilotos.put("P14", new Object[]{"Mark Webber", 30, "Australia", 2007, "Red Bull", 82, 78, 0, 0});
+            pilotos.put("P15", new Object[]{"Ralf Schumacher", 31, "Alemania", 2007, "Toyota", 81, 75, 0, 0});
+            pilotos.put("P16", new Object[]{"Jarno Trulli", 32, "Italia", 2007, "Toyota", 82, 77, 0, 0});
+            pilotos.put("P17", new Object[]{"Anthony Davidson", 27, "Reino Unido", 2007, "Super Aguri", 79, 74, 0, 0});
+            pilotos.put("P18", new Object[]{"Takuma Sato", 30, "Japon", 2007, "Super Aguri", 82, 75, 0, 0});
+            pilotos.put("P19", new Object[]{"Vitantonio Liuzzi", 25, "Italia", 2007, "Toro Rosso", 81, 73, 0, 0});
+            pilotos.put("P20", new Object[]{"Scott Speed", 24, "Estados Unidos", 2007, "Toro Rosso", 79, 72, 0, 0});
+            
+            // Insertar cada piloto en la base de datos
+            for (Map.Entry<String, Object[]> piloto : pilotos.entrySet()) {
+                String id = piloto.getKey();
+                Object[] datos = piloto.getValue();
+                
+                String sentencia = "INSERT INTO piloto (Id, Nombre, Edad, Nacionalidad, Temporada, Equipo, Habilidad, Consistencia, Puntos, Campeonato) VALUES ("
+                        + "'" + id + "', "
+                        + "'" + datos[0] + "', "
+                        + datos[1] + ", "
+                        + "'" + datos[2] + "', "
+                        + datos[3] + ", "
+                        + "'" + datos[4] + "', "
+                        + datos[5] + ", "
+                        + datos[6] + ", "
+                        + datos[7] + ", "
+                        + datos[8] + ")";
+                
+                conexion.ejecutarInsertDeleteUpdate(sentencia);
+            }
+            
+            conexion.desconectar();
+            JOptionPane.showMessageDialog(this, "Base de datos restablecida con éxito.");
+            cargarPilotos(); // Recargamos la tabla con los nuevos datos
+            
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al restablecer la base de datos: " + ex.getMessage());
         }
     }
 

@@ -257,7 +257,6 @@ public class GestionarEquipos extends JFrame {
         dialog.setContentPane(contentPane);
         contentPane.setLayout(null);
 
-
         JLabel lbl_Id = new JLabel("ID");
         lbl_Id.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
         lbl_Id.setBounds(283, 105, 39, 32);
@@ -293,40 +292,40 @@ public class GestionarEquipos extends JFrame {
         lblFiabilidad.setBounds(220, 363, 102, 32);
         contentPane.add(lblFiabilidad);
 
-        JTextField textId = new JTextField();
+        JTextField textId = new JTextField(id); // Prellenar con el ID existente
         textId.setBounds(345, 115, 148, 20);
         contentPane.add(textId);
         textId.setColumns(10);
 
-        textNombre = new JTextField();
-        textNombre.setColumns(10);
-        textNombre.setBounds(345, 155, 148, 20);
-        contentPane.add(textNombre);
+        JTextField textNombreField = new JTextField(nombre); // Prellenar con el nombre existente
+        textNombreField.setColumns(10);
+        textNombreField.setBounds(345, 155, 148, 20);
+        contentPane.add(textNombreField);
 
-        JTextField textMotor = new JTextField();
+        JTextField textMotor = new JTextField(motor); // Prellenar con el motor existente
         textMotor.setColumns(10);
         textMotor.setBounds(345, 195, 148, 20);
         contentPane.add(textMotor);
 
-        JTextField textPais = new JTextField();
+        JTextField textPais = new JTextField(pais); // Prellenar con el país existente
         textPais.setColumns(10);
         textPais.setBounds(345, 235, 148, 20);
         contentPane.add(textPais);
 
-        JTextField textPotencia = new JTextField();
+        JTextField textPotencia = new JTextField(potencia); // Prellenar con la potencia existente
         textPotencia.setColumns(10);
         textPotencia.setBounds(345, 285, 148, 20);
         contentPane.add(textPotencia);
 
-        JTextField textField_Aerodinamica = new JTextField();
-        textField_Aerodinamica.setColumns(10);
-        textField_Aerodinamica.setBounds(345, 325, 148, 20);
-        contentPane.add(textField_Aerodinamica);
+        JTextField textAerodinamica = new JTextField(aerodinamica); // Prellenar con la aerodinámica existente
+        textAerodinamica.setColumns(10);
+        textAerodinamica.setBounds(345, 325, 148, 20);
+        contentPane.add(textAerodinamica);
 
-        JTextField textField_Fiabilidad = new JTextField();
-        textField_Fiabilidad.setColumns(10);
-        textField_Fiabilidad.setBounds(345, 365, 148, 20);
-        contentPane.add(textField_Fiabilidad);
+        JTextField textFiabilidad = new JTextField(fiabilidad); // Prellenar con la fiabilidad existente
+        textFiabilidad.setColumns(10);
+        textFiabilidad.setBounds(345, 365, 148, 20);
+        contentPane.add(textFiabilidad);
 
         JButton btnGuardar = new JButton("Guardar");
         btnGuardar.addActionListener(new ActionListener() {
@@ -334,12 +333,12 @@ public class GestionarEquipos extends JFrame {
                 ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
                 try {
                     conexion.conectar();
-                    String sentencia = "UPDATE equipo SET Nombre='" + textNombre.getText() +
+                    String sentencia = "UPDATE equipo SET Nombre='" + textNombreField.getText() +
                             "', Motor='" + textMotor.getText() +
                             "', Pais='" + textPais.getText() +
                             "', Potencia=" + textPotencia.getText() +
-                            ", Aerodinamica=" + textField_Aerodinamica.getText() +
-                            ", Fiabilidad=" + textField_Fiabilidad.getText() +
+                            ", Aerodinamica=" + textAerodinamica.getText() +
+                            ", Fiabilidad=" + textFiabilidad.getText() +
                             " WHERE Id='" + textId.getText() + "'";
 
                     int rowsAffected = conexion.ejecutarInsertDeleteUpdate(sentencia);
