@@ -36,21 +36,21 @@ public class MenuDeGestion extends JFrame {
 		setContentPane(contentPane);
 		contentPane.setLayout(null);
 		
-		JButton btnNewButton = new JButton("Gestionar Pilotos");
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnGestionarPilotos = new JButton("Gestionar Pilotos");
+		btnGestionarPilotos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				VerPilotos temp=new VerPilotos();
 				temp.setVisible(true);
 			}
 		});
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 20));
-		btnNewButton.setBounds(113, 180, 272, 54);
-		contentPane.add(btnNewButton);
+		btnGestionarPilotos.setFont(new Font("Tahoma", Font.PLAIN, 20));
+		btnGestionarPilotos.setBounds(113, 180, 272, 54);
+		contentPane.add(btnGestionarPilotos);
 		
-		JLabel lblNewLabel = new JLabel("MENÚ DE GESTIÓN");
-		lblNewLabel.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
-		lblNewLabel.setBounds(200, 32, 394, 63);
-		contentPane.add(lblNewLabel);
+		JLabel lblMenuGestion = new JLabel("MENÚ DE GESTIÓN");
+		lblMenuGestion.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
+		lblMenuGestion.setBounds(200, 32, 394, 63);
+		contentPane.add(lblMenuGestion);
 		
 		JButton btnGestionarEquipos = new JButton("Gestionar Equipos");
 		btnGestionarEquipos.addActionListener(new ActionListener() {
