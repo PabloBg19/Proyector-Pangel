@@ -271,19 +271,16 @@ public class VerPilotos extends JFrame {
             Map<String, Object[]> pilotos = new HashMap<>();
             
             // Formato: ID, Nombre, Edad, Nacionalidad, Temporada, Equipo, Habilidad, Consistencia, Puntos, Campeonato
-            pilotos.put("P3", new Object[]{"Michael Schumacher", 37, "Alemania", 2007, "Ferrari", 95, 93, 102, 7});
-            pilotos.put("P1", new Object[]{"Fernando Alonso", 25, "España", 2007, "Mclaren", 95, 91, 79, 2});
-            pilotos.put("P2", new Object[]{"Lewis Hamilton", 22, "Reino Unido", 2007, "Mclaren", 94, 93, 70, 0});
-            pilotos.put("P4", new Object[]{"Felipe Massa", 25, "Brasil", 2007, "Ferrari", 92, 90, 68, 0});
-            pilotos.put("P8", new Object[]{"Robert Kubica", 22, "Polonia", 2007, "BMW Sauber", 87, 86, 39, 0});
-            pilotos.put("P7", new Object[]{"Nick Heidfeld", 29, "Polonia", 2007, "BMW Sauber", 88, 88, 37, 0});
-            pilotos.put("P6", new Object[]{"Heikki Kovalainen", 25, "Finlandia", 2007, "Renault", 85, 83, 22, 0});
-            pilotos.put("P13", new Object[]{"Sebastian Vettel", 19, "Alemania", 2007, "Red Bull", 88, 85, 9, 0});
-            pilotos.put("P5", new Object[]{"Giancarlo Fisichella", 33, "Italia", 2007, "Renault", 83, 81, 3, 0});
+            pilotos.put("P3", new Object[]{"Kimi Raikkonen", 28, "Finlandia", 2007, "Ferrari", 93, 93, 0, 0});
+            pilotos.put("P1", new Object[]{"Fernando Alonso", 25, "España", 2007, "Mclaren", 95, 91, 0, 2});
+            pilotos.put("P2", new Object[]{"Lewis Hamilton", 22, "Reino Unido", 2007, "Mclaren", 94, 93, 0, 0});
+            pilotos.put("P4", new Object[]{"Felipe Massa", 25, "Brasil", 2007, "Ferrari", 92, 90, 0, 0});
+            pilotos.put("P8", new Object[]{"Robert Kubica", 22, "Polonia", 2007, "BMW Sauber", 87, 86, 0, 0});
+            pilotos.put("P7", new Object[]{"Nick Heidfeld", 29, "Polonia", 2007, "BMW Sauber", 88, 88, 0, 0});
+            pilotos.put("P6", new Object[]{"Heikki Kovalainen", 25, "Finlandia", 2007, "Renault", 85, 83, 0, 0});
+            pilotos.put("P13", new Object[]{"Sebastian Vettel", 19, "Alemania", 2007, "Red Bull", 88, 85, 0, 0});
+            pilotos.put("P5", new Object[]{"Giancarlo Fisichella", 33, "Italia", 2007, "Renault", 83, 81, 0, 0});
             pilotos.put("P9", new Object[]{"Nico Rosberg", 21, "Alemania", 2007, "Williams", 84, 80, 0, 0});
-            pilotos.put("P96", new Object[]{"Rubens Barrichello", 37, "Brasil", 2007, "Ferrari", 87, 82, 0, 0});
-            pilotos.put("P97", new Object[]{"Juan Pablo Montoya", 36, "Colombia", 2007, "BMW Sauber", 91, 84, 0, 0});
-            pilotos.put("P98", new Object[]{"Michael Schumacher", 37, "Alemania", 2007, "Ferrari", 95, 93, 0, 7});
             pilotos.put("P22", new Object[]{"Christijan Albers", 28, "Holanda", 2007, "Spyker", 77, 75, 0, 0});
             pilotos.put("P21", new Object[]{"Adrian Sutil", 24, "Uruguay", 2007, "Spyker", 78, 76, 0, 0});
             pilotos.put("P10", new Object[]{"Alexander Wurz", 33, "Reino Unido", 2007, "Williams", 82, 78, 0, 0});
