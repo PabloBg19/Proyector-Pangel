@@ -218,6 +218,14 @@ public class GestionarEquipos extends JFrame {
         lblNewLabel_3_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
         lblNewLabel_3_1.setBounds(677, 25, 69, 31);
         getContentPane().add(lblNewLabel_3_1);
+
+        // New button to reset teams
+        JButton btnRestablecer = new JButton("Restablecer Equipos");
+        btnRestablecer.addActionListener(e -> {
+            restablecerEquipos();
+        });
+        btnRestablecer.setBounds(739, 424, 150, 26);
+        getContentPane().add(btnRestablecer);
     }
 
     // Method to load all teams into the table
@@ -365,5 +373,53 @@ public class GestionarEquipos extends JFrame {
         contentPane.add(lblNewLabel_11);
 
         dialog.setVisible(true);
+    }
+
+    // Method to reset teams to initial data
+    private void restablecerEquipos() {
+        ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
+        try {
+            conexion.conectar();
+            // Delete all existing teams
+            String deleteSentencia = "DELETE FROM equipo";
+            conexion.ejecutarInsertDeleteUpdate(deleteSentencia);
+
+            // Insert initial teams from the image
+            String[] equipos = {
+                "E1,Mclaren,Mercedes,Reino Unido,856,743,85",
+                "E10,Super Aguri,Honda,Japon,841,721,75",
+                "E11,Spyker,Ferrari,Holanda,840,720,74",
+                "E2,Ferrari,Ferrari,Italia,864,740,84",
+                "E3,BMW Sauber,BMW,Alemania,856,735,82",
+                "E4,Renault,Renault,Francia,852,734,83",
+                "E5,Williams,Toyota,Reino Unido,853,728,78",
+                "E6,Red Bull,Renault,Francia,848,730,76",
+                "E7,Toyota,Toyota,Japon,853,725,76",
+                "E8,Toro Rosso,Ferrari,Italia,845,723,81",
+                "E9,Honda,Honda,Japon,841,722,76"
+            };
+
+            for (String equipo : equipos) {
+                String[] datos = equipo.split(",");
+                String id = datos[0];
+                String nombre = datos[1];
+                String motor = datos[2];
+                String pais = datos[3];
+                int potencia = Integer.parseInt(datos[4]);
+                int aerodinamica = Integer.parseInt(datos[5]);
+                int fiabilidad = Integer.parseInt(datos[6]);
+                String insertSentencia = "INSERT INTO equipo (Id, Nombre, Motor, Pais, Potencia, Aerodinamica, Fiabilidad) VALUES ('" +
+                        id + "', '" + nombre + "', '" + motor + "', '" + pais + "', " + potencia + ", " + aerodinamica + ", " + fiabilidad + ")";
+                conexion.ejecutarInsertDeleteUpdate(insertSentencia);
+            }
+
+            // Reload the table with the reset data
+            cargarEquipos();
+            JOptionPane.showMessageDialog(this, "Equipos restablecidos con éxito.");
+            conexion.desconectar();
+        } catch (SQLException ex) {
+            ex.printStackTrace();
+            JOptionPane.showMessageDialog(this, "Error al restablecer los equipos.");
+        }
     }
 }
