@@ -95,4 +95,5 @@ public class CalculoRendimiento {
         System.out.printf("Piloto: %s, Equipo: %s, RendimientoTotal: %.2f%n",
                 piloto.nombre, equipo.nombre, rendimientoTotal);
     }
+    
 }

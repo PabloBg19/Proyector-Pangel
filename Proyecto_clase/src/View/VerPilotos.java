@@ -31,7 +31,7 @@ public class VerPilotos extends JFrame {
 
     public VerPilotos() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(0, 0, 800, 500);
+        setBounds(0, 0, 800, 550);
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setLocationRelativeTo(null);
@@ -51,6 +51,33 @@ public class VerPilotos extends JFrame {
         for (int i = 0; i < table.getColumnCount(); i++) {
             table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
         }
+        
+     // Etiqueta para mostrar el promedio de habilidad
+        JLabel lblPromedioHabilidad = new JLabel("Promedio Habilidad: ");
+        lblPromedioHabilidad.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        lblPromedioHabilidad.setBounds(70, 462, 200, 20);
+        getContentPane().add(lblPromedioHabilidad);
+
+        // Botón para calcular el promedio de habilidad
+        JButton btnCalcularPromedio = new JButton("Calcular Promedio Habilidad");
+        btnCalcularPromedio.setBounds(280, 461, 200, 26);
+        btnCalcularPromedio.addActionListener(e -> {
+            ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
+            try {
+                conexion.conectar();
+                String sentencia = "SELECT CalcularPromedioHabilidad() AS promedio";
+                ResultSet resultado = conexion.ejecutarSelect(sentencia);
+                if (resultado.next()) {
+                    float promedio = resultado.getFloat("promedio");
+                    lblPromedioHabilidad.setText("Promedio Habilidad: " + String.format("%.2f", promedio));
+                }
+                conexion.desconectar();
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+                JOptionPane.showMessageDialog(this, "Error al calcular el promedio de habilidad.");
+            }
+        });
+        getContentPane().add(btnCalcularPromedio);
 
         cargarPilotos();
 
@@ -152,7 +179,7 @@ public class VerPilotos extends JFrame {
                 JOptionPane.showMessageDialog(this, "Selecciona un piloto para eliminar.");
             }
         });
-        btnEliminar.setBounds(474, 424, 150, 26);
+        btnEliminar.setBounds(422, 424, 150, 26);
         getContentPane().add(btnEliminar);
 
         table.getSelectionModel().addListSelectionListener(e -> {
@@ -168,7 +195,7 @@ public class VerPilotos extends JFrame {
             AñadirPilotos temp = new AñadirPilotos();
             temp.setVisible(true);
         });
-        btnNewButton.setBounds(100, 424, 129, 26);
+        btnNewButton.setBounds(43, 425, 146, 26);
         getContentPane().add(btnNewButton);
 
         JButton btnNewButton_1 = new JButton("Modificar Piloto");
@@ -204,7 +231,7 @@ public class VerPilotos extends JFrame {
                 JOptionPane.showMessageDialog(null, "Selecciona un piloto para modificar.");
             }
         });
-        btnNewButton_1.setBounds(250, 424, 129, 26);
+        btnNewButton_1.setBounds(216, 425, 129, 26);
         getContentPane().add(btnNewButton_1);
 
         JButton btnRestablecer = new JButton("Restablecer Pilotos");
@@ -216,7 +243,7 @@ public class VerPilotos extends JFrame {
                 restablecerPilotos();
             }
         });
-        btnRestablecer.setBounds(635, 424, 150, 26);
+        btnRestablecer.setBounds(595, 424, 150, 26);
         getContentPane().add(btnRestablecer);
 
         JButton btnNewButton_2 = new JButton("");
