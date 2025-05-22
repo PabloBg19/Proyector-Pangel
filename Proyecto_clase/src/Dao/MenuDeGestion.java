@@ -22,7 +22,7 @@ public class MenuDeGestion extends JFrame {
 	private JPanel contentPane;
 
 	/**
-	 * Create the frame.
+	 * Crea el frame.
 	 */
 	public MenuDeGestion() {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
