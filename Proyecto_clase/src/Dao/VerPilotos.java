@@ -1,9 +1,12 @@
-package View;
+package Dao;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import Util.ConexionMySQL;
+
 import java.awt.*;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -165,7 +168,7 @@ public class VerPilotos extends JFrame {
 
         JButton btnNewButton = new JButton("Añadir Piloto");
         btnNewButton.addActionListener(e -> {
-            AñadirPilotos temp = new AñadirPilotos();
+            AnadirPilotos temp = new AnadirPilotos();
             temp.setVisible(true);
         });
         btnNewButton.setBounds(100, 424, 129, 26);
