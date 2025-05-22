@@ -231,11 +231,11 @@ public class AñadirPilotos extends JFrame {
                 ");";
 
             // Eliminar el trigger si ya existe
-            String dropTriggerSQL = "DROP TRIGGER IF EXISTS after_piloto_insert;";
+            /*String dropTriggerSQL = "DROP TRIGGER IF EXISTS after_piloto_insert;"; */
 
             // Crear el trigger
             String createTriggerSQL = 
-                "CREATE TRIGGER after_piloto_insert " +
+                "CREATE OR REPLACE TRIGGER after_piloto_insert " +
                 "AFTER INSERT ON piloto " +
                 "FOR EACH ROW " +
                 "BEGIN " +
@@ -251,7 +251,7 @@ public class AñadirPilotos extends JFrame {
 
             // Ejecutar las sentencias
             conexion.ejecutarInsertDeleteUpdate(createTableSQL);
-            conexion.ejecutarInsertDeleteUpdate(dropTriggerSQL);
+            /*conexion.ejecutarInsertDeleteUpdate(dropTriggerSQL);*/
             conexion.ejecutarInsertDeleteUpdate(createTriggerSQL);
 
             System.out.println("Tabla de log y trigger creados con éxito.");
