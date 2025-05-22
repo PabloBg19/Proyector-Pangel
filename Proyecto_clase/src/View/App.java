@@ -16,6 +16,8 @@ import java.awt.Image;
 
 import javax.swing.ImageIcon;
 import javax.swing.JScrollPane;
+import java.awt.Toolkit;
+import javax.swing.border.LineBorder;
 
 public class App extends JFrame {
 
@@ -39,6 +41,7 @@ public class App extends JFrame {
 
 	//Crea el frame
 	public App() {
+		setIconImage(Toolkit.getDefaultToolkit().getImage(App.class.getResource("/image/logo_f1.png")));
 		JPanel contentPane = new JPanel() {
             private Image backgroundImage = new ImageIcon(App.class.getResource("/image/fondo.jpg")).getImage(); //Imagen de Fondo
 
@@ -48,6 +51,7 @@ public class App extends JFrame {
                 g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
             }
         };
+		contentPane.setBorder(new LineBorder(new Color(128, 0, 0)));
 
         setContentPane(contentPane);
         contentPane.setLayout(null); // Usamos layout libre
