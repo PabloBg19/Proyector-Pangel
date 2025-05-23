@@ -113,7 +113,7 @@ CONTENIDO
 
 - **Pruebas unitarias con Junit sin Maven**: Verifican el comportamiento de unidades específicas de código, como métodos o clases, asegurando que funcionen correctamente. En la carpeta ED se pueden encontrar capturas para probar que se pasaron todas las pruebas. Asimismo se incluye la carpeta Test que contiene NuevaTemporada2007Test, la clase para realizar dichas pruebas.
 - **Depuración y Refactorización**: Proceso de reestructurar el código existente para mejorar su legibilidad y eficiencia. Se incluyen capturas dentro de la carpeta ED con ejemplos de cambios.
-- Control de Versiones: Progreso compartido del proyecto mediante commits frecuentes.
+- **Control de Versiones**: Progreso compartido del proyecto mediante commits frecuentes.
 - **Documentación**: JavaDoc generado para clases y métodos públicos.
 
 
