@@ -1,7 +1,5 @@
 ---
 
-# Proyector-Pangel 🏎️
-
 **Proyector-Pangel** es una aplicación de simulación de la temporada 2007 de Fórmula 1, desarrollada en Java con Swing y persistencia SQL en MySQL (usando phpMyAdmin + XAMPP). Permite gestionar y simular equipos y pilotos de F1. 🏁
 
 ---
