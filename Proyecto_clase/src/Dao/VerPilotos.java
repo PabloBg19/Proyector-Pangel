@@ -68,7 +68,7 @@ public class VerPilotos extends JFrame {
             ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
             try {
                 conexion.conectar();
-                String sentencia = "SELECT CalcularPromedioHabilidad()  AS promedio FROM DUAL";
+                String sentencia = "SELECT CalcularPromedioHabilidad() AS promedio FROM DUAL";
                 ResultSet resultado = conexion.ejecutarSelect(sentencia);
                 if (resultado.next()) {
                     float promedio = resultado.getFloat("promedio");
@@ -195,7 +195,7 @@ public class VerPilotos extends JFrame {
 
         JButton btnNewButton = new JButton("Añadir Piloto");
         btnNewButton.addActionListener(e -> {
-            AñadirPilotos temp = new AñadirPilotos();
+            AnadirPilotos temp = new AnadirPilotos();
             temp.setVisible(true);
         });
         btnNewButton.setBounds(43, 425, 146, 26);
@@ -489,7 +489,7 @@ public class VerPilotos extends JFrame {
 
         JLabel lblNewLabel_1 = new JLabel("MODIFICAR PILOTO");
         lblNewLabel_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
-        lblNewLabel_1.setBounds(240, 11, 325, 90);
+        lblNewLabel_1.setBounds(200, 0, 425, 90); // Adjusted y to 0 and x to 200
         contentPane.add(lblNewLabel_1);
 
         dialog.setVisible(true);

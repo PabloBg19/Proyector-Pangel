@@ -21,7 +21,7 @@ import Util.ConexionMySQL;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 
-public class AñadirPilotos extends JFrame {
+public class AnadirPilotos extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
@@ -39,7 +39,7 @@ public class AñadirPilotos extends JFrame {
     /**
      * Constructor de la clase
      */
-    public AñadirPilotos() {
+    public AnadirPilotos() {
         // Configurar la ventana
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setBounds(0, 0, 800, 500);
@@ -180,11 +180,11 @@ public class AñadirPilotos extends JFrame {
                     conexion.ejecutarInsertDeleteUpdate(sentencia);
                     conexion.desconectar();
                     // Mostrar pop-up de éxito
-                    JOptionPane.showMessageDialog(AñadirPilotos.this, "Piloto añadido con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
+                    JOptionPane.showMessageDialog(AnadirPilotos.this, "Piloto añadido con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
                     dispose();
                 } catch (SQLException e1) {
                     e1.printStackTrace();
-                    JOptionPane.showMessageDialog(AñadirPilotos.this, "Error al añadir piloto: " + e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(AnadirPilotos.this, "Error al añadir piloto: " + e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
                     try {
                         conexion.desconectar();
                     } catch (SQLException e2) {

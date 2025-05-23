@@ -372,7 +372,7 @@ public class GestionarEquipos extends JFrame {
 
         JLabel lblNewLabel_11 = new JLabel("MODIFICAR EQUIPO");
         lblNewLabel_11.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
-        lblNewLabel_11.setBounds(240, 11, 325, 90);
+        lblNewLabel_11.setBounds(240, 11, 425, 90);
         contentPane.add(lblNewLabel_11);
 
         dialog.setVisible(true);
