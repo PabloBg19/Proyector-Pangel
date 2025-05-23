@@ -107,6 +107,13 @@
 
 ---
 
+## Entornos de Desarrollo 💻
+
+- **Pruebas unitarias con Junit sin Maven**: Verifican el comportamiento de unidades específicas de código, como métodos o clases, asegurando que funcionen correctamente.  
+- **Refactorización**: Proceso de reestructurar el código existente para mejorar su legibilidad y eficiencia.
+  
+---
+
 ## Notas 📝
 
 - Puedes modificar la parrilla y las estadísticas antes de iniciar la simulación.  
