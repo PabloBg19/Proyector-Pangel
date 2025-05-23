@@ -121,6 +121,17 @@ CONTENIDO
 
 ---
 
+## Programación 🖥️
+
+-**Interfaz Gráfica (GUI):** Implementación de una interfaz de usuario utilizando Swing o JavaFX, que permita una interacción clara y sencilla para el usuario final.
+-**Manejo de Eventos:** Programación de los controladores de eventos necesarios para gestionar las acciones del usuario sobre la interfaz.
+-**Conexión a Base de Datos:** Establecimiento y gestión de la conexión con el SGBD elegido (Oracle o MySQL) mediante JDBC. Nota: 
+- `El driver JDBC correspondiente (ojdbc.jar para Oracle, mysql-connector-java.jar para MySQL) deberá ser gestionado manualmente (descargado y añadido al classpath del proyecto).`
+-**Persistencia de Datos:** Implementación de la lógica necesaria para realizar operaciones CRUD sobre la base de datos, ejecutando sentencias SQL o llamadas a procedimientos/funciones almacenadas desde la aplicación Java.
+-**Principios de POO:** Aplicación correcta de los principios de la Programación Orientada a Objetos (encapsulamiento, herencia si aplica, polimorfismo).
+
+
+---
 ## Notas 📝
 
 - Puedes modificar la parrilla y las estadísticas antes de iniciar la simulación.  
