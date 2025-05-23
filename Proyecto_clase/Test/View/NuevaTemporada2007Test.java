@@ -11,6 +11,8 @@ import javax.swing.JLabel;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import Dao.NuevaTemporada2007;
+
 class NuevaTemporada2007Test {
 
     private NuevaTemporada2007 temporada;
