@@ -1,65 +1,65 @@
 package Dao;
 
-import java.awt.EventQueue;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import javax.swing.JFrame;
-import javax.swing.JPanel;
-import javax.swing.border.EmptyBorder;
-import javax.swing.JLabel;
-import java.awt.Font;
-import javax.swing.JTextField;
-import javax.swing.JButton;
-import javax.swing.JDialog;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTable;
-import javax.swing.table.DefaultTableModel;
+import java.awt.EventQueue; // Importa la clase para manejar la cola de eventos de la interfaz gráfica
+import java.sql.ResultSet; // Importa ResultSet para manejar resultados de consultas SQL
+import java.sql.SQLException; // Importa SQLException para manejar errores de base de datos
+import javax.swing.JFrame; // Importa JFrame para crear la ventana principal
+import javax.swing.JPanel; // Importa JPanel para el contenedor de componentes
+import javax.swing.border.EmptyBorder; // Importa EmptyBorder para márgenes en el panel
+import javax.swing.JLabel; // Importa JLabel para etiquetas de texto
+import java.awt.Font; // Importa Font para personalizar fuentes
+import javax.swing.JTextField; // Importa JTextField para campos de entrada de texto
+import javax.swing.JButton; // Importa JButton para botones
+import javax.swing.JDialog; // Importa JDialog para ventanas emergentes
+import javax.swing.JOptionPane; // Importa JOptionPane para mensajes emergentes
+import javax.swing.JScrollPane; // Importa JScrollPane para barras de desplazamiento
+import javax.swing.JTable; // Importa JTable para tablas de datos
+import javax.swing.table.DefaultTableModel; // Importa DefaultTableModel para el modelo de la tabla
 
-import Util.ConexionMySQL;
+import Util.ConexionMySQL; // Importa la clase personalizada para conexión a MySQL
 
-import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener; // Importa ActionListener para manejar eventos de acción
+import java.awt.event.ActionEvent; // Importa ActionEvent para eventos de botones
 
 public class AnadirPilotos extends JFrame {
 
-    private static final long serialVersionUID = 1L;
-    private JPanel contentPane;
-    private JTextField textId;
-    private JTextField textNombre;
-    private JTextField textEdad;
-    private JTextField textNacionalidad;
-    private JTextField textEquipo;
-    private JTextField textTemporada;
-    private JTextField textHabilidad;
-    private JTextField textConsistencia;
-    private JTextField textPuntos;
-    private JTextField textCampeonato;
+    private static final long serialVersionUID = 1L; // ID de serialización para la clase
+    private JPanel contentPane; // Panel principal que contiene los componentes
+    private JTextField textId; // Campo de texto para el ID del piloto
+    private JTextField textNombre; // Campo de texto para el nombre del piloto
+    private JTextField textEdad; // Campo de texto para la edad del piloto
+    private JTextField textNacionalidad; // Campo de texto para la nacionalidad del piloto
+    private JTextField textEquipo; // Campo de texto para el equipo del piloto
+    private JTextField textTemporada; // Campo de texto para la temporada del piloto
+    private JTextField textHabilidad; // Campo de texto para la habilidad del piloto
+    private JTextField textConsistencia; // Campo de texto para la consistencia del piloto
+    private JTextField textPuntos; // Campo de texto para los puntos del piloto
+    private JTextField textCampeonato; // Campo de texto para el campeonato del piloto
 
     /**
      * Constructor de la clase
      */
     public AnadirPilotos() {
-        // Configurar la ventana
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(0, 0, 800, 500);
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setLocationRelativeTo(null); // Centra la ventana
-        setContentPane(contentPane);
-        contentPane.setLayout(null);
+        // Configurar la ventana principal
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Cierra solo esta ventana al hacer clic en cerrar
+        setBounds(0, 0, 800, 500); // Establece las dimensiones y posición inicial de la ventana (x, y, ancho, alto)
+        contentPane = new JPanel(); // Crea el panel principal
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5)); // Añade márgenes de 5 píxeles alrededor del panel
+        setLocationRelativeTo(null); // Centra la ventana en la pantalla
+        setContentPane(contentPane); // Asigna el panel como contenido de la ventana
+        contentPane.setLayout(null); // Usa un layout nulo para posicionamiento manual
 
-        // Título
+        // Título de la ventana
         JLabel lblNewLabel_1 = new JLabel("AÑADIR PILOTO");
-        lblNewLabel_1.setBounds(237, -11, 326, 90);
-        lblNewLabel_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
-        contentPane.add(lblNewLabel_1);
+        lblNewLabel_1.setBounds(237, -11, 326, 90); // Posiciona el título (x, y, ancho, alto)
+        lblNewLabel_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38)); // Establece fuente y tamaño
+        contentPane.add(lblNewLabel_1); // Añade el título al panel
 
-        // Etiquetas
+        // Etiquetas para los campos de entrada
         JLabel lblId = new JLabel("ID ");
-        lblId.setBounds(282, 67, 39, 32);
-        lblId.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
-        contentPane.add(lblId);
+        lblId.setBounds(282, 67, 39, 32); // Posiciona la etiqueta
+        lblId.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18)); // Establece fuente
+        contentPane.add(lblId); // Añade la etiqueta al panel
 
         JLabel lblNombre = new JLabel("NOMBRE");
         lblNombre.setBounds(238, 107, 83, 32);
@@ -106,7 +106,7 @@ public class AnadirPilotos extends JFrame {
         lblCampeonato.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
         contentPane.add(lblCampeonato);
 
-        // Campos de texto
+        // Campos de texto para la entrada de datos
         textId = new JTextField();
         textId.setBounds(329, 75, 149, 20);
         contentPane.add(textId);
@@ -129,8 +129,8 @@ public class AnadirPilotos extends JFrame {
 
         textTemporada = new JTextField();
         textTemporada.setBounds(329, 235, 149, 20);
-        contentPane.add(textTemporada);
         textTemporada.setColumns(10);
+        contentPane.add(textTemporada);
 
         textEquipo = new JTextField();
         textEquipo.setBounds(329, 275, 149, 20);
@@ -148,23 +148,23 @@ public class AnadirPilotos extends JFrame {
         contentPane.add(textConsistencia);
 
         textPuntos = new JTextField();
-        textPuntos.setColumns(10);
         textPuntos.setBounds(329, 355, 149, 20);
+        textPuntos.setColumns(10);
         contentPane.add(textPuntos);
 
         textCampeonato = new JTextField();
-        textCampeonato.setColumns(10);
         textCampeonato.setBounds(329, 435, 149, 20);
+        textCampeonato.setColumns(10);
         contentPane.add(textCampeonato);
 
-        // Botón Enviar
+        // Botón para enviar los datos
         JButton btnEnviar = new JButton("ENVIAR");
         btnEnviar.setBounds(579, 224, 106, 37);
         btnEnviar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
+                ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1"); // Conexión a la base de datos
                 try {
-                    conexion.conectar();
+                    conexion.conectar(); // Establece la conexión
                     String sentencia = "INSERT INTO piloto (Id, Nombre, Edad, Nacionalidad, Temporada, Equipo, Habilidad, Consistencia, Puntos, Campeonato) VALUES ('"
                             + textId.getText() + "', '"
                             + textNombre.getText() + "', '"
@@ -175,48 +175,47 @@ public class AnadirPilotos extends JFrame {
                             + textHabilidad.getText() + "', '"
                             + textConsistencia.getText() + "', '"
                             + textPuntos.getText() + "', '"
-                            + textCampeonato.getText() + "')";
+                            + textCampeonato.getText() + "')"; // Construye la sentencia SQL
 
-                    conexion.ejecutarInsertDeleteUpdate(sentencia);
-                    conexion.desconectar();
-                    // Mostrar pop-up de éxito
-                    JOptionPane.showMessageDialog(AnadirPilotos.this, "Piloto añadido con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-                    dispose();
+                    conexion.ejecutarInsertDeleteUpdate(sentencia); // Ejecuta la inserción
+                    conexion.desconectar(); // Cierra la conexión
+                    JOptionPane.showMessageDialog(AnadirPilotos.this, "Piloto añadido con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE); // Muestra mensaje de éxito
+                    dispose(); // Cierra la ventana
                 } catch (SQLException e1) {
-                    e1.printStackTrace();
-                    JOptionPane.showMessageDialog(AnadirPilotos.this, "Error al añadir piloto: " + e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
+                    e1.printStackTrace(); // Imprime el error en la consola
+                    JOptionPane.showMessageDialog(AnadirPilotos.this, "Error al añadir piloto: " + e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE); // Muestra mensaje de error
                     try {
-                        conexion.desconectar();
+                        conexion.desconectar(); // Intenta cerrar la conexión en caso de error
                     } catch (SQLException e2) {
-                        e2.printStackTrace();
+                        e2.printStackTrace(); // Imprime error al cerrar la conexión
                     }
                 }
             }
         });
         contentPane.add(btnEnviar);
 
-        // Botón Ver Logs
+        // Botón para ver los logs
         JButton btnVerLogs = new JButton("VER LOGS");
         btnVerLogs.setBounds(579, 270, 106, 37);
         btnVerLogs.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                mostrarLogs();
+                mostrarLogs(); // Llama al método para mostrar los logs
             }
         });
         contentPane.add(btnVerLogs);
 
         // Crear la tabla piloto_log y el trigger al iniciar la ventana
-        setupPilotLogAndTrigger();
+        setupPilotLogAndTrigger(); // Llama al método para configurar la tabla y el trigger
     }
 
     /**
      * Método para crear la tabla de log y el trigger en la base de datos
      */
     private void setupPilotLogAndTrigger() {
-        ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
+        ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1"); // Conexión a la base de datos
         try {
-            conexion.conectar();
-            // Crear la tabla piloto_log
+            conexion.conectar(); // Establece la conexión
+            // Crear la tabla piloto_log si no existe
             String createTableSQL = 
                 "CREATE TABLE IF NOT EXISTS piloto_log (" +
                 "    log_id INT AUTO_INCREMENT PRIMARY KEY," +
@@ -233,10 +232,7 @@ public class AnadirPilotos extends JFrame {
                 "    log_timestamp DATETIME DEFAULT CURRENT_TIMESTAMP" +
                 ");";
 
-            // Eliminar el trigger si ya existe
-            /*String dropTriggerSQL = "DROP TRIGGER IF EXISTS after_piloto_insert;"; */
-
-            // Crear el trigger
+            // Crear el trigger para registrar inserciones
             String createTriggerSQL = 
                 "CREATE OR REPLACE TRIGGER after_piloto_insert " +
                 "AFTER INSERT ON piloto " +
@@ -253,18 +249,17 @@ public class AnadirPilotos extends JFrame {
                 "END;";
 
             // Ejecutar las sentencias
-            conexion.ejecutarInsertDeleteUpdate(createTableSQL);
-            /*conexion.ejecutarInsertDeleteUpdate(dropTriggerSQL);*/
-            conexion.ejecutarInsertDeleteUpdate(createTriggerSQL);
+            conexion.ejecutarInsertDeleteUpdate(createTableSQL); // Crea la tabla
+            conexion.ejecutarInsertDeleteUpdate(createTriggerSQL); // Crea el trigger
 
-            System.out.println("Tabla de log y trigger creados con éxito.");
-            conexion.desconectar();
+            System.out.println("Tabla de log y trigger creados con éxito."); // Mensaje de confirmación
+            conexion.desconectar(); // Cierra la conexión
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Imprime el error en la consola
             try {
-                conexion.desconectar();
+                conexion.desconectar(); // Intenta cerrar la conexión en caso de error
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                ex.printStackTrace(); // Imprime error al cerrar la conexión
             }
         }
     }
@@ -274,125 +269,78 @@ public class AnadirPilotos extends JFrame {
      */
     private void mostrarLogs() {
         // Crear el diálogo (pop-up)
-        JDialog dialog = new JDialog(this, "Registros de Pilotos", true);
-        dialog.setBounds(100, 100, 800, 400);
-        dialog.setLocationRelativeTo(this);
-        dialog.getContentPane().setLayout(null);
+        JDialog dialog = new JDialog(this, "Registros de Pilotos", true); // Diálogo modal
+        dialog.setBounds(100, 100, 800, 400); // Dimensiones y posición
+        dialog.setLocationRelativeTo(this); // Centra el diálogo
+        dialog.getContentPane().setLayout(null); // Layout nulo
 
         // Crear el modelo de la tabla
         DefaultTableModel model = new DefaultTableModel();
-        model.addColumn("Log ID");
-        model.addColumn("Piloto ID");
-        model.addColumn("Nombre");
-        model.addColumn("Edad");
-        model.addColumn("Nacionalidad");
-        model.addColumn("Temporada");
-        model.addColumn("Equipo");
-        model.addColumn("Habilidad");
-        model.addColumn("Consistencia");
-        model.addColumn("Puntos");
-        model.addColumn("Campeonato");
-        model.addColumn("Fecha y Hora");
+        model.addColumn("Log ID"); // Añade columna para ID del log
+        model.addColumn("Piloto ID"); // Añade columna para ID del piloto
+        model.addColumn("Nombre"); // Añade columna para nombre
+        model.addColumn("Edad"); // Añade columna para edad
+        model.addColumn("Nacionalidad"); // Añade columna para nacionalidad
+        model.addColumn("Temporada"); // Añade columna para temporada
+        model.addColumn("Equipo"); // Añade columna para equipo
+        model.addColumn("Habilidad"); // Añade columna para habilidad
+        model.addColumn("Consistencia"); // Añade columna para consistencia
+        model.addColumn("Puntos"); // Añade columna para puntos
+        model.addColumn("Campeonato"); // Añade columna para campeonato
+        model.addColumn("Fecha y Hora"); // Añade columna para timestamp
 
         // Consultar los datos de piloto_log
         ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
         try {
-            conexion.conectar();
-            String consulta = "SELECT * FROM piloto_log";
-            ResultSet rs = conexion.ejecutarSelect(consulta);
+            conexion.conectar(); // Establece la conexión
+            String consulta = "SELECT * FROM piloto_log"; // Consulta SQL
+            ResultSet rs = conexion.ejecutarSelect(consulta); // Ejecuta la consulta
 
             // Llenar el modelo con los datos
             while (rs.next()) {
                 model.addRow(new Object[]{
-                    rs.getInt("log_id"),
-                    rs.getString("piloto_id"),
-                    rs.getString("nombre"),
-                    rs.getInt("edad"),
-                    rs.getString("nacionalidad"),
-                    rs.getString("temporada"),
-                    rs.getString("equipo"),
-                    rs.getInt("habilidad"),
-                    rs.getInt("consistencia"),
-                    rs.getInt("puntos"),
-                    rs.getString("campeonato"),
-                    rs.getTimestamp("log_timestamp")
+                    rs.getInt("log_id"), // Añade ID del log
+                    rs.getString("piloto_id"), // Añade ID del piloto
+                    rs.getString("nombre"), // Añade nombre
+                    rs.getInt("edad"), // Añade edad
+                    rs.getString("nacionalidad"), // Añade nacionalidad
+                    rs.getString("temporada"), // Añade temporada
+                    rs.getString("equipo"), // Añade equipo
+                    rs.getInt("habilidad"), // Añade habilidad
+                    rs.getInt("consistencia"), // Añade consistencia
+                    rs.getInt("puntos"), // Añade puntos
+                    rs.getString("campeonato"), // Añade campeonato
+                    rs.getTimestamp("log_timestamp") // Añade timestamp
                 });
             }
-            rs.close();
-            conexion.desconectar();
+            rs.close(); // Cierra el ResultSet
+            conexion.desconectar(); // Cierra la conexión
         } catch (SQLException e) {
-            e.printStackTrace();
+            e.printStackTrace(); // Imprime el error en la consola
             try {
-                conexion.desconectar();
+                conexion.desconectar(); // Intenta cerrar la conexión en caso de error
             } catch (SQLException ex) {
-                ex.printStackTrace();
+                ex.printStackTrace(); // Imprime error al cerrar la conexión
             }
         }
 
         // Crear la tabla y añadirla a un JScrollPane
-        JTable table = new JTable(model);
-        JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(10, 10, 760, 300);
-        dialog.getContentPane().add(scrollPane);
+        JTable table = new JTable(model); // Crea la tabla con el modelo
+        JScrollPane scrollPane = new JScrollPane(table); // Añade barras de desplazamiento
+        scrollPane.setBounds(10, 10, 760, 300); // Posiciona el scrollpane
+        dialog.getContentPane().add(scrollPane); // Añade el scrollpane al diálogo
 
         // Botón para cerrar el diálogo
         JButton btnCerrar = new JButton("CERRAR");
-        btnCerrar.setBounds(350, 320, 100, 30);
+        btnCerrar.setBounds(350, 320, 100, 30); // Posiciona el botón
         btnCerrar.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                dialog.dispose();
+                dialog.dispose(); // Cierra el diálogo
             }
         });
-        dialog.getContentPane().add(btnCerrar);
+        dialog.getContentPane().add(btnCerrar); // Añade el botón al diálogo
 
         // Mostrar el diálogo
-        dialog.setVisible(true);
+        dialog.setVisible(true); // Hace visible el diálogo
     }
-
-   
 }
-
-/*### Cambios Realizados
-1. **Pop-up de Éxito**:
-   - Añadí un `JOptionPane` en el `ActionListener` del botón `ENVIAR` para mostrar el mensaje "Piloto añadido con éxito" después de que la inserción en la base de datos sea exitosa:
-     ```java
-     JOptionPane.showMessageDialog(AñadirPilotos.this, "Piloto añadido con éxito", "Éxito", JOptionPane.INFORMATION_MESSAGE);
-     ```
-   - Este pop-up aparece justo antes de cerrar la ventana con `dispose()`.
-
-2. **Manejo de Errores**:
-   - Añadí un `JOptionPane` en el bloque `catch` para mostrar un mensaje de error si la inserción falla (por ejemplo, debido a un problema en la base de datos o datos inválidos):
-     ```java
-     JOptionPane.showMessageDialog(AñadirPilotos.this, "Error al añadir piloto: " + e1.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
-     ```
-
-3. **Mantenimiento de Funcionalidad Existente**:
-   - El código de la interfaz, el botón `ENVIAR`, el método `setupPilotLogAndTrigger`, y el botón `VER LOGS` con su pop-up de tabla permanecen sin cambios.
-   - La conexión sigue usando tu clase `ConexionMySQL` con `ejecutarInsertDeleteUpdate` y la concatenación de cadenas, como solicitaste.
-   - El trigger `after_piloto_insert` y la tabla `piloto_log` siguen funcionando para registrar las inserciones.
-
-### Notas Importantes
-- **Importación de JOptionPane**: Añadí `import javax.swing.JOptionPane;` para usar el pop-up. Esto ya está incluido en el código.
-- **Inyección SQL**: El código sigue usando concatenación de cadenas para la consulta SQL, lo que lo hace vulnerable a inyección SQL. Por ejemplo, si un usuario ingresa comillas simples (`'`) en los campos, la consulta puede fallar. Considera usar `PreparedStatement` en el futuro para mayor seguridad.
-- **Validación de Entrada**: No se valida si los campos numéricos (`Edad`, `Habilidad`, `Consistencia`, `Puntos`) contienen valores válidos. Si se ingresan valores no numéricos, la inserción fallará y se mostrará el pop-up de error. Podrías añadir validaciones para mejorar la experiencia.
-- **MariaDB**: El código es compatible con MariaDB (como indicaste en errores anteriores). Asegúrate de que la tabla `piloto` existe con las columnas `Id`, `Nombre`, `Edad`, `Nacionalidad`, `Temporada`, `Equipo`, `Habilidad`, `Consistencia`, `Puntos`, `Campeonato`, y que `piloto_log` tiene las columnas correspondientes.
-
-### Cómo Probar
-1. **Configura tu Entorno**:
-   - Verifica que la base de datos `formula_1` esté creada en MariaDB y que la tabla `piloto` exista con las columnas correctas.
-   - Asegúrate de que el usuario `root` sin contraseña tenga acceso a la base de datos.
-   - Confirma que el driver MySQL (`com.mysql.cj.jdbc.Driver`) esté en el classpath de tu proyecto.
-
-2. **Ejecuta el Programa**:
-   - Compila y ejecuta la clase `AñadirPilotos`. La ventana se abrirá, y la tabla `piloto_log` y el trigger se crearán automáticamente.
-   - Rellena los campos (asegúrate de usar números válidos para `Edad`, `Habilidad`, `Consistencia`, `Puntos`) y haz clic en "ENVIAR". Deberías ver un pop-up que dice "Piloto añadido con éxito", y la ventana se cerrará.
-   - Si hay un error (por ejemplo, datos inválidos), verás un pop-up con el mensaje de error.
-   - Haz clic en "VER LOGS" para abrir el pop-up con la tabla de logs y confirmar que el piloto añadido está registrado en `piloto_log`.
-
-3. **Verifica el Comportamiento**:
-   - Añade varios pilotos y verifica que el pop-up de éxito aparece cada vez.
-   - Usa el botón "VER LOGS" para confirmar que los registros se guardan en `piloto_log` con la marca de tiempo.
-   - Si introduces datos inválidos (por ejemplo, letras en `Edad`), deberías ver el pop-up de error con el mensaje de la excepción.
-
-Si necesitas ajustes (como personalizar el diseño del pop-up, añadir validaciones de entrada, o más funcionalidades), o si encuentras algún error, házmelo saber y lo resolveremos. ¡Espero que el nuevo pop-up sea justo lo que necesitas!
-*/

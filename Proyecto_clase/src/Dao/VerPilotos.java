@@ -1,74 +1,66 @@
-package Dao;
+package Dao; // Paquete donde se encuentra la clase
 
-import javax.swing.*;
-import javax.swing.border.EmptyBorder;
-import javax.swing.table.DefaultTableCellRenderer;
-import javax.swing.table.DefaultTableModel;
+import javax.swing.*; // Importa todas las clases de javax.swing
+import javax.swing.border.EmptyBorder; // Importa EmptyBorder para márgenes en el panel
+import javax.swing.table.DefaultTableCellRenderer; // Importa DefaultTableCellRenderer para centrar contenido en la tabla
+import javax.swing.table.DefaultTableModel; // Importa DefaultTableModel para el modelo de la tabla
 
-import Util.ConexionMySQL;
+import Util.ConexionMySQL; // Importa la clase personalizada para conexión a MySQL
 
-import java.awt.*;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.HashMap;
-import java.util.Map;
+import java.awt.*; // Importa todas las clases de java.awt
+import java.sql.ResultSet; // Importa ResultSet para manejar resultados de consultas SQL
+import java.sql.SQLException; // Importa SQLException para manejar errores de base de datos
+import java.util.HashMap; // Importa HashMap para mapas
+import java.util.Map; // Importa Map para interfaces de mapas
 
 public class VerPilotos extends JFrame {
 
-    private static final long serialVersionUID = 1L;
-    private JPanel contentPane;
-    private JTextField textBusquedaNombre;
-    private JTextField textBusquedaEquipo;
-    private JTable table;
-    private DefaultTableModel tableModel;
-    private JTextField textId;
-    private JTextField textNombre;
-    private JTextField textEdad;
-    private JTextField textNacionalidad;
-    private JTextField textEquipo;
-    private JTextField textTemporada;
-    private JTextField textHabilidad;
-    private JTextField textConsistencia;
-    private JTextField textPuntos;
-    private JTextField textCampeonato;
+    private static final long serialVersionUID = 1L; // Identificador para serialización
+    private JPanel contentPane; // Panel principal de la ventana
+    private JTextField textBusquedaNombre; // Campo de texto para buscar por nombre
+    private JTextField textBusquedaEquipo; // Campo de texto para buscar por equipo
+    private JTable table; // Tabla para mostrar los pilotos
+    private DefaultTableModel tableModel; // Modelo de la tabla
+    private JTextField textId, textNombre, textEdad, textNacionalidad, textEquipo, textTemporada, textHabilidad, textConsistencia, textPuntos, textCampeonato; // Campos de texto para modificar piloto
 
     public VerPilotos() {
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(0, 0, 800, 550);
-        contentPane = new JPanel();
-        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-        setLocationRelativeTo(null);
-        getContentPane().setLayout(null);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Cierra solo esta ventana al salir
+        setBounds(0, 0, 800, 550); // Tamaño y posición inicial de la ventana
+        contentPane = new JPanel(); // Crea el panel principal
+        contentPane.setBorder(new EmptyBorder(5, 5, 5, 5)); // Borde vacío de 5 píxeles
+        setLocationRelativeTo(null); // Centrar la ventana en la pantalla
+        getContentPane().setLayout(null); // Usar diseño absoluto (sin layout manager)
 
-        String[] columnNames = {"Id", "Nombre", "Equipo", "Nacionalidad", "Temporada", "Habilidad", "Consistencia"};
-        tableModel = new DefaultTableModel(columnNames, 0);
-        table = new JTable(tableModel);
-        table.setFillsViewportHeight(true);
+        // Configuración de la tabla
+        String[] columnNames = {"Id", "Nombre", "Equipo", "Nacionalidad", "Temporada", "Habilidad", "Consistencia"}; // Nombres de las columnas
+        tableModel = new DefaultTableModel(columnNames, 0); // Inicializa el modelo sin filas
+        table = new JTable(tableModel); // Crea la tabla con el modelo
+        table.setFillsViewportHeight(true); // Ajusta la tabla al alto del scrollpane
+        JScrollPane scrollPane = new JScrollPane(table); // Añade barras de desplazamiento
+        scrollPane.setBounds(70, 120, 652, 293); // Posición y tamaño del scrollpane
+        getContentPane().add(scrollPane); // Añade el scrollpane al panel
 
-        JScrollPane scrollPane = new JScrollPane(table);
-        scrollPane.setBounds(70, 120, 652, 293);
-        getContentPane().add(scrollPane);
-
+        // Configurar el renderizador para centrar todas las columnas
         DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
-        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+        centerRenderer.setHorizontalAlignment(SwingConstants.CENTER); // Centrar el contenido
         for (int i = 0; i < table.getColumnCount(); i++) {
-            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer);
+            table.getColumnModel().getColumn(i).setCellRenderer(centerRenderer); // Aplica centrado a todas las columnas
         }
-        
-     // Etiqueta para mostrar el promedio de habilidad
+
+        // Etiqueta para mostrar el promedio de habilidad
         JLabel lblPromedioHabilidad = new JLabel("Promedio Habilidad: ");
         lblPromedioHabilidad.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         lblPromedioHabilidad.setBounds(70, 462, 200, 20);
         getContentPane().add(lblPromedioHabilidad);
 
-        // Botón para calcular el promedio de habilidad, BLOQUE ANÓNIMO.
+        // Botón para calcular el promedio de habilidad (bloque anónimo)
         JButton btnCalcularPromedio = new JButton("Calcular Promedio Habilidad");
         btnCalcularPromedio.setBounds(280, 461, 200, 26);
         btnCalcularPromedio.addActionListener(e -> {
             ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
             try {
                 conexion.conectar();
-                String sentencia = "SELECT CalcularPromedioHabilidad() AS promedio FROM DUAL";
+                String sentencia = "SELECT CalcularPromedioHabilidad() AS promedio FROM DUAL"; // Llama a una función SQL personalizada
                 ResultSet resultado = conexion.ejecutarSelect(sentencia);
                 if (resultado.next()) {
                     float promedio = resultado.getFloat("promedio");
@@ -82,25 +74,29 @@ public class VerPilotos extends JFrame {
         });
         getContentPane().add(btnCalcularPromedio);
 
+        // Cargar datos iniciales de pilotos
         cargarPilotos();
 
+        // Botón "VER PILOTOS" (deshabilitado y con tamaño 0, parece un error)
         JButton btnVerEquipo = new JButton("VER PILOTOS");
         btnVerEquipo.setEnabled(false);
         btnVerEquipo.addActionListener(e -> cargarPilotos());
-        btnVerEquipo.setBounds(33, 439, 0, 11);
+        btnVerEquipo.setBounds(33, 439, 0, 11); // Tamaño y posición incorrectos
         getContentPane().add(btnVerEquipo);
 
+        // Campo de texto para búsqueda por nombre
         textBusquedaNombre = new JTextField();
         textBusquedaNombre.setBounds(74, 82, 120, 20);
         getContentPane().add(textBusquedaNombre);
         textBusquedaNombre.setColumns(10);
 
+        // Botón para buscar por nombre
         JButton btnNombre = new JButton("Buscar por Nombre");
         btnNombre.addActionListener(e -> {
             ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
             try {
                 conexion.conectar();
-                String sentencia = "SELECT * FROM piloto WHERE Nombre='" + textBusquedaNombre.getText() + "'";
+                String sentencia = "SELECT * FROM piloto WHERE Nombre='" + textBusquedaNombre.getText() + "'"; // Vulnerable a SQL Injection
                 ResultSet resultado = conexion.ejecutarSelect(sentencia);
                 tableModel.setRowCount(0);
                 while (resultado.next()) {
@@ -121,17 +117,19 @@ public class VerPilotos extends JFrame {
         btnNombre.setBounds(237, 77, 146, 31);
         getContentPane().add(btnNombre);
 
+        // Campo de texto para búsqueda por equipo
         textBusquedaEquipo = new JTextField();
         textBusquedaEquipo.setColumns(10);
         textBusquedaEquipo.setBounds(444, 82, 103, 20);
         getContentPane().add(textBusquedaEquipo);
 
+        // Botón para buscar por equipo
         JButton btnEquipo = new JButton("Buscar por Equipo");
         btnEquipo.addActionListener(e -> {
             ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
             try {
                 conexion.conectar();
-                String sentencia = "SELECT * FROM piloto WHERE Equipo='" + textBusquedaEquipo.getText() + "'";
+                String sentencia = "SELECT * FROM piloto WHERE Equipo='" + textBusquedaEquipo.getText() + "'"; // Vulnerable a SQL Injection
                 ResultSet resultado = conexion.ejecutarSelect(sentencia);
                 tableModel.setRowCount(0);
                 while (resultado.next()) {
@@ -152,11 +150,13 @@ public class VerPilotos extends JFrame {
         btnEquipo.setBounds(570, 77, 146, 31);
         getContentPane().add(btnEquipo);
 
+        // Título principal
         JLabel lblNewLabel_3 = new JLabel("VER PILOTOS");
         lblNewLabel_3.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
         lblNewLabel_3.setBounds(264, 25, 261, 31);
         getContentPane().add(lblNewLabel_3);
 
+        // Botón para eliminar piloto
         JButton btnEliminar = new JButton("Eliminar Piloto");
         btnEliminar.addActionListener(e -> {
             int selectedRow = table.getSelectedRow();
@@ -165,7 +165,7 @@ public class VerPilotos extends JFrame {
                 ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
                 try {
                     conexion.conectar();
-                    String sentencia = "DELETE FROM piloto WHERE Id='" + idPiloto + "'";
+                    String sentencia = "DELETE FROM piloto WHERE Id='" + idPiloto + "'"; // Vulnerable a SQL Injection
                     int rowsAffected = conexion.ejecutarInsertDeleteUpdate(sentencia);
                     if (rowsAffected > 0) {
                         tableModel.removeRow(selectedRow);
@@ -185,6 +185,7 @@ public class VerPilotos extends JFrame {
         btnEliminar.setBounds(422, 424, 150, 26);
         getContentPane().add(btnEliminar);
 
+        // Habilitar/deshabilitar botón "Eliminar" según selección
         table.getSelectionModel().addListSelectionListener(e -> {
             if (!e.getValueIsAdjusting() && table.getSelectedRow() != -1) {
                 btnEliminar.setEnabled(true);
@@ -193,14 +194,16 @@ public class VerPilotos extends JFrame {
             }
         });
 
+        // Botón para añadir piloto
         JButton btnNewButton = new JButton("Añadir Piloto");
         btnNewButton.addActionListener(e -> {
-            AnadirPilotos temp = new AnadirPilotos();
+            AnadirPilotos temp = new AnadirPilotos(); // Abre una ventana para añadir pilotos
             temp.setVisible(true);
         });
         btnNewButton.setBounds(43, 425, 146, 26);
         getContentPane().add(btnNewButton);
 
+        // Botón para modificar piloto
         JButton btnNewButton_1 = new JButton("Modificar Piloto");
         btnNewButton_1.addActionListener(e -> {
             int selectedRow = table.getSelectedRow();
@@ -213,11 +216,10 @@ public class VerPilotos extends JFrame {
                 int habilidad = (int) tableModel.getValueAt(selectedRow, 5);
                 int consistencia = (int) tableModel.getValueAt(selectedRow, 6);
 
-                // Query additional fields (Edad, Puntos, Campeonato)
                 ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
                 try {
                     conexion.conectar();
-                    String sentencia = "SELECT Edad, Puntos, Campeonato FROM piloto WHERE Id='" + id + "'";
+                    String sentencia = "SELECT Edad, Puntos, Campeonato FROM piloto WHERE Id='" + id + "'"; // Vulnerable a SQL Injection
                     ResultSet resultado = conexion.ejecutarSelect(sentencia);
                     if (resultado.next()) {
                         int edad = resultado.getInt("Edad");
@@ -237,6 +239,7 @@ public class VerPilotos extends JFrame {
         btnNewButton_1.setBounds(216, 425, 129, 26);
         getContentPane().add(btnNewButton_1);
 
+        // Botón para restablecer pilotos
         JButton btnRestablecer = new JButton("Restablecer Pilotos");
         btnRestablecer.addActionListener(e -> {
             int option = JOptionPane.showConfirmDialog(this, 
@@ -249,6 +252,7 @@ public class VerPilotos extends JFrame {
         btnRestablecer.setBounds(595, 424, 150, 26);
         getContentPane().add(btnRestablecer);
 
+        // Botón de refrescar con imagen
         JButton btnNewButton_2 = new JButton("");
         btnNewButton_2.addActionListener(e -> cargarPilotos());
         ImageIcon originalIcon = new ImageIcon(VerPilotos.class.getResource("/image/recargar.png"));
@@ -258,18 +262,21 @@ public class VerPilotos extends JFrame {
         btnNewButton_2.setBounds(552, 11, 52, 51);
         getContentPane().add(btnNewButton_2);
 
+        // Etiqueta "Refrescar"
         JLabel lblNewLabel_3_1 = new JLabel("Refrescar");
         lblNewLabel_3_1.setFont(new Font("Tahoma", Font.PLAIN, 11));
         lblNewLabel_3_1.setBounds(614, 25, 69, 31);
         getContentPane().add(lblNewLabel_3_1);
     }
 
+    /**
+     * Carga todos los pilotos desde la base de datos y los muestra en la tabla.
+     */
     private void cargarPilotos() {
         ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
         try {
             conexion.conectar();
-            String sentencia = "SELECT * FROM piloto ORDER BY CAST(SUBSTRING(Id, 2) AS UNSIGNED) ASC"; //ordena los id de los pilotos: p1, p2, p3...
-            																									
+            String sentencia = "SELECT * FROM piloto ORDER BY CAST(SUBSTRING(Id, 2) AS UNSIGNED) ASC"; // Ordena por ID numérico
             ResultSet resultado = conexion.ejecutarSelect(sentencia);
             tableModel.setRowCount(0);
             while (resultado.next()) {
@@ -287,20 +294,19 @@ public class VerPilotos extends JFrame {
             ex.printStackTrace();
         }
     }
-    
+
+    /**
+     * Restablece la base de datos eliminando todos los pilotos y cargando datos predeterminados.
+     */
     private void restablecerPilotos() {
         ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
         try {
             conexion.conectar();
-            
-            // Primero eliminamos todos los pilotos existentes
-            String eliminarPilotos = "DELETE FROM piloto";
+            String eliminarPilotos = "DELETE FROM piloto"; // Elimina todos los pilotos
             conexion.ejecutarInsertDeleteUpdate(eliminarPilotos);
-            
-            // Datos de los pilotos a insertar
+
+            // Datos de los pilotos a insertar (formato: ID, Nombre, Edad, Nacionalidad, Temporada, Equipo, Habilidad, Consistencia, Puntos, Campeonato)
             Map<String, Object[]> pilotos = new HashMap<>();
-            
-            // Formato: ID, Nombre, Edad, Nacionalidad, Temporada, Equipo, Habilidad, Consistencia, Puntos, Campeonato
             pilotos.put("P3", new Object[]{"Kimi Raikkonen", 28, "Finlandia", 2007, "Ferrari", 93, 93, 0, 0});
             pilotos.put("P1", new Object[]{"Fernando Alonso", 25, "España", 2007, "Mclaren", 95, 91, 0, 2});
             pilotos.put("P2", new Object[]{"Lewis Hamilton", 22, "Reino Unido", 2007, "Mclaren", 94, 93, 0, 0});
@@ -323,12 +329,11 @@ public class VerPilotos extends JFrame {
             pilotos.put("P18", new Object[]{"Takuma Sato", 30, "Japon", 2007, "Super Aguri", 82, 75, 0, 0});
             pilotos.put("P19", new Object[]{"Vitantonio Liuzzi", 25, "Italia", 2007, "Toro Rosso", 81, 73, 0, 0});
             pilotos.put("P20", new Object[]{"Scott Speed", 24, "Estados Unidos", 2007, "Toro Rosso", 79, 72, 0, 0});
-            
+
             // Insertar cada piloto en la base de datos
             for (Map.Entry<String, Object[]> piloto : pilotos.entrySet()) {
                 String id = piloto.getKey();
                 Object[] datos = piloto.getValue();
-                
                 String sentencia = "INSERT INTO piloto (Id, Nombre, Edad, Nacionalidad, Temporada, Equipo, Habilidad, Consistencia, Puntos, Campeonato) VALUES ("
                         + "'" + id + "', "
                         + "'" + datos[0] + "', "
@@ -340,22 +345,33 @@ public class VerPilotos extends JFrame {
                         + datos[6] + ", "
                         + datos[7] + ", "
                         + datos[8] + ")";
-                
                 conexion.ejecutarInsertDeleteUpdate(sentencia);
             }
-            
+
             conexion.desconectar();
             JOptionPane.showMessageDialog(this, "Base de datos restablecida con éxito.");
-            cargarPilotos(); // Recargamos la tabla con los nuevos datos
-            
+            cargarPilotos(); // Recarga la tabla con los nuevos datos
         } catch (SQLException ex) {
             ex.printStackTrace();
             JOptionPane.showMessageDialog(this, "Error al restablecer la base de datos: " + ex.getMessage());
         }
     }
 
+    /**
+     * Abre una ventana de diálogo para modificar los datos de un piloto.
+     * @param id ID del piloto
+     * @param nombre Nombre del piloto
+     * @param equipo Equipo del piloto
+     * @param nacionalidad Nacionalidad del piloto
+     * @param temporada Temporada del piloto
+     * @param habilidad Habilidad del piloto
+     * @param consistencia Consistencia del piloto
+     * @param edad Edad del piloto
+     * @param puntos Puntos del piloto
+     * @param campeonato Campeonato del piloto
+     */
     private void abrirVentanaModificacion(String id, String nombre, String equipo, String nacionalidad, int temporada, int habilidad, int consistencia, int edad, int puntos, String campeonato) {
-        JDialog dialog = new JDialog(this, "Modificar Piloto", true);
+        JDialog dialog = new JDialog(this, "Modificar Piloto", true); // Ventana modal
         dialog.setDefaultCloseOperation(JDialog.DISPOSE_ON_CLOSE);
         dialog.setBounds(0, 0, 800, 500);
         dialog.setLocationRelativeTo(this);
@@ -364,6 +380,7 @@ public class VerPilotos extends JFrame {
         dialog.setContentPane(contentPane);
         contentPane.setLayout(null);
 
+        // Etiquetas y campos de texto para cada atributo
         JLabel lblId = new JLabel("ID");
         lblId.setBounds(282, 67, 39, 32);
         lblId.setFont(new Font("Segoe UI Historic", Font.BOLD | Font.ITALIC, 18));
@@ -454,6 +471,7 @@ public class VerPilotos extends JFrame {
         textCampeonato.setBounds(329, 435, 149, 20);
         contentPane.add(textCampeonato);
 
+        // Botón para guardar cambios
         JButton btnGuardar = new JButton("Guardar");
         btnGuardar.addActionListener(e -> {
             ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
@@ -469,7 +487,7 @@ public class VerPilotos extends JFrame {
                         "Consistencia='" + textConsistencia.getText() + "', " +
                         "Puntos='" + textPuntos.getText() + "', " +
                         "Campeonato='" + textCampeonato.getText() + "' " +
-                        "WHERE Id='" + textId.getText() + "'";
+                        "WHERE Id='" + textId.getText() + "'"; // Vulnerable a SQL Injection
                 int rowsAffected = conexion.ejecutarInsertDeleteUpdate(sentencia);
                 if (rowsAffected > 0) {
                     JOptionPane.showMessageDialog(dialog, "Piloto modificado con éxito.");
@@ -487,11 +505,12 @@ public class VerPilotos extends JFrame {
         btnGuardar.setBounds(597, 228, 89, 23);
         contentPane.add(btnGuardar);
 
+        // Título de la ventana de modificación
         JLabel lblNewLabel_1 = new JLabel("MODIFICAR PILOTO");
         lblNewLabel_1.setFont(new Font("Baskerville Old Face", Font.PLAIN, 38));
-        lblNewLabel_1.setBounds(200, 0, 425, 90); // Adjusted y to 0 and x to 200
+        lblNewLabel_1.setBounds(200, 0, 425, 90); // Posición ajustada
         contentPane.add(lblNewLabel_1);
 
-        dialog.setVisible(true);
+        dialog.setVisible(true); // Muestra la ventana de diálogo
     }
 }

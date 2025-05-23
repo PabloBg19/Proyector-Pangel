@@ -1,35 +1,34 @@
-package Dao;
+package Dao; // Paquete donde se encuentra la clase
 
-import java.awt.BorderLayout;
-// Importaciones necesarias para la interfaz gráfica, manejo de eventos, base de datos y otras utilidades
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Random;
+import java.awt.BorderLayout; // Importa BorderLayout (aunque no se usa directamente aquí)
+import java.awt.Color; // Importa Color para personalizar colores
+import java.awt.Font; // Importa Font para personalizar fuentes
+import java.awt.Graphics; // Importa Graphics para dibujo personalizado
+import java.awt.Image; // Importa Image para manejar imágenes
+import java.awt.event.ActionEvent; // Importa ActionEvent para eventos de botones
+import java.awt.event.ActionListener; // Importa ActionListener para manejar eventos de acción
+import java.awt.event.WindowAdapter; // Importa WindowAdapter para manejar eventos de ventana
+import java.awt.event.WindowEvent; // Importa WindowEvent para eventos de cierre de ventana
+import java.sql.ResultSet; // Importa ResultSet para manejar resultados de consultas SQL
+import java.sql.SQLException; // Importa SQLException para manejar errores de base de datos
+import java.util.ArrayList; // Importa ArrayList para listas dinámicas
+import java.util.Arrays; // Importa Arrays para operaciones con arrays
+import java.util.HashMap; // Importa HashMap para mapas
+import java.util.Map; // Importa Map para interfaces de mapas
+import java.util.Random; // Importa Random para generar números aleatorios
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.Timer;
-import javax.swing.border.EmptyBorder;
+import javax.swing.JButton; // Importa JButton para botones
+import javax.swing.JFrame; // Importa JFrame para crear la ventana principal
+import javax.swing.JLabel; // Importa JLabel para etiquetas de texto
+import javax.swing.JOptionPane; // Importa JOptionPane para mensajes emergentes
+import javax.swing.JPanel; // Importa JPanel para el contenedor de componentes
+import javax.swing.Timer; // Importa Timer para animaciones
+import javax.swing.border.EmptyBorder; // Importa EmptyBorder para márgenes en el panel
 
-import Util.ConexionMySQL;
+import Util.ConexionMySQL; // Importa la clase personalizada para conexión a MySQL
 
-import javax.swing.BorderFactory;
-import javax.swing.ImageIcon;
+import javax.swing.BorderFactory; // Importa BorderFactory para bordes (aunque no se usa directamente aquí)
+import javax.swing.ImageIcon; // Importa ImageIcon para cargar imágenes
 
 /**
  * Clase principal que representa la ventana de la temporada 2007 de Fórmula 1.
@@ -47,8 +46,7 @@ public class NuevaTemporada2007 extends JFrame {
      * Configura la interfaz gráfica con las carreras, botones y elementos visuales.
      */
     public NuevaTemporada2007() {
-        // Configuración inicial de la ventana
-        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Cerrar solo esta ventana al salir
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE); // Cierra solo esta ventana al salir
         setBounds(0, 0, 800, 500); // Tamaño y posición inicial de la ventana
 
         // Crear y configurar el panel principal
@@ -192,11 +190,10 @@ public class NuevaTemporada2007 extends JFrame {
                             ex.printStackTrace();
                         } finally {
                             try {
-								conexion.desconectar();
-							} catch (SQLException e) {
-								// TODO Auto-generated catch block
-								e.printStackTrace();
-							}
+                                conexion.desconectar();
+                            } catch (SQLException e1) {
+                                e1.printStackTrace();
+                            }
                         }
                     }
                 };
@@ -261,17 +258,14 @@ public class NuevaTemporada2007 extends JFrame {
             conexion.conectar();
             String query = "SELECT indice_actual FROM carreras WHERE Año = 2007 LIMIT 1";
             ResultSet result = conexion.ejecutarSelect(query);
-            //Trigger Bases de Datos
             if (result.next()) {
                 currentRaceIndex = result.getInt("indice_actual");
                 System.out.println("Estado cargado: currentRaceIndex = " + currentRaceIndex);
-                // Restablecer el estilo de todas las etiquetas de carreras
                 for (JLabel label : raceLabels) {
                     label.setOpaque(false);
                     label.setBackground(null);
                     label.setFont(new Font("Dialog", Font.PLAIN, 12));
                 }
-                // Resaltar la carrera actual
                 if (currentRaceIndex >= 0 && currentRaceIndex < raceLabels.length) {
                     raceLabels[currentRaceIndex].setOpaque(true);
                     raceLabels[currentRaceIndex].setBackground(new Color(173, 216, 230));
@@ -332,22 +326,18 @@ public class NuevaTemporada2007 extends JFrame {
             return; // Salir del método para evitar abrir la simulación
         }
 
-        // Restablecer estilo de la carrera anterior
         if (currentRaceIndex > 0) {
             raceLabels[currentRaceIndex - 1].setOpaque(false);
             raceLabels[currentRaceIndex - 1].setBackground(null);
             raceLabels[currentRaceIndex - 1].setFont(new Font("Dialog", Font.PLAIN, 12));
         }
 
-        // Resaltar la carrera actual
         raceLabels[currentRaceIndex].setOpaque(true);
         raceLabels[currentRaceIndex].setBackground(new Color(173, 216, 230));
         raceLabels[currentRaceIndex].setFont(new Font("Dialog", Font.BOLD, 12));
 
-        // Abrir ventana de simulación de la carrera
         new RaceWindow(raceLabels[currentRaceIndex].getText()).setVisible(true);
 
-        // Guardar el estado actual
         saveSeasonState();
     }
 
@@ -408,7 +398,6 @@ public class NuevaTemporada2007 extends JFrame {
         private JLabel lblNewLabel; // Etiqueta vacía (posiblemente para uso futuro)
         private JLabel etiquetaVueltasCarrera; // Muestra la vuelta actual
 
-        // Variables para la animación
         private double[] currentYSquares; // Posiciones Y actuales de los puntos
         private double[] targetYSquares; // Posiciones Y objetivo de los puntos
         private double[] currentYRows; // Posiciones Y actuales de las filas
@@ -429,7 +418,6 @@ public class NuevaTemporada2007 extends JFrame {
         private String[] EQUIPOS; // Equipos de los pilotos
         private int[] PUNTUACIONES_RENDIMIENTO; // Puntuaciones de rendimiento de los pilotos
 
-        // Mapa de colores por equipo para la temporada 2007
         private static final Map<String, Color> COLORES_POR_EQUIPO = new HashMap<>();
         static {
             COLORES_POR_EQUIPO.put("McLaren", new Color(200, 200, 200)); // Gris
@@ -450,7 +438,6 @@ public class NuevaTemporada2007 extends JFrame {
          * @param nombreCarrera Nombre del Gran Premio a simular.
          */
         public RaceWindow(String nombreCarrera) {
-            // Configuración inicial de la ventana
             setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             setBounds(0, 0, 900, 600);
             panelContenido = new JPanel();
@@ -461,23 +448,19 @@ public class NuevaTemporada2007 extends JFrame {
             setContentPane(panelContenido);
             panelContenido.setLayout(null);
 
-            // Inicializar arrays para pilotos y equipos
             PILOTOS = new String[NUM_PILOTOS];
             EQUIPOS = new String[NUM_PILOTOS];
             PUNTUACIONES_RENDIMIENTO = new int[NUM_PILOTOS];
 
-            // Cargar datos de pilotos y equipos
             fetchPilotAndTeamData();
-            calculatePerformance(); // Calcular rendimiento de los pilotos
+            calculatePerformance();
 
-            // Título de la carrera
             JLabel etiquetaTituloCarrera = new JLabel(nombreCarrera);
             etiquetaTituloCarrera.setFont(new Font("Arial", Font.BOLD, 24));
             etiquetaTituloCarrera.setForeground(new Color(25, 25, 112));
             etiquetaTituloCarrera.setBounds(320, 34, 500, 30);
             panelContenido.add(etiquetaTituloCarrera);
 
-            // Botón para cerrar la ventana
             JButton botonCerrar = new JButton("Cerrar");
             botonCerrar.setBounds(460, 520, 100, 30);
             botonCerrar.setFont(new Font("Arial", Font.BOLD, 12));
@@ -486,7 +469,6 @@ public class NuevaTemporada2007 extends JFrame {
             botonCerrar.addActionListener(e -> dispose());
             panelContenido.add(botonCerrar);
 
-            // Inicializar arrays para la interfaz
             puntosPilotos = new JPanel[NUM_PILOTOS];
             posicionesPilotos = new int[NUM_PILOTOS];
             etiquetasPosicion = new JLabel[NUM_PILOTOS];
@@ -500,7 +482,6 @@ public class NuevaTemporada2007 extends JFrame {
             vueltasCompletadas = new int[NUM_PILOTOS];
             Random aleatorio = new Random();
 
-            // Inicializar arrays para la animación
             currentYSquares = new double[NUM_PILOTOS];
             targetYSquares = new double[NUM_PILOTOS];
             currentYRows = new double[NUM_PILOTOS];
@@ -509,7 +490,6 @@ public class NuevaTemporada2007 extends JFrame {
             targetYPoints = new double[NUM_PILOTOS];
             animationProgress = 1.0;
 
-            // Inicializar posiciones iniciales y puntos por piloto
             for (int i = 0; i < NUM_PILOTOS; i++) {
                 puntosPorPiloto.put(PILOT_IDS[i], 0);
                 currentYSquares[i] = Y_POSICION + (i * 20);
@@ -520,12 +500,10 @@ public class NuevaTemporada2007 extends JFrame {
                 targetYPoints[i] = Y_POSICION + (i * 20) - 5;
             }
 
-            // Etiqueta vacía (posiblemente para uso futuro)
             lblNewLabel = new JLabel();
             lblNewLabel.setBounds(0, 0, 0, 0);
             panelContenido.add(lblNewLabel);
 
-            // Etiqueta para mostrar la vuelta actual
             etiquetaVueltasCarrera = new JLabel("Vuelta 0/" + TOTAL_VUELTAS);
             etiquetaVueltasCarrera.setFont(new Font("Arial", Font.BOLD, 14));
             etiquetaVueltasCarrera.setForeground(Color.WHITE);
@@ -534,7 +512,6 @@ public class NuevaTemporada2007 extends JFrame {
             etiquetaVueltasCarrera.setBackground(Color.BLACK);
             panelContenido.add(etiquetaVueltasCarrera);
 
-            // Panel para la tabla de clasificación
             JPanel panelClasificacion = new JPanel();
             panelClasificacion.setBounds(5, Y_POSICION, 200, 440);
             panelClasificacion.setBackground(Color.BLACK);
@@ -542,9 +519,7 @@ public class NuevaTemporada2007 extends JFrame {
             panelClasificacion.setLayout(null);
             panelContenido.add(panelClasificacion);
 
-            // Configurar componentes para cada piloto
             for (int i = 0; i < NUM_PILOTOS; i++) {
-                // Punto visual que representa al piloto
                 puntosPilotos[i] = new JPanel();
                 puntosPilotos[i].setBounds(X_INICIO, (int)currentYSquares[i], TAMANO_PUNTO, TAMANO_PUNTO);
                 puntosPilotos[i].setBackground(getColorForTeam(EQUIPOS[i]));
@@ -554,13 +529,11 @@ public class NuevaTemporada2007 extends JFrame {
                 haTerminado[i] = false;
                 vueltasCompletadas[i] = 0;
 
-                // Etiqueta para mostrar la posición final
                 etiquetasPosicion[i] = new JLabel("");
                 etiquetasPosicion[i].setFont(new Font("Arial", Font.PLAIN, 12));
                 etiquetasPosicion[i].setBounds(X_FIN + 10, (int)currentYPoints[i], 50, 20);
                 panelContenido.add(etiquetasPosicion[i]);
 
-                // Fila de la tabla de clasificación
                 filasClasificacion[i] = new JPanel();
                 filasClasificacion[i].setBounds(0, (int)currentYRows[i], 200, 20);
                 filasClasificacion[i].setBackground(Color.BLACK);
@@ -568,14 +541,12 @@ public class NuevaTemporada2007 extends JFrame {
                 filasClasificacion[i].setLayout(null);
                 panelClasificacion.add(filasClasificacion[i]);
 
-                // Etiqueta para la posición en tiempo real
                 etiquetasPosicionEnVivo[i] = new JLabel(String.valueOf(i + 1));
                 etiquetasPosicionEnVivo[i].setFont(new Font("Arial", Font.BOLD, 12));
                 etiquetasPosicionEnVivo[i].setForeground(Color.WHITE);
                 etiquetasPosicionEnVivo[i].setBounds(10, 0, 20, 20);
                 filasClasificacion[i].add(etiquetasPosicionEnVivo[i]);
 
-                // Etiqueta para el nombre del piloto
                 String nombrePiloto = (PILOTOS[i] != null) ? PILOTOS[i] : "Piloto" + (i + 1);
                 etiquetasNombrePiloto[i] = new JLabel(nombrePiloto);
                 etiquetasNombrePiloto[i].setFont(new Font("Arial", Font.BOLD, 12));
@@ -583,14 +554,12 @@ public class NuevaTemporada2007 extends JFrame {
                 etiquetasNombrePiloto[i].setBounds(40, 2, 120, 16);
                 filasClasificacion[i].add(etiquetasNombrePiloto[i]);
 
-                // Panel con el color del equipo
                 panelesColorEquipo[i] = new JPanel();
                 panelesColorEquipo[i].setBounds(160, 2, 16, 16);
                 panelesColorEquipo[i].setBackground(getColorForTeam(EQUIPOS[i]));
                 panelesColorEquipo[i].setOpaque(true);
                 filasClasificacion[i].add(panelesColorEquipo[i]);
 
-                // Etiqueta para las vueltas completadas
                 etiquetasVueltas[i] = new JLabel("0/" + TOTAL_VUELTAS);
                 etiquetasVueltas[i].setFont(new Font("Arial", Font.BOLD, 10));
                 etiquetasVueltas[i].setForeground(Color.WHITE);
@@ -598,21 +567,17 @@ public class NuevaTemporada2007 extends JFrame {
                 filasClasificacion[i].add(etiquetasVueltas[i]);
             }
 
-            // Etiqueta para la línea de meta
             JLabel lineaMeta = new JLabel("META");
             lineaMeta.setBounds(X_FIN - 20, Y_POSICION - 20, 40, 20);
             lineaMeta.setFont(new Font("Arial", Font.BOLD, 12));
             lineaMeta.setForeground(Color.RED);
             panelContenido.add(lineaMeta);
 
-            // Asegurar que el panel de clasificación esté al frente
             panelContenido.setComponentZOrder(panelClasificacion, 0);
 
-            // Temporizador para la animación de la carrera
             Timer temporizador = new Timer(ANIMATION_STEP_TIME, new ActionListener() {
                 @Override
                 public void actionPerformed(ActionEvent e) {
-                    // Actualizar posiciones de los pilotos
                     for (int i = 0; i < NUM_PILOTOS; i++) {
                         if (!haTerminado[i]) {
                             int velocidadMaxima = Math.max(1, PUNTUACIONES_RENDIMIENTO[i]);
@@ -622,21 +587,19 @@ public class NuevaTemporada2007 extends JFrame {
                                 vueltasCompletadas[i]++;
                                 etiquetasVueltas[i].setText(vueltasCompletadas[i] + "/" + TOTAL_VUELTAS);
                                 if (vueltasCompletadas[i] < TOTAL_VUELTAS) {
-                                    posicionesPilotos[i] = X_INICIO; // Volver al inicio para la siguiente vuelta
+                                    posicionesPilotos[i] = X_INICIO;
                                 } else {
-                                    posicionesPilotos[i] = X_FIN; // Quedarse en la meta
+                                    posicionesPilotos[i] = X_FIN;
                                     haTerminado[i] = true;
-                                    ordenLlegada.add(i); // Registrar orden de llegada
+                                    ordenLlegada.add(i);
                                 }
                             }
                         }
                     }
 
-                    // Actualizar la vuelta máxima
                     int vueltaMaxima = Arrays.stream(vueltasCompletadas).max().getAsInt();
                     etiquetaVueltasCarrera.setText("Vuelta " + vueltaMaxima + "/" + TOTAL_VUELTAS);
 
-                    // Ordenar pilotos según su posición actual
                     Integer[] indices = new Integer[NUM_PILOTOS];
                     for (int i = 0; i < NUM_PILOTOS; i++) {
                         indices[i] = i;
@@ -655,7 +618,6 @@ public class NuevaTemporada2007 extends JFrame {
                         return Integer.compare(posicionesPilotos[b], posicionesPilotos[a]);
                     });
 
-                    // Actualizar posiciones en la tabla de clasificación
                     for (int i = 0; i < NUM_PILOTOS; i++) {
                         int idx = indices[i];
                         targetYSquares[idx] = Y_POSICION + (i * 20);
@@ -668,7 +630,6 @@ public class NuevaTemporada2007 extends JFrame {
                         etiquetasVueltas[idx].setText(vueltasCompletadas[idx] + "/" + TOTAL_VUELTAS);
                     }
 
-                    // Avanzar la animación
                     if (animationProgress >= 1.0) {
                         animationProgress = 0.0;
                     }
@@ -677,7 +638,6 @@ public class NuevaTemporada2007 extends JFrame {
                         animationProgress = 1.0;
                     }
 
-                    // Actualizar posiciones visuales
                     for (int i = 0; i < NUM_PILOTOS; i++) {
                         currentYSquares[i] += (targetYSquares[i] - currentYSquares[i]) * animationProgress;
                         currentYRows[i] += (targetYRows[i] - currentYRows[i]) * animationProgress;
@@ -687,7 +647,6 @@ public class NuevaTemporada2007 extends JFrame {
                         etiquetasPosicion[i].setBounds(X_FIN + 10, (int)currentYPoints[i], 50, 20);
                     }
 
-                    // Finalizar la carrera cuando todos los pilotos terminan
                     if (ordenLlegada.size() == NUM_PILOTOS) {
                         for (int i = 0; i < NUM_PILOTOS; i++) {
                             int pilotIndex = ordenLlegada.get(i);
@@ -697,16 +656,16 @@ public class NuevaTemporada2007 extends JFrame {
                             etiquetasPosicion[pilotIndex].setText(position + " + " + puntos);
                         }
 
-                        guardarPuntosAutomaticamente(); // Guardar puntos en la base de datos
-                        mostrarPodio(); // Mostrar ventana del podio
+                        guardarPuntosAutomaticamente();
+                        mostrarPodio();
 
-                        ((Timer)e.getSource()).stop(); // Detener el temporizador
+                        ((Timer)e.getSource()).stop();
                     }
 
-                    panelContenido.repaint(); // Redibujar la ventana
+                    panelContenido.repaint();
                 }
             });
-            temporizador.start(); // Iniciar la simulación
+            temporizador.start();
         }
 
         /**
@@ -734,60 +693,53 @@ public class NuevaTemporada2007 extends JFrame {
          * Muestra una ventana con el podio de la carrera (primeros tres puestos).
          */
         private void mostrarPodio() {
-            // Create larger frame
             JFrame podioFrame = new JFrame("Podio - " + lblNewLabel.getText());
             podioFrame.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
             podioFrame.setSize(600, 450);
             podioFrame.setLocationRelativeTo(null);
-            
-            // Create a custom JPanel that draws the background image
+
             JPanel backgroundPanel = new JPanel() {
                 @Override
                 protected void paintComponent(Graphics g) {
                     super.paintComponent(g);
                     ImageIcon podioIcon = new ImageIcon("src/image/podio.jpg");
                     Image podioImage = podioIcon.getImage();
-                    // Draw image scaled to fit the panel
                     g.drawImage(podioImage, 0, 0, getWidth(), getHeight(), this);
                 }
             };
-            backgroundPanel.setLayout(null); // Use absolute positioning for labels
-            
-            // First place (center, highest position)
+            backgroundPanel.setLayout(null);
+
             JPanel panel1 = createPodiumPanel("1° " + PILOTOS[ordenLlegada.get(0)], 15, new Color(255, 215, 0));
             panel1.setBounds(212, 237, 160, 35);
             backgroundPanel.add(panel1);
-            
-            // Second place (left, higher than before)
+
             JPanel panel2 = createPodiumPanel("2° " + PILOTOS[ordenLlegada.get(1)], 15, new Color(192, 192, 192));
             panel2.setBounds(28, 255, 160, 35);
             backgroundPanel.add(panel2);
-            
-            // Third place (right, higher than before)
+
             JPanel panel3 = createPodiumPanel("3° " + PILOTOS[ordenLlegada.get(2)], 15, new Color(205, 127, 50));
             panel3.setBounds(394, 285, 160, 35);
             backgroundPanel.add(panel3);
-            
-            // Set content pane to the background panel
+
             podioFrame.setContentPane(backgroundPanel);
             podioFrame.setResizable(true);
             podioFrame.setVisible(true);
         }
 
-        // Helper method to create a panel with a label that has a semi-transparent background
         private JPanel createPodiumPanel(String text, int fontSize, Color textColor) {
             JLabel label = new JLabel(text);
             label.setFont(new Font("Arial", Font.BOLD, fontSize));
             label.setForeground(textColor);
             label.setHorizontalAlignment(JLabel.CENTER);
-            
+
             JPanel panel = new JPanel();
             panel.setLayout(new BorderLayout());
             panel.setBackground(new Color(0, 0, 0, 150)); // Semi-transparent black
             panel.add(label, BorderLayout.CENTER);
-           
+
             return panel;
         }
+
         /**
          * Carga los datos de pilotos y equipos desde la base de datos.
          */
@@ -804,7 +756,6 @@ public class NuevaTemporada2007 extends JFrame {
                     System.out.println("Piloto cargado: " + PILOTOS[index] + ", Equipo: " + EQUIPOS[index]);
                     index++;
                 }
-                // Completar con valores por defecto si no hay suficientes pilotos
                 if (index != NUM_PILOTOS) {
                     System.out.println("No se encontraron suficientes pilotos en la base de datos.");
                     for (int i = index; i < NUM_PILOTOS; i++) {
@@ -817,7 +768,6 @@ public class NuevaTemporada2007 extends JFrame {
             } catch (SQLException e) {
                 System.out.println("Error al cargar pilotos: " + e.getMessage());
                 e.printStackTrace();
-                // Inicializar con valores por defecto en caso de error
                 for (int i = 0; i < NUM_PILOTOS; i++) {
                     PILOTOS[i] = "Piloto" + (i + 1);
                     EQUIPOS[i] = "EquipoDesconocido";
@@ -835,7 +785,6 @@ public class NuevaTemporada2007 extends JFrame {
 
             try {
                 conexion.conectar();
-                // Obtener estadísticas de los equipos
                 String queryTeams = "SELECT Nombre, Potencia, Aerodinamica, Fiabilidad FROM equipo";
                 ResultSet rsTeams = conexion.ejecutarSelect(queryTeams);
                 while (rsTeams.next()) {
@@ -849,7 +798,6 @@ public class NuevaTemporada2007 extends JFrame {
                 }
                 rsTeams.close();
 
-                // Obtener estadísticas de los pilotos
                 String queryPilots = "SELECT Id, Habilidad, Consistencia, Equipo FROM piloto ORDER BY CAST(SUBSTRING(Id, 2) AS UNSIGNED) ASC";
                 ResultSet rsPilots = conexion.ejecutarSelect(queryPilots);
                 int index = 0;
@@ -866,7 +814,6 @@ public class NuevaTemporada2007 extends JFrame {
                 rsPilots.close();
                 conexion.desconectar();
 
-                // Normalizar rendimientos
                 double minRendimiento = Arrays.stream(rendimientosCrudos).min().orElse(1.0);
                 double maxRendimiento = Arrays.stream(rendimientosCrudos).max().orElse(1.0);
                 double rangoOriginal = maxRendimiento - minRendimiento;
@@ -881,17 +828,16 @@ public class NuevaTemporada2007 extends JFrame {
             } catch (SQLException e) {
                 System.out.println("Error al calcular rendimientos: " + e.getMessage());
                 e.printStackTrace();
-                // Asignar rendimiento por defecto en caso de error
                 for (int i = 0; i < NUM_PILOTOS; i++) {
                     PUNTUACIONES_RENDIMIENTO[i] = 10;
                 }
             }
         }
 
-        /*
-         Asigna puntos según la posición final en la carrera.
-         @param posicion Posición del piloto.
-         @return Puntos correspondientes.
+        /**
+         * Asigna puntos según la posición final en la carrera.
+         * @param posicion Posición del piloto.
+         * @return Puntos correspondientes.
          */
         private int obtenerPuntosPorPosicion(int posicion) {
             switch (posicion) {
