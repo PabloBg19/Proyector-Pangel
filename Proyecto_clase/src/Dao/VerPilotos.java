@@ -68,7 +68,7 @@ public class VerPilotos extends JFrame {
             ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
             try {
                 conexion.conectar();
-                String sentencia = "SELECT CalcularPromedioHabilidad() AS promedio";
+                String sentencia = "SELECT CalcularPromedioHabilidad()  AS promedio FROM DUAL";
                 ResultSet resultado = conexion.ejecutarSelect(sentencia);
                 if (resultado.next()) {
                     float promedio = resultado.getFloat("promedio");
