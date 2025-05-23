@@ -1,4 +1,4 @@
-package View;
+package Dao;
 
 import java.awt.EventQueue;
 import java.sql.ResultSet;
@@ -15,6 +15,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
+
+import Util.ConexionMySQL;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 

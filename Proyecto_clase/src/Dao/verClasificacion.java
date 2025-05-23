@@ -1,4 +1,4 @@
-package View;
+package Dao;
 
 import java.awt.Font;
 import java.sql.ResultSet;
@@ -14,6 +14,8 @@ import javax.swing.SwingConstants;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import Util.ConexionMySQL;
 
 public class verClasificacion extends JFrame {
     private static final long serialVersionUID = 1L;

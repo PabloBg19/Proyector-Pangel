@@ -1,4 +1,4 @@
-package View;
+package Dao;
 
 import java.awt.BorderLayout;
 // Importaciones necesarias para la interfaz gráfica, manejo de eventos, base de datos y otras utilidades
@@ -25,6 +25,9 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.Timer;
 import javax.swing.border.EmptyBorder;
+
+import Util.ConexionMySQL;
+
 import javax.swing.BorderFactory;
 import javax.swing.ImageIcon;
 
