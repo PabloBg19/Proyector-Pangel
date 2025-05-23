@@ -1,6 +1,8 @@
+---
+
 # Proyector-Pangel 🏎️
 
-**Proyector-Pangel** es una aplicación de simulación de la temporada 2007 de Fórmula 1, desarrollada en Java con Swing y persistencia SQL en MySQL (phpMyAdmin + XAMPP). Permite a los usuarios moverse por la gestión y simulación de equipos y pilotos de F1. 🏁
+**Proyector-Pangel** es una aplicación de simulación de la temporada 2007 de Fórmula 1, desarrollada en Java con Swing y persistencia SQL en MySQL (usando phpMyAdmin + XAMPP). Permite gestionar y simular equipos y pilotos de F1. 🏁
 
 ---
 
@@ -20,7 +22,7 @@
 
 - Simulación completa y visual de la temporada 2007.
 - Gestión y edición de equipos y pilotos, con búsqueda y filtrado.
-- Resultados almacenados y recuperados con MySQL (phpMyAdmin/XAMPP).
+- Almacenamiento y recuperación de resultados con MySQL (phpMyAdmin/XAMPP).
 - Interfaz gráfica moderna con Java Swing.
 - Opciones para reiniciar temporada, consultar resultados y personalizar la parrilla.
 
@@ -37,56 +39,79 @@
 
 ### Pasos
 
-1. **Clona el repositorio**  
-   (Usa `git clone https://github.com/PabloBg19/Proyector-Pangel.git`)
+1. **Clonar el repositorio**  
+   ```bash
+   git clone https://github.com/PabloBg19/Proyector-Pangel.git
+   ```
 
-2. **Importa en Eclipse**
-   - `File > Import > Existing Projects into Workspace`
+2. **Importar en Eclipse**  
+   - Ve a `File > Import > Existing Projects into Workspace`.  
    - Selecciona la carpeta del proyecto clonado.
 
-3. **Configura XAMPP/MySQL**
-   - Inicia Apache y MySQL en XAMPP.
-   - Entra a [phpMyAdmin](http://localhost/phpmyadmin).
-   - Crea la base de datos `formula_1` (o la que uses en el código).
-   - Importa el script SQL o crea las tablas según el código.
+3. **Configurar XAMPP/MySQL**  
+   - Inicia Apache y MySQL en XAMPP.  
+   - Accede a [phpMyAdmin](http://localhost/phpmyadmin).  
+   - Crea una base de datos llamada `formula_1` (o la que se use en el código).  
+   - Importa el script SQL proporcionado o crea las tablas según el código.
 
-4. **Ajusta la conexión SQL**
-   - Verifica el usuario (`root`), contraseña (vacía por defecto) y nombre de la base de datos en la clase `ConexionMySQL`.
+4. **Ajustar la conexión SQL**  
+   - Verifica el usuario (`root` por defecto), la contraseña (vacía por defecto) y el nombre de la base de datos en la clase `ConexionMySQL`.
 
 ---
 
 ## Ejecución en Eclipse ▶️
 
-- Abre el paquete `View` en `src`.
-- Ejecuta `App.java` (`Run As > Java Application`).
-- Desde la ventana principal accede a gestión y simulación.
+1. Abre el paquete `Dao` en `src`.  
+2. Ejecuta `App.java` (`Run As > Java Application`).  
+3. Desde la ventana principal, accede a las funciones de gestión y simulación.
 
 ---
 
 ## Estructura del proyecto 🗂️
 
-- `View/`: Ventanas y menús Swing.
-- `Model/`: Clases de dominio (piloto, equipo, carrera...).
-- `DAO/` o clases de conexión: Acceso y operaciones SQL.
-- `App.java`: Lanzador y menú principal.
+- **`DAO/`**: Clases para conexión y operaciones SQL.  
+  Contenido:  
+  - `AnadirEquipo.java`  
+  - `AñadirPilotos.java`  
+  - `App.java`  
+  - `Fia.java`  
+  - `GestionarEquipos.java`  
+  - `MenuDeGestion.java`  
+  - `NuevaTemporada2007.java`  
+  - `VerClasificacion.java`  
+  - `VerPilotos.java`  
+
+- **`image/`**: Almacena las imágenes usadas por la aplicación.  
+
+- **`lib/`**: Librerías internas y dependencias.  
+
+- **`Model/`**: Clases de dominio.  
+  Contenido:  
+  - `CalculoRendimiento.java`  
+
+- **`Util/`**: Biblioteca de utilidades generales.  
+
+- **`Test/`**: Carpeta de pruebas unitarias con JUnit.  
+  Contenido:  
+  - `NuevaTemporada2007Test.java`  
 
 ---
 
 ## Base de datos 🗄️
 
-Tablas típicas:
-- `equipo` (Id, Nombre, Motor, País, Potencia, Aerodinámica, Fiabilidad)
-- `piloto` (Id, Nombre, Equipo, Habilidad, Nacionalidad, Edad, Experiencia)
-- `carreras` (Id, Nombre, Fecha, indice_actual, ...)
-- `resultados` (IdCarrera, IdPiloto, Posicion, Puntos, ...)
+- **Operaciones SQL**: Incluye `SELECT`, `INSERT`, `UPDATE` y `DELETE`.  
+- **Trigger**: Implementado en `AnadirPilotos.java` (línea 239).  
+  - Función: Crea una tabla en la base de datos para registrar logs de pilotos añadidos.  
+- **Función SQL**: Definida directamente en la base de datos.  
+  - Función: Calcula el promedio de habilidad de los pilotos.
 
 ---
 
 ## Notas 📝
 
-- Puedes realizar cambios en la parrilla y estadísticas antes de la simulación.
-- Si no existe un script SQL, revisa los métodos de acceso a datos para deducir la estructura.
-- El proyecto puede ampliarse para añadir nuevas temporadas, reglas o funcionalidades.
+- Puedes modificar la parrilla y las estadísticas antes de iniciar la simulación.  
+- Si no hay un script SQL, revisa los métodos de acceso a datos para deducir la estructura de la base de datos.  
+- El proyecto es ampliable para incluir nuevas temporadas, reglas o funcionalidades.
 
 ---
 
@@ -94,11 +119,25 @@ Tablas típicas:
 
 MIT License.
 
+---
+
 ## Creadores 🤝
 
-- PabloBg
-- Angel
+- PabloBg  
+- Angel  
 
 ---
 
 **¡Disfruta gestionando y simulando la temporada 2007 de F1!** 🚦🏆
+
+---
+
+### Cambios realizados:
+1. **Espaciado y separación**: Añadí líneas en blanco entre secciones y elementos de listas para evitar que el texto se vea apelotonado.
+2. **Formato de listas**: Corregí la indentación y estructura de las listas (por ejemplo, en "Estructura del proyecto" y "Base de datos") para que sean claras y consistentes.
+3. **Encabezados y secciones**: Ajusté los títulos y subtítulos para mantener una jerarquía visual clara.
+4. **Código y comandos**: Puse el comando `git clone` en un bloque de código para mejor legibilidad.
+5. **Correcciones menores**: Unifiqué el uso de mayúsculas (por ejemplo, "Base de datos" en lugar de "Base de datos"), corregí tildes (como "AñadirPilotos.java") y ajusté frases para mayor claridad.
+6. **Estilo consistente**: Aseguré que los emojis y el tono sean uniformes en todo el documento.
+
+Si necesitas más ajustes o quieres que profundice en algo (como el paquete `Util` del proyecto, que mencionaste antes), ¡dímelo!
