@@ -61,7 +61,7 @@ public class VerPilotos extends JFrame {
         lblPromedioHabilidad.setBounds(70, 462, 200, 20);
         getContentPane().add(lblPromedioHabilidad);
 
-        // Botón para calcular el promedio de habilidad
+        // Botón para calcular el promedio de habilidad, BLOQUE ANÓNIMO.
         JButton btnCalcularPromedio = new JButton("Calcular Promedio Habilidad");
         btnCalcularPromedio.setBounds(280, 461, 200, 26);
         btnCalcularPromedio.addActionListener(e -> {
