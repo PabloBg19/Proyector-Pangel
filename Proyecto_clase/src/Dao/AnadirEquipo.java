@@ -5,7 +5,6 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.sql.SQLException;
-
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -13,9 +12,16 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
-
 import Util.ConexionMySQL;
 
+/**
+ * Clase que representa una ventana para añadir un equipo a la base de datos de Fórmula 1.
+ * Proporciona una interfaz gráfica para ingresar los detalles del equipo, como ID, nombre, motor,
+ * país, potencia, aerodinámica y fiabilidad, y los guarda en la base de datos al hacer clic en el botón "Enviar".
+ * 
+ * @author Pangel
+ * @version 1.0
+ */
 public class AnadirEquipo extends JFrame {
 
     private static final long serialVersionUID = 1L;
@@ -30,7 +36,9 @@ public class AnadirEquipo extends JFrame {
 
     /**
      * Constructor de la clase AnadirEquipo.
-     * Inicializa la ventana para añadir un equipo a la base de datos.
+     * Inicializa y configura la ventana gráfica para añadir un equipo a la base de datos.
+     * Configura el layout, los componentes de la interfaz (etiquetas, campos de texto, botón) y
+     * centra la ventana en la pantalla.
      */
     public AnadirEquipo() {
         // Configura la operación de cierre de la ventana
@@ -138,9 +146,19 @@ public class AnadirEquipo extends JFrame {
         textField_Fiabilidad.setBounds(345, 365, 148, 20);
         contentPane.add(textField_Fiabilidad);
 
-        // Botón para enviar los datos del equipo a la base de datos
+        /**
+         * Botón para enviar los datos del equipo a la base de datos.
+         * Al hacer clic, valida los campos numéricos, crea una conexión a la base de datos,
+         * ejecuta una sentencia SQL para insertar el equipo y muestra un mensaje de éxito o error.
+         */
         JButton btnEnviar = new JButton("ENVIAR");
         btnEnviar.addActionListener(new ActionListener() {
+            /**
+             * Maneja el evento de clic en el botón "Enviar".
+             * Valida los datos ingresados, se conecta a la base de datos e inserta un nuevo equipo.
+             * 
+             * @param e El evento de acción generado al hacer clic en el botón.
+             */
             public void actionPerformed(ActionEvent e) {
                 // Crea una conexión a la base de datos MySQL
                 ConexionMySQL conexion2 = new ConexionMySQL("root", "", "formula_1");

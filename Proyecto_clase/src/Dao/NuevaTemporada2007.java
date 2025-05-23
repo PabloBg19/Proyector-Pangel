@@ -1,4 +1,4 @@
-package Dao; // Paquete donde se encuentra la clase
+package Dao;
 
 import java.awt.BorderLayout; // Importa BorderLayout (aunque no se usa directamente aquí)
 import java.awt.Color; // Importa Color para personalizar colores
@@ -16,7 +16,6 @@ import java.util.Arrays; // Importa Arrays para operaciones con arrays
 import java.util.HashMap; // Importa HashMap para mapas
 import java.util.Map; // Importa Map para interfaces de mapas
 import java.util.Random; // Importa Random para generar números aleatorios
-
 import javax.swing.JButton; // Importa JButton para botones
 import javax.swing.JFrame; // Importa JFrame para crear la ventana principal
 import javax.swing.JLabel; // Importa JLabel para etiquetas de texto
@@ -24,9 +23,7 @@ import javax.swing.JOptionPane; // Importa JOptionPane para mensajes emergentes
 import javax.swing.JPanel; // Importa JPanel para el contenedor de componentes
 import javax.swing.Timer; // Importa Timer para animaciones
 import javax.swing.border.EmptyBorder; // Importa EmptyBorder para márgenes en el panel
-
 import Util.ConexionMySQL; // Importa la clase personalizada para conexión a MySQL
-
 import javax.swing.BorderFactory; // Importa BorderFactory para bordes (aunque no se usa directamente aquí)
 import javax.swing.ImageIcon; // Importa ImageIcon para cargar imágenes
 
@@ -34,6 +31,9 @@ import javax.swing.ImageIcon; // Importa ImageIcon para cargar imágenes
  * Clase principal que representa la ventana de la temporada 2007 de Fórmula 1.
  * Gestiona la interfaz gráfica para mostrar las carreras, avanzar entre ellas y
  * manejar el estado de la temporada (guardar/cargar desde la base de datos).
+ * 
+ * @author Pangel
+ * @version 1.0
  */
 public class NuevaTemporada2007 extends JFrame {
     private static final long serialVersionUID = 1L; // Identificador para serialización
@@ -151,13 +151,19 @@ public class NuevaTemporada2007 extends JFrame {
         lblRAustralia_2_1_1_3.setBounds(559, 239, 25, 14);
         contentPane.add(lblRAustralia_2_1_1_3);
 
-        // Botón para avanzar a la siguiente carrera
+        /**
+         * Botón para avanzar a la siguiente carrera.
+         * Llama al método advanceToNextRace para actualizar el estado y abrir la simulación.
+         */
         JButton btnNewButton = new JButton("Avanzar a Carrera");
         btnNewButton.setBounds(478, 353, 157, 51);
         btnNewButton.addActionListener(e -> advanceToNextRace()); // Llama al método para avanzar
         contentPane.add(btnNewButton);
 
-        // Botón para ver la clasificación general
+        /**
+         * Botón para ver la clasificación general.
+         * Abre la ventana de clasificación general (verClasificacion).
+         */
         JButton btnVerClasificacin = new JButton("Ver Clasificación");
         btnVerClasificacin.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -168,7 +174,10 @@ public class NuevaTemporada2007 extends JFrame {
         btnVerClasificacin.setBounds(292, 353, 157, 51);
         contentPane.add(btnVerClasificacin);
 
-        // Botón para gestionar la temporada
+        /**
+         * Botón para gestionar la temporada.
+         * Abre la ventana Fia y permite reiniciar los puntos de los pilotos.
+         */
         JButton btnNewButton_1_1 = new JButton("Gestionar Temporada");
         btnNewButton_1_1.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -250,7 +259,9 @@ public class NuevaTemporada2007 extends JFrame {
 
     /**
      * Carga el estado de la temporada desde la base de datos.
-     * Obtiene el índice de la carrera actual y actualiza la interfaz.
+     * Obtiene el índice de la carrera actual y actualiza la interfaz gráfica.
+     * 
+     * @throws SQLException Si ocurre un error al interactuar con la base de datos.
      */
     public void loadSeasonState() {
         ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
@@ -291,6 +302,8 @@ public class NuevaTemporada2007 extends JFrame {
 
     /**
      * Guarda el estado de la temporada (índice de la carrera actual) en la base de datos.
+     * 
+     * @throws SQLException Si ocurre un error al interactuar con la base de datos.
      */
     public void saveSeasonState() {
         ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
@@ -311,7 +324,7 @@ public class NuevaTemporada2007 extends JFrame {
 
     /**
      * Avanza a la siguiente carrera, actualiza la interfaz y abre la ventana de simulación.
-     * Si es la última carrera, muestra el campeón y abre la ventana principal para continuar.
+     * Si es la última carrera, muestra el campeón y abre una nueva ventana para continuar.
      */
     public void advanceToNextRace() {
         if (currentRaceIndex == -1) {
@@ -342,7 +355,9 @@ public class NuevaTemporada2007 extends JFrame {
     }
 
     /**
-     * Muestra el campeón de la temporada sin reiniciar los puntos.
+     * Muestra el campeón de la temporada basado en los puntos acumulados.
+     * 
+     * @throws SQLException Si ocurre un error al interactuar con la base de datos.
      */
     public void mostrarCampeon() {
         ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
@@ -364,7 +379,7 @@ public class NuevaTemporada2007 extends JFrame {
     }
 
     /**
-     * Refresca el estado de la temporada y redibuja la interfaz.
+     * Refresca el estado de la temporada y redibuja la interfaz gráfica.
      */
     public void refreshSeasonState() {
         loadSeasonState();
@@ -374,6 +389,8 @@ public class NuevaTemporada2007 extends JFrame {
     /**
      * Clase interna que representa la ventana de simulación de una carrera.
      * Muestra una animación de los pilotos, la clasificación en tiempo real y el podio final.
+     * 
+     * @author Pangel
      */
     public class RaceWindow extends JFrame {
         private static final long serialVersionUID = 1L;
@@ -435,6 +452,8 @@ public class NuevaTemporada2007 extends JFrame {
 
         /**
          * Constructor de la ventana de simulación de carrera.
+         * Inicializa la interfaz gráfica para la simulación de una carrera, incluyendo la animación de pilotos y la clasificación.
+         * 
          * @param nombreCarrera Nombre del Gran Premio a simular.
          */
         public RaceWindow(String nombreCarrera) {
@@ -461,6 +480,10 @@ public class NuevaTemporada2007 extends JFrame {
             etiquetaTituloCarrera.setBounds(320, 34, 500, 30);
             panelContenido.add(etiquetaTituloCarrera);
 
+            /**
+             * Botón para cerrar la ventana de simulación.
+             * Cierra la ventana actual sin afectar el estado de la temporada.
+             */
             JButton botonCerrar = new JButton("Cerrar");
             botonCerrar.setBounds(460, 520, 100, 30);
             botonCerrar.setFont(new Font("Arial", Font.BOLD, 12));
@@ -669,7 +692,9 @@ public class NuevaTemporada2007 extends JFrame {
         }
 
         /**
-         * Guarda los puntos obtenidos por los pilotos en la base de datos.
+         * Guarda los puntos obtenidos por los pilotos en la base de datos al finalizar la carrera.
+         * 
+         * @throws SQLException Si ocurre un error al interactuar con la base de datos.
          */
         private void guardarPuntosAutomaticamente() {
             ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
@@ -690,7 +715,7 @@ public class NuevaTemporada2007 extends JFrame {
         }
 
         /**
-         * Muestra una ventana con el podio de la carrera (primeros tres puestos).
+         * Muestra una ventana con el podio de la carrera, destacando los tres primeros puestos.
          */
         private void mostrarPodio() {
             JFrame podioFrame = new JFrame("Podio - " + lblNewLabel.getText());
@@ -726,6 +751,14 @@ public class NuevaTemporada2007 extends JFrame {
             podioFrame.setVisible(true);
         }
 
+        /**
+         * Crea un panel para mostrar un puesto en el podio con el nombre del piloto y un color específico.
+         * 
+         * @param text Texto a mostrar (posición y nombre del piloto).
+         * @param fontSize Tamaño de la fuente del texto.
+         * @param textColor Color del texto.
+         * @return El panel creado para el podio.
+         */
         private JPanel createPodiumPanel(String text, int fontSize, Color textColor) {
             JLabel label = new JLabel(text);
             label.setFont(new Font("Arial", Font.BOLD, fontSize));
@@ -734,7 +767,7 @@ public class NuevaTemporada2007 extends JFrame {
 
             JPanel panel = new JPanel();
             panel.setLayout(new BorderLayout());
-            panel.setBackground(new Color(0, 0, 0, 150)); // Semi-transparent black
+            panel.setBackground(new Color(0, 0, 0, 150)); // Fondo negro semi-transparente
             panel.add(label, BorderLayout.CENTER);
 
             return panel;
@@ -742,6 +775,8 @@ public class NuevaTemporada2007 extends JFrame {
 
         /**
          * Carga los datos de pilotos y equipos desde la base de datos.
+         * 
+         * @throws SQLException Si ocurre un error al interactuar con la base de datos.
          */
         private void fetchPilotAndTeamData() {
             ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
@@ -777,6 +812,8 @@ public class NuevaTemporada2007 extends JFrame {
 
         /**
          * Calcula el rendimiento de los pilotos basado en las estadísticas del equipo y del piloto.
+         * 
+         * @throws SQLException Si ocurre un error al interactuar con la base de datos.
          */
         private void calculatePerformance() {
             ConexionMySQL conexion = new ConexionMySQL("root", "", "formula_1");
@@ -836,8 +873,9 @@ public class NuevaTemporada2007 extends JFrame {
 
         /**
          * Asigna puntos según la posición final en la carrera.
-         * @param posicion Posición del piloto.
-         * @return Puntos correspondientes.
+         * 
+         * @param posicion Posición del piloto en la carrera.
+         * @return Puntos correspondientes a la posición (10 para 1º, 8 para 2º, etc.).
          */
         private int obtenerPuntosPorPosicion(int posicion) {
             switch (posicion) {
@@ -855,8 +893,9 @@ public class NuevaTemporada2007 extends JFrame {
 
         /**
          * Obtiene el color asociado al equipo del piloto.
+         * 
          * @param team Nombre del equipo.
-         * @return Color correspondiente o gris por defecto.
+         * @return Color correspondiente al equipo o gris por defecto si no se encuentra.
          */
         private Color getColorForTeam(String team) {
             return COLORES_POR_EQUIPO.getOrDefault(team, Color.GRAY);
