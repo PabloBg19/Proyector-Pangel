@@ -91,8 +91,11 @@
 ## Base de datos 🗄️
 
 -Se han realizado todas las operaciones SQL vistas, como SELECT, INSERT, UPDATE, DELETE.
--Se ha añadido un TRIGGER en el código de java, en la clase AnadirPilotos.java (Línea 239 del código). Su función es la de crear una tabla en la BBDD con los logs de pilotos añadidos.
--Se 
+-Se ha añadido un TRIGGER en el código de java, en la clase AnadirPilotos.java (Línea 239 del código). 
+Su función es la de crear una tabla en la BBDD con los logs de pilotos añadidos.
+-Se ha añadido una function en el sql directamente en la base de datos.
+Su función es la de calcular el promedio de habilidad de los pilotos.
+
 ---
 
 ## Notas 📝
