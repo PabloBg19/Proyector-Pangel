@@ -62,7 +62,7 @@ public class NuevaTemporada2007 extends JFrame {
 
         // Crear etiquetas para cada Gran Premio y añadirlas al panel
         JLabel lblGPAustralia = new JLabel("Gran Premio de Albert Park");
-        lblGPAustralia.setBounds(147, 139, 140, 14); // Posición y tamaño
+        lblGPAustralia.setBounds(147, 139, 157, 14); // Posición y tamaño
         contentPane.add(lblGPAustralia);
         raceLabels[0] = lblGPAustralia;
 
@@ -98,7 +98,7 @@ public class NuevaTemporada2007 extends JFrame {
         contentPane.add(lblRAustralia_1_1_1);
 
         JLabel lblGPAustralia_1_1_1_1 = new JLabel("Gran Premio de Silverstone");
-        lblGPAustralia_1_1_1_1.setBounds(147, 239, 140, 14);
+        lblGPAustralia_1_1_1_1.setBounds(147, 239, 157, 14);
         contentPane.add(lblGPAustralia_1_1_1_1);
         raceLabels[4] = lblGPAustralia_1_1_1_1;
 

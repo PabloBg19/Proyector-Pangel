@@ -303,7 +303,7 @@ public class AnadirPilotos extends JFrame {
                 "    log_timestamp DATETIME DEFAULT CURRENT_TIMESTAMP" +
                 ");";
 
-            // Crear el trigger para registrar inserciones
+            // TRIGGER
             String createTriggerSQL = 
                 "CREATE OR REPLACE TRIGGER after_piloto_insert " +
                 "AFTER INSERT ON piloto " +

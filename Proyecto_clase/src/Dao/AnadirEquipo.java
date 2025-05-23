@@ -175,7 +175,7 @@ public class AnadirEquipo extends JFrame {
                         JOptionPane.showMessageDialog(AnadirEquipo.this, "Los campos Potencia, Aerodinámica y Fiabilidad deben ser números válidos.");
                         return;
                     }
-                    // Crea la sentencia SQL para insertar un nuevo equipo
+                    // Inserta un nuevo equipo
                     String sentencia = "INSERT INTO equipo (Id, Nombre, Motor, Pais, Potencia, Aerodinamica, Fiabilidad) VALUES (" +
                             "'" + textId.getText() + "', " +
                             "'" + textNombre.getText() + "', " +
