@@ -57,7 +57,7 @@
 
 ## Ejecución en Eclipse ▶️
 
-- Abre el paquete `View` en `src`.
+- Abre el paquete `Dao` en `src`.
 - Ejecuta `App.java` (`Run As > Java Application`).
 - Desde la ventana principal accede a gestión y simulación.
 
@@ -65,21 +65,34 @@
 
 ## Estructura del proyecto 🗂️
 
-- `View/`: Ventanas y menús Swing.
-- `Model/`: Clases de dominio (piloto, equipo, carrera...).
 - `DAO/` o clases de conexión: Acceso y operaciones SQL.
-- `App.java`: Lanzador y menú principal.
+  Contenido:
+     AnadirEquipo.java
+     AñadirPilotos.java
+     App.java
+     Fia.java
+     GestionarEquipos.java
+     MenuDeGestion.java
+     Nueva Temporada2007.java
+     verClasificacion.java
+     VerPilotos.java
+- `image/`: Almacena las imágenes que usa la aplicación
+- `lib/`: Librerias internas y dependencias
+- `Model/`: Clases de dominio
+  Contenido:
+     CalculoRendimiento
+- `Util`: Biblioteca de utilidad general.
+- `Test`: Carpeta de pruebas unitarias Junit
+  Contenido:
+     NuevaTemporada2007Test.
 
 ---
 
 ## Base de datos 🗄️
 
-Tablas típicas:
-- `equipo` (Id, Nombre, Motor, País, Potencia, Aerodinámica, Fiabilidad)
-- `piloto` (Id, Nombre, Equipo, Habilidad, Nacionalidad, Edad, Experiencia)
-- `carreras` (Id, Nombre, Fecha, indice_actual, ...)
-- `resultados` (IdCarrera, IdPiloto, Posicion, Puntos, ...)
-
+-Se han realizado todas las operaciones SQL vistas, como SELECT, INSERT, UPDATE, DELETE.
+-Se ha añadido un TRIGGER en el código de java, en la clase AnadirPilotos.java (Línea 239 del código). Su función es la de crear una tabla en la BBDD con los logs de pilotos añadidos.
+-Se 
 ---
 
 ## Notas 📝
