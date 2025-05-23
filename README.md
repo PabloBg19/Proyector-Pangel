@@ -1,4 +1,4 @@
-
+---
 **Proyector-Pangel** es una aplicación de simulación de la temporada 2007 de Fórmula 1, desarrollada en Java con Swing y persistencia SQL en MySQL (usando phpMyAdmin + XAMPP). Permite gestionar y simular equipos y pilotos de F1. 🏁
 
 ---
@@ -99,7 +99,7 @@ CONTENIDO
 
 ## Base de datos 🗄️
 
--Diseño del Esquema y BBDD: Esquema de relación de tablas incluido en captura junto con el archivo .mwb de workbench en la carpeta BBDD. También se incluye la base de datos en formato sql. 
+- **Diseño del Esquema y BBDD**: Esquema de relación de tablas incluido en captura junto con el archivo .mwb de workbench en la carpeta BBDD. También se incluye la base de datos en formato sql. 
 - **Operaciones SQL**: Incluye `SELECT`, `INSERT`, `UPDATE` y `DELETE`.  
 - **Trigger**: Implementado en `AnadirPilotos.java` (línea 239).  
   - Función: Crea una tabla en la base de datos para registrar logs de pilotos añadidos.  
@@ -143,13 +143,3 @@ MIT License.
 **¡Disfruta gestionando y simulando la temporada 2007 de F1!** 🚦🏆
 
 ---
-
-### Cambios realizados:
-1. **Espaciado y separación**: Añadí líneas en blanco entre secciones y elementos de listas para evitar que el texto se vea apelotonado.
-2. **Formato de listas**: Corregí la indentación y estructura de las listas (por ejemplo, en "Estructura del proyecto" y "Base de datos") para que sean claras y consistentes.
-3. **Encabezados y secciones**: Ajusté los títulos y subtítulos para mantener una jerarquía visual clara.
-4. **Código y comandos**: Puse el comando `git clone` en un bloque de código para mejor legibilidad.
-5. **Correcciones menores**: Unifiqué el uso de mayúsculas (por ejemplo, "Base de datos" en lugar de "Base de datos"), corregí tildes (como "AñadirPilotos.java") y ajusté frases para mayor claridad.
-6. **Estilo consistente**: Aseguré que los emojis y el tono sean uniformes en todo el documento.
-
-Si necesitas más ajustes o quieres que profundice en algo (como el paquete `Util` del proyecto, que mencionaste antes), ¡dímelo!
