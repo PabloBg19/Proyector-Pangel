@@ -54,8 +54,10 @@
    - Crea una base de datos llamada `formula_1` (o la que se use en el código).  
    - Importa el script SQL proporcionado o crea las tablas según el código.
 
-4. **Ajustar la conexión SQL**  
+4. **Ajustar la conexión SQL**
+   -Control de Versiones: 
    - Verifica el usuario (`root` por defecto), la contraseña (vacía por defecto) y el nombre de la base de datos en la clase `ConexionMySQL`.
+   - Inicia Apache y MySQL en XAMPP.  
 
 ---
 
@@ -96,22 +98,28 @@
   - `NuevaTemporada2007Test.java`  
 
 ---
+CONTENIDO
 
 ## Base de datos 🗄️
 
+-Diseño del Esquema y BBDD: Esquema de relación de tablas incluido en captura junto con el archivo .mwb de workbench en la carpeta BBDD. También se incluye la base de datos en formato sql. 
 - **Operaciones SQL**: Incluye `SELECT`, `INSERT`, `UPDATE` y `DELETE`.  
 - **Trigger**: Implementado en `AnadirPilotos.java` (línea 239).  
   - Función: Crea una tabla en la base de datos para registrar logs de pilotos añadidos.  
 - **Función SQL**: Definida directamente en la base de datos.  
   - Función: Calcula el promedio de habilidad de los pilotos.
 
+
 ---
 
 ## Entornos de Desarrollo 💻
 
 - **Pruebas unitarias con Junit sin Maven**: Verifican el comportamiento de unidades específicas de código, como métodos o clases, asegurando que funcionen correctamente.  
-- **Refactorización**: Proceso de reestructurar el código existente para mejorar su legibilidad y eficiencia.
-  
+- **Depuración y Refactorización**: Proceso de reestructurar el código existente para mejorar su legibilidad y eficiencia.
+-Control de Versiones: Progreso compartido del proyecto mediante commits frecuentes.
+- **Depuración y Refactorización**: JavaDoc generado para clases y métodos públicos.
+
+
 ---
 
 ## Notas 📝
